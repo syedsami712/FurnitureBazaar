@@ -19,7 +19,8 @@
 </head>
 <body>
 <?php include "header.php" ?>
-<?php include "index-container.php" ?>
+<?php include "index-container.php" ?> 
+<h1>hello world</h1>
 <?php include "footer.php" ?>
 <!-- JS Part Start-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
