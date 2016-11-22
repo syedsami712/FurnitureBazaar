@@ -1,6 +1,5 @@
 <html>
 <head>
-<?php require("functions/validation.php"); ?>
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,58 +37,25 @@
           <form class="form-horizontal" method="POST" action="">
             <fieldset id="account">
               <legend>Your Personal Details</legend>
-              <div style="display: none;" class="form-group required">
-                <label class="col-sm-2 control-label">Customer Group</label>
-                <div class="col-sm-10">
-                  <div class="radio">
-                    <label>
-                      <input type="radio" checked="checked" value="1" name="customer_group_id">
-                      Default</label>
-                  </div>
-                </div>
-              </div>
               <!-- PHP to check if fields are empty or not -->
               <?php 
-                $fnameerr = $lnameerr = $emailerr = $telerr = $add1err = $add2err = $cityerr = $state_err = $pinerr = "";
                 $fname = $lname = $email = $telephone=$address_2=$address_1=$city=$state=$pin = "";
 
                 if(isset($_POST['submit']))
                 {
-                  $fname = $_POST['fname'];$lname = $_POST["lname"]; $lname = $_POST["lname"];$telephone =$_POST["telephone"];$address_1 = $_POST["address_1"];
-                  $address_2 = $_POST["address_2"]; $city = $_POST["city"];$state =$_POST["state"];$pin = $_POST["pin"];
-                  
-                  if (empty($_POST["fname"])) { $fnameerr = "First Name cannot be empty!";}
-                  else if(validate_name($_POST['fname'])==true){ $fnameerr = error1();}
-                  else{$fname=test_input($_POST['fname']);}
-                  
-
-                  if(empty($_POST["lname"])){ $lnameerr="Last Name cannot be empty";}
-                  else if(validate_name($_POST['lname'])==true){ $lnameerr = error1();}
-                  else{$lname=test_input($_POST['lname']);}
-                  
-                  if(empty($_POST["email"])){ $emailerr="Email cannot be empty" ;}else{$email=test_input($_POST['email']);}
-
-                  if(empty($_POST["telephone"])){ $telerr="Contact Number canoot be empty" ;}
-                  else if(validate_name($telephone)==false){$telerr="Only numbers are acceptable";}
-                  else if(validate_num($_POST['telephone'])==true){$telerr="Contact Number Should be 10 Digits";}
-                  else{$telephone = test_input($_POST['telephone']);}
-
-                  if(empty($_POST["address_1"])){ $add1err="Address cannot be empty" ;}else{$address_1=test_input($_POST['address_1']);}
-
-                  if(empty($_POST["address_2"])){ $add2err="Address cannot be empty" ;}else{$address_2=test_input($_POST['address_2']);}
-
-                  if(empty($_POST["city"])){ $cityerr="City cannot be empty" ;}
-                  else if(validate_name($_POST['city'])==true){ $cityerr = error1();}
-                  else{$city=test_input($_POST['city']);}
-
-                  if(empty($_POST["state"])){ $state_err="State cannot be empty" ;}
-                  else if(validate_name($_POST['state'])==true){ $state_err = error1();}
-                  else{$state=test_input($_POST['state']);}
-
-                  if(empty($_POST["pin"])){ $pinerr="Pin cannot be empty" ;}
-                  else if(validate_name($pin)==false){$pinerr="Only numbers are acceptable";}
-                  else if(validate_num1($_POST['pin'])==true){ $pinerr = "PIN should be 6 Digits";}
-                  else{$pin=test_input($_POST['pin']);} 
+                  //if(emailavailable(_POST['email']))
+                    //{
+                    test_input($fname = $_POST['fname']);
+                    test_input($lname = $_POST["lname"]);
+                    test_input($lname = $_POST["lname"]);
+                    test_input($email = $_POST["email"]);
+                    test_input($telephone =$_POST["telephone"]);
+                    test_input($address_1 = $_POST["address_1"]);
+                    test_input($address_2 = $_POST["address_2"]);
+                    test_input($city = $_POST["city"]);
+                    test_input($state =$_POST["state"]);
+                    test_input($pin = $_POST["pin"]);
+                   // }
                 }
                   function test_input($data) {
                   $data = trim($data);
@@ -100,29 +66,30 @@
               <div class="form-group required">
                 <label for="input-firstname" class="col-sm-2 control-label">First Name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" width="12" id="input-firstname" placeholder="First Name" name="fname" value="<?php print($fname); ?>" >
-                  <span class="error-validation">* <?php echo $fnameerr; ?></span>
+                  <input type="text" class="form-control" width="12" id="input-firstname" placeholder="First Name" name="fname" pattern="[A-Za-z]+" value="<?php print($fname); ?>" required >
+                 
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-lastname" class="col-sm-2 control-label">Last Name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="<?php print $lname; ?>" name="lname">
-                  <span class="error-validation">* <?php echo $lnameerr; ?></span>
+                  <input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="<?php print $lname; ?>" pattern="[A-Za-z]+" name="lname" required>
+                 
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-email" class="col-sm-2 control-label">E-Mail</label>
                 <div class="col-sm-10">
-                  <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="<?php print $email; ?>" name="email">
-                  <span class="error-validation">* <?php echo $emailerr; ?></span>
+                  <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="<?php print $email ?>" name="email" required>
+                  <?php $emailerr=" "; ?>
+                  <span class="error-validation"> <?php echo "$emailerr" ; ?></span>
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-telephone" class="col-sm-2 control-label">Contact No</label>
                 <div class="col-sm-10">
-                  <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" value="<?php print $telephone; ?>" name="telephone">
-                  <span class="error-validation">* <?php echo $telerr; ?></span>
+                  <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" pattern="\d*" minlength="10" maxlength="10" value="<?php print $telephone; ?>" name="telephone" required>
+                  
                 </div>
               </div>
             </fieldset>
@@ -131,52 +98,85 @@
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">Address 1</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="<?php print $address_1; ?>" name="address_1">
-                  <span class="error-validation">* <?php echo $add1err; ?></span>
+                  <input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="<?php print $address_1; ?>" name="address_1" required>
+                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">Address 2</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-address-2" placeholder="Address 2" value="<?php print $address_2; ?>" name="address_2">
-                  <span class="error-validation">* <?php echo $add2err; ?></span>
+                  <input type="text" class="form-control" id="input-address-2" placeholder="Address 2" value="<?php print $address_2; ?>" name="address_2" required>
+                 
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-city" class="col-sm-2 control-label">City</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-city" placeholder="City" value="<?php print $city; ?>" name="city">
-                  <span class="error-validation">* <?php echo $cityerr; ?></span>
+                  <input type="text" class="form-control" id="input-city" placeholder="City" value="<?php print $city; ?>"  pattern="[A-Za-z]+" name="city" required>
+                 
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">State</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-state" placeholder="state" value="<?php print $state; ?>" name="state">
-                  <span class="error-validation">* <?php echo $state_err; ?></span>
+                  <input type="text" class="form-control" id="input-state" placeholder="state" value="<?php print $state; ?>" pattern="[A-Za-z]+" name="state" required>
+                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-postcode" class="col-sm-2 control-label">Post Code</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php print $pin; ?>" name="pin">
-                  <span class="error-validation">* <?php echo $pinerr; ?></span>
+                  <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php print $pin; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
+                  
                 </div>
               </div>
-              
+                <!--Password Validation Start -->
+              <?php 
+                  $pwderr = $conpasserr = "";
+                  $password = "";
+                  if(isset($_POST['submit']))
+                  {
+                    $password = $_POST['password'];
+                    if(empty($_POST['password']))
+                    {
+                      $pwderr =  "Password cannot be empty.";
+                    }
+                    else if(empty($_POST['confirm_password']))
+                    {
+                      $conpasserr = "Password cannot be empty";
+                    }
+                    function validpswd()
+                    {
+                      $flag = false ;
+                      if ($_POST['password'] == $_POST['confirm_password'])
+                      {
+                      $flag = true ;
+                      }
+                      else 
+                      {
+                        $conpasserr = "Passwords do not Match" ;
+                        $flag = flase ;
+                      }
+                      return $flag ;
+                    }
+                  }
+              ?>
+              <!--Password validation end -->
             </fieldset>
             <fieldset>
               <legend>Your Password</legend>
               <div class="form-group required">
                 <label for="input-password" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                  <input type="password" class="form-control" id="input-password" placeholder="Password" value="" name="password">
-                </div>
+                  <input type="password" class="form-control" onchange="reg_form.confirm_password.pattern= this.value;" id="input-password" placeholder="Password" value="<?php print $password ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password">
+                  
+              </div>
               </div>
               <div class="form-group required">
                 <label for="input-confirm" class="col-sm-2 control-label">Password Confirm</label>
                 <div class="col-sm-10">
-                  <input type="password" class="form-control" id="input-confirm" placeholder="Password Confirm" value="" name="confirm">
+                  <input type="password" class="form-control" id="input-confirm" placeholder="Password Confirm" value="" name="confirm_password">
+                  <span class="error-validation">* <?php echo $conpasserr; ?></span>
                 </div>
               </div>
             </fieldset>
@@ -186,6 +186,48 @@
               </div>
             </div>
           </form>
+          <!--Final Call to write the data in database -->
+          <?php 
+
+              require('functions/dbconfig.php');
+              //require_once('functions/function1.php');
+              $uid = generateuid();
+              if(isset($_POST['submit']))
+              {
+                if(validpswd())
+                {
+                  $query = "INSERT INTO `customers` (`uid`,`FName`, `LName`, `email`, `contact_no`, `address1`, `address2`, `city`,`state`,`pin`,`password`) VALUES ('$uid','$fname', '$lname', '$email', '$telephone','$address_1', '$address_2', '$city','$state','$pin','$password')";
+                   $result=mysql_query($query, $conn);
+                   if(!$result)
+                   {
+                   print('<script>
+                          function myFunction() {
+                          alert("Email Already Exist");
+                          }
+                          myFunction();
+                          </script>');
+                   }
+                  else
+                  {
+                    print('<script>
+                          function myFunction() {
+                          alert("Registration Succesful");
+                          }
+                          myFunction();
+                          </script>');
+                  }
+                }
+                else
+              {
+                print('<script>
+                          function myFunction() {
+                          alert("Password do not match");
+                          }
+                          myFunction();
+                          </script>');
+              }
+              }        
+          ?>
         </div>
         <!--Middle Part End -->
         <!--Right Part Start -->
@@ -214,12 +256,6 @@
     </div>
   </div>
 <?php include "footer.php"; ?>
- <?php
-                
-                
-                
-                    
-          ?>
 <!-- JS Part Start-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
