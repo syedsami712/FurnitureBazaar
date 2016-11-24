@@ -196,7 +196,7 @@
                 if(validpswd())
                 {
                   $query = "INSERT INTO `customers` (`uid`,`FName`, `LName`, `email`, `contact_no`, `address1`, `address2`, `city`,`state`,`pin`,`password`) VALUES ('$uid','$fname', '$lname', '$email', '$telephone','$address_1', '$address_2', '$city','$state','$pin','$password')";
-                   $result=mysql_query($query, $conn);
+                   $result=mysqli_query($conn,$query);
                    if(!$result)
                    {
                    print('<script>

@@ -43,8 +43,9 @@ function getsubcats($cat_ID)
 
 	function generateuid()
 	{
-		$rowSQL1 = mysql_query( "SELECT count( uid ) AS count FROM `customers`;" );
-		$row1 = mysql_fetch_array($rowSQL1);
+		global $con;
+		$rowSQL1 = mysqli_query($con, "SELECT count( uid ) AS count FROM `customers`;" );
+		$row1 = mysqli_fetch_array($rowSQL1);
 		$count = $row1['count'];
 		if($count==0)
 		{
@@ -52,8 +53,8 @@ function getsubcats($cat_ID)
 		}
 		else
 		{
-			$rowSQL = mysql_query( "SELECT MAX( uid ) AS max FROM `customers`;" );
-			$row = mysql_fetch_array( $rowSQL );
+			$rowSQL = mysqli_query($con, "SELECT MAX( uid ) AS max FROM `customers`;" );
+			$row = mysqli_fetch_array( $rowSQL );
 			$largestNumber = $row['max'];
 			return $largestNumber+1;
 		}
