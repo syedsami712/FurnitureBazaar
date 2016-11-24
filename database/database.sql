@@ -54,6 +54,31 @@ CREATE TABLE `customers` (
 
 insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (123,'fads','fsdf','123@ddd.com','sdf','fsadfasdf','sdfasdf','asdfasdf','sadfsdaf','sadfas','fsadf'),(432,'afdsf','dfasf','abc@xyz.com','asdfasd','fsdf','dsfdsf','asda','fdsafasd','fasdfa','asdfa'),(433,'asd','sdfasd','fsa','','','','','','',''),(434,'','','','','','','','','',''),(435,'qwre','rqwe','abc@xyz.comad','1111111111','sfdfa','agsdg','asdga','sgasdgas','111111','ASSa11111'),(436,'asd','asdd','ads@adasd.dsaa','1111111111','ads','dasddasdas','dasdasdsadasdsa','asdfasdf','111111','Ass11111'),(437,'asd','adsda','ads@adasd.dsasdas','1111111111','ad','ada','ads','adsd','111111','Ass11111'),(438,'Syed','Sami','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','Assasin712'),(439,'Syed','Sami','syedsami712@yahoo.co','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','Assasin712'),(440,'dhapoi','ofuqhpqwuf','uuifa@hnai.dauhp','1111111111','lakhd','iuhaspia','pdapsusa','sahdau','111111','Ashli1h2hw;oh1'),(441,'sunny','jain','uusah@jahd.xjcj','1111111111','jxiahcihaiu','iuhcoiusciua','hicspsih','hcioauc','111111','Aaaaa1111'),(442,'asdfdasdsfs','adfdsaf','asdfadsf@adad.f','1111111111','asdadsadasasf','asfasfas','asfaf','safasf','400059','Aaaa1111'),(443,'fsadf','sdafsd','sadff@dad.sdad','1111111111','adssad','asdasd','adsadass','asdasdas','400059','Aaaaa1111');
 
+/*Table structure for table `products` */
+
+DROP TABLE IF EXISTS `products`;
+
+CREATE TABLE `products` (
+  `categoryid` int(10) NOT NULL,
+  `sub_categoryid` int(10) NOT NULL,
+  `productid` int(10) NOT NULL,
+  `productname` varchar(200) NOT NULL,
+  `productdesc` varchar(1000) NOT NULL,
+  `productimg` varchar(10) NOT NULL,
+  `prodmaterial` varchar(100) NOT NULL,
+  `mrp` int(5) NOT NULL,
+  `cost` int(5) NOT NULL,
+  PRIMARY KEY (`productid`),
+  KEY `catID` (`categoryid`),
+  KEY `subcatID` (`sub_categoryid`),
+  CONSTRAINT `catID` FOREIGN KEY (`categoryid`) REFERENCES `category` (`ID`),
+  CONSTRAINT `subcatID` FOREIGN KEY (`sub_categoryid`) REFERENCES `sub_categories` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `products` */
+
+insert  into `products`(`categoryid`,`sub_categoryid`,`productid`,`productname`,`productdesc`,`productimg`,`prodmaterial`,`mrp`,`cost`) values (1,1,1,'Presley Sofa (Boucle Brown)','<p>King Comfort.An elementory design gets a modern upgrage in chik presley sofa.<b>The sofa is sleef Contemporary and gives your living room a clean light room. ','1-1-1.jpg','fabric',11000,10599);
+
 /*Table structure for table `sub_categories` */
 
 DROP TABLE IF EXISTS `sub_categories`;
