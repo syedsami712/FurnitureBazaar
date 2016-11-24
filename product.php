@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -17,6 +18,11 @@
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
 <!-- CSS Part End-->
 </head>
+<?php 
+  
+  //php section for 
+
+?>
 <body>
 <?php include "header.php"; ?>
 <div id="container">

@@ -211,7 +211,7 @@
                     print('<script>
                           function myFunction() {
                           alert("Registration Succesful");
-                          window.location.href = "http://localhost:8012/FurnitureBazaar/login.php";
+                          window.location.href = "http://localhost:8012/FurnitureBazaar/index.php";
                           }
                           myFunction();
                           </script>');
