@@ -1,3 +1,4 @@
+<?php //include 'functions/dbconfig.php'; ?>
 <html>
 <html>
 <head>
@@ -34,20 +35,22 @@
               <p><strong>Register Account</strong></p>
               <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
               <a href="register.php" class="btn btn-primary">Continue</a> </div>
+              <form method="POST" action="?">
             <div class="col-sm-6">
               <h2 class="subtitle">Returning Customer</h2>
               <p><strong>I am a returning customer</strong></p>
                 <div class="form-group">
                   <label class="control-label" for="input-email">E-Mail Address</label>
-                  <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" />
+                  <input type="email" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" required />
                 </div>
                 <div class="form-group">
                   <label class="control-label" for="input-password">Password</label>
-                  <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control" />
+                  <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control" required />
                   <br />
                   <a href="#">Forgotten Password</a></div>
-                <input type="submit" value="Login" class="btn btn-primary" style="margin-bottom: 16px;" />
+                <input type="submit" value="Login" name="submitForm" class="btn btn-primary" style="margin-bottom: 16px;" />
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -57,8 +60,48 @@
 
 <?php 
 // php section 
+include 'functions/dbconfig.php';
+if(isset($_POST['submitForm'])){
+  if(!empty($_POST['email']) && !empty($_POST['password'])) {
+      
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $row_count=0;
+
+    $result = $conn->prepare("Select count(*) as row_count from cutomers where email=? AND password=?");
+    $result->bind_param("ss", $email, $password);
+    $result->execute();
+    $result->store_result();
+    $result->bind_result($row_count);
+    $result->fetch();
+    if($num_rows > 0) {
+      print('<script>
+                          function myFunction() {
+                          alert("Customer logged in");
+                          }
+                          myFunction();
+                          </script>');
+    }
+    else {
+       print('<script>
+                          function myFunction() {
+                          alert("Please Check your email or password");
+                          }
+                          myFunction();
+                          </script>');
+    }
 
 
+  }else {
+    print('<script>
+                          function myFunction() {
+                          alert("please Enter all the details");
+                          }
+                          myFunction();
+                          </script>');
+  }
+}
 
 ?>
 <!-- JS Part Start-->
