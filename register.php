@@ -81,7 +81,6 @@
                 <label for="input-email" class="col-sm-2 control-label">E-Mail</label>
                 <div class="col-sm-10">
                   <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="<?php print $email ?>" name="email" required>
-                  <?php $emailerr=" "; ?>
                   <span class="error-validation"> <?php echo "$emailerr" ; ?></span>
                 </div>
               </div>

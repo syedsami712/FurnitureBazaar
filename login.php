@@ -32,7 +32,7 @@
             <div class="col-sm-6">
               <h2 class="subtitle">New Customer</h2>
               <p><strong>Register Account</strong></p>
-              <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+              <p>By Creating an Account you will be able to save carts and create a token for Order Replacements and Cancellation</p>
               <a href="register.php" class="btn btn-primary">Continue</a> </div>
             <div class="col-sm-6">
               <h2 class="subtitle">Returning Customer</h2>
