@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php session_start();
+
+//inlcudes
+include 'GlobalVariables.php';
+
+ ?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -20,9 +25,23 @@
 </head>
 <?php 
   
-  //php section for 
-
-?>
+  //php section for retrieving product details.
+$url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS;
+$productid = $_GET['productid'];
+$postfields = array('productid' => $productid);
+$ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $array_assoc = json_decode($result, true);
+        
+        ?>
 <body>
 <?php include "header.php"; ?>
 <div id="container">
@@ -32,18 +51,18 @@
         <!--Middle Part Start-->
         <div id="content" class="col-sm-9">
           <div itemscope itemtype="http://schema.org/Product">
-            <h1 class="title" itemprop="name">php get productname()</h1>
+            <h1 class="title" itemprop="name"><?php echo  $array_assoc[0]['productname']; ?></h1>
             <div class="row product-info">
               <div class="col-sm-6">
-                <div class="image"><img class="img-responsive" itemprop="image" id="zoom_01" src="image/product/macbook_air_1-350x525.jpg" title="Laptop Silver black" alt="Laptop Silver black" data-zoom-image="image/product/macbook_air_1-600x900.jpg" /> </div>
+                <div class="image"><img class="img-responsive" itemprop="image" id="zoom_01" src="<?php echo  DEFAULT_IMAGE_PATH."products/".$array_assoc[0]['productimg']; ?>" title="Laptop Silver black" alt="Laptop Silver black" data-zoom-image="" /> </div>
               </div>
               <div class="col-sm-6">
                 <ul class="list-unstyled description">
-                  <li><b>Material:</b> <a href="#"><span itemprop="brand">php getmaterial()</span></a></li>
-                  <li><b>Product Code:</b> <span itemprop="mpn">php getproductcode()</span></li>
+                  <li><b>Material:</b> <a href="#"><span itemprop="brand"><?php echo $array_assoc[0]['prodmaterial']; ?></span></a></li>
+                  <li><b>Product Code:</b> <span itemprop="mpn"><?php echo $array_assoc[0]['productid']; ?></span></li>
                 </ul>
                 <ul class="price-box">
-                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old">php mrp()</span> <span itemprop="price">php cost()<span itemprop="availability" content="In Stock"></span></span></li>
+                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old"><?php echo $array_assoc[0]['mrp']; ?></span> <span itemprop="price"><?php echo $array_assoc[0]['cost']; ?><span itemprop="availability" content="In Stock"></span></span></li>
                   <li></li>
                 </ul>
                 <div id="product">
@@ -73,12 +92,9 @@
             <div class="tab-content">
               <div itemprop="description" id="tab-description" class="tab-pane active">
                 <div>
-                  <p><b>Get bold legend</b></p>
-                  <p>Description data to get from the Database</p>
-                  <p><b>Get bold legend</b></p>
-                  <p>Description data to get from the Database</p></p>
-                  <p><b>Get bold legend</b></p>
-                  <p>Description data to get from the Database</p>
+                  <?php 
+                    echo $array_assoc[0]['productdesc'];
+                  ?>
                 </div>
               </div>
             </div>

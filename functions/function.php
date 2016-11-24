@@ -14,7 +14,7 @@ function getcats(){
 				$cat_ID = $row_cats['ID'];
 				$cat_title = $row_cats['Category_Name'];
 
-				echo "<li><a href='category.php' >$cat_title</a>";
+				echo "<li><a href='category.php' id='$cat_ID' >$cat_title</a>";
 				
 				print('<div class="dropdown-menu">');
 				print('<ul>') ;

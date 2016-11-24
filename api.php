@@ -1,4 +1,4 @@
-<?php include 'functions/dbconfig.php';
+<?php include 'functions/dbconfig.php';	
 	
 	$functionName = $_GET['functionName'];
 
