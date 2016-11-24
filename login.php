@@ -22,12 +22,7 @@
 <?php include "header.php"; ?>
 <div id="container">
     <div class="container">
-      <!-- Breadcrumb Start-->
-      <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="login.html">Account</a></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
+     
       <!-- Breadcrumb End-->
       <div class="row">
         <!--Middle Part Start-->
@@ -38,7 +33,7 @@
               <h2 class="subtitle">New Customer</h2>
               <p><strong>Register Account</strong></p>
               <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
-              <a href="register.html" class="btn btn-primary">Continue</a> </div>
+              <a href="register.php" class="btn btn-primary">Continue</a> </div>
             <div class="col-sm-6">
               <h2 class="subtitle">Returning Customer</h2>
               <p><strong>I am a returning customer</strong></p>
@@ -51,37 +46,21 @@
                   <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control" />
                   <br />
                   <a href="#">Forgotten Password</a></div>
-                <input type="submit" value="Login" class="btn btn-primary" />
+                <input type="submit" value="Login" class="btn btn-primary" style="margin-bottom: 16px;" />
             </div>
           </div>
         </div>
-        <!--Middle Part End -->
-        <!--Right Part Start -->
-        <aside id="column-right" class="col-sm-3 hidden-xs">
-          <h3 class="subtitle">Account</h3>
-          <div class="list-group">
-            <ul class="list-item">
-              <li><a href="login.html">Login</a></li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="#">Forgotten Password</a></li>
-              <li><a href="#">My Account</a></li>
-              <li><a href="#">Address Books</a></li>
-              <li><a href="wishlist.html">Wish List</a></li>
-              <li><a href="#">Order History</a></li>
-              <li><a href="#">Downloads</a></li>
-              <li><a href="#">Reward Points</a></li>
-              <li><a href="#">Returns</a></li>
-              <li><a href="#">Transactions</a></li>
-              <li><a href="#">Newsletter</a></li>
-              <li><a href="#">Recurring payments</a></li>
-            </ul>
-          </div>
-        </aside>
-        <!--Right Part End -->
       </div>
     </div>
   </div>
 <?php include "footer.php" ?>
+
+<?php 
+// php section 
+
+
+
+?>
 <!-- JS Part Start-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>

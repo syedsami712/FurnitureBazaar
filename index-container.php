@@ -1,4 +1,4 @@
-<?php echo'
+
   <div id="container">
     
     <div class="container">
@@ -65,4 +65,4 @@
           </div>
         </div>
       </div>
-    </div>'; ?>
+    </div>

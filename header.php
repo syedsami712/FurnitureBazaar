@@ -1,7 +1,7 @@
 
-<?php require("functions/function.php"); 
-	echo '<div id="header">
-    <!-- Top Bar Start-->
+<?php require("functions/function.php"); ?>
+<div id="header">
+    <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
     <nav id="top" class="htop">
       <div class="container">
         <div class="row"> <span class="drop-icon visible-sm visible-xs"><i class="fa fa-align-justify"></i></span>
@@ -22,7 +22,9 @@
         </div>
       </div>
     </nav>
-    <!-- Top Bar End-->
+    
+
+    
     <!-- Header Start-->
     <header class="header-row">
       <div class="container">
@@ -108,10 +110,10 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li><a class="home_link" title="Home" href="index.php">Home</a></li>
-            <li class="dropdown">' ; ?>
+            <li class="dropdown">
             <?php  getcats(); ?>
-            <?php  print('</li>  
-            <li class="dropdown information-link"><a>Pages</a>
+            </li>  
+            <!--<li class="dropdown information-link"><a>Pages</a>
               <div class="dropdown-menu">
                 <ul>
                   <li><a href="login.html">Login</a></li>
@@ -133,7 +135,7 @@
                   <li><a href="contact-us.html">Contact Us</a></li>
                 </ul>
               </div>
-            </li>
+            </li>-->
             <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
           </ul>
         </div>
@@ -141,6 +143,4 @@
       </nav>
     
     <!-- Main Menu End-->
-  </div>');
-
- ?>
+  </div>
