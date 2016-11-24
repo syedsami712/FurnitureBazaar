@@ -1,10 +1,30 @@
 <?php include 'functions/dbconfig.php';
 	
-	$functonName = $_GET['functionName'];
+	$functionName = $_GET['functionName'];
 
-	function customerRegistration($conn, $firstName, $lastName, $email, $contact_no, $address1, $address2, $city, $state, $pin) {
-		$result = $conn->prepare("insert into customers(Fname, Lname, email, contact_no, address1, address2, city, state, pin) VALUES (?,?,?,?,?,?,?,?)");
-		$result->bind_param("ssssssss", $firstName, $lastName, $)
+	function retrieveProductDetails($conn, $productId){
+		$result = $conn->query("Select * from products where productid = $productId");
+		$resultSet = array();
+		while ($row = $result->fetch_assoc()) {
+			array_push($resultSet, $row);
+		}
+
+		return json_encode($resultSet);
+	}
+
+	switch ($functionName) {
+		case 'retrieveProductDetails':
+			if(isset($_POST['productid'])){
+			echo retrieveProductDetails($conn, $_POST['productid']);
+		}
+		else {
+			echo json_encode(array('Result' => 'Failed'));
+			break;
+		}
+		
+		default:
+			# code...
+			break;
 	}
 
 ?>
