@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 <head>
 <?php require("functions/cats.php"); ?>
@@ -44,8 +45,7 @@
         <!--Left Part End -->
         <!--Middle Part Start-->
         <div id="content" class="col-sm-9">
-          <h1 class="title">Electronics</h1>
-          
+          <h1 class="title"></h1>
           <h3 class="subtitle">Refine Search</h3>
           <div class="category-list row">
                         <div class="col-sm-3">
@@ -53,7 +53,7 @@
                         <li><a href="category.html">TV &amp; Home Audio (3)</a></li>
                         <li><a href="category.html">MP3 Players (2)</a></li>
                       </ul>
-        </div>
+                        </div>
                 <div class="col-sm-3">
           <ul class="list-item">
                         <li><a href="category.html">Mobile Phones (2)</a></li>

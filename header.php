@@ -85,7 +85,7 @@
                     <p class="checkout"><a href="cart.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="checkout.html" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
                   </div>
                 </li>
-              </ul>-->
+              </ul>
             </div>
           </div>
           <!-- Mini Cart End-->
