@@ -22,9 +22,6 @@
         </div>
       </div>
     </nav>
-    
-
-    
     <!-- Header Start-->
     <header class="header-row">
       <div class="container">
@@ -45,17 +42,15 @@
                   <table class="table">
                     <tbody>
                       <tr>
-                        <td class="text-center"><a href="product.html"><img class="img-thumbnail" title="Xitefun Causal Wear Fancy Shoes" alt="Xitefun Causal Wear Fancy Shoes" src="image/product/sony_vaio_1-50x75.jpg"></a></td>
-                        <td class="text-left"><a href="product.html">Xitefun Causal Wear Fancy Shoes</a></td>
-                        <td class="text-right">x 1</td>
-                        <td class="text-right">$902.00</td>
+                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
+                        <td class="text-right">x prodquantity</td>
+                        <td class="text-right">Price</td>
                         <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
                       </tr>
                       <tr>
-                        <td class="text-center"><a href="product.html"><img class="img-thumbnail" title="Aspire Ultrabook Laptop" alt="Aspire Ultrabook Laptop" src="image/product/samsung_tab_1-50x75.jpg"></a></td>
-                        <td class="text-left"><a href="product.html">Aspire Ultrabook Laptop</a></td>
-                        <td class="text-right">x 1</td>
-                        <td class="text-right">$230.00</td>
+                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
+                        <td class="text-right">x prodquantity</td>
+                        <td class="text-right">Price</td>
                         <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
                       </tr>
                     </tbody>
@@ -67,26 +62,17 @@
                       <tbody>
                         <tr>
                           <td class="text-right"><strong>Sub-Total</strong></td>
-                          <td class="text-right">$940.00</td>
+                          <td class="text-right">get cartprice()</td>
                         </tr>
-                        <tr>
-                          <td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
-                          <td class="text-right">$4.00</td>
-                        </tr>
-                        <tr>
-                          <td class="text-right"><strong>VAT (20%)</strong></td>
-                          <td class="text-right">$188.00</td>
-                        </tr>
-                        <tr>
                           <td class="text-right"><strong>Total</strong></td>
-                          <td class="text-right">$1,132.00</td>
+                          <td class="text-right">get cartprice()/td>
                         </tr>
                       </tbody>
                     </table>
                     <p class="checkout"><a href="cart.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="checkout.html" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
                   </div>
                 </li>
-              </ul>
+              </ul>-->
             </div>
           </div>
           <!-- Mini Cart End-->
@@ -103,7 +89,6 @@
     </header>
     <!-- Header End-->
     <!-- Main Menu Start-->
-    
       <nav id="menu" class="navbar">
         <div class="navbar-header"> <span class="visible-xs visible-sm"> Menu <b></b></span></div>
         <div class="container">
@@ -112,35 +97,11 @@
             <li><a class="home_link" title="Home" href="index.php">Home</a></li>
             <li class="dropdown">
             <?php  getcats(); ?>
-            </li>  
-            <!--<li class="dropdown information-link"><a>Pages</a>
-              <div class="dropdown-menu">
-                <ul>
-                  <li><a href="login.html">Login</a></li>
-                  <li><a href="register.html">Register</a></li>
-                  <li><a href="category.html">Category (Grid/List)</a></li>
-                  <li><a href="product.html">Product</a></li>
-                  <li><a href="cart.html">Shopping Cart</a></li>
-                  <li><a href="checkout.html">Checkout</a></li>
-                  <li><a href="compare.html">Compare</a></li>
-                  <li><a href="wishlist.html">Wishlist</a></li>
-                  <li><a href="search.html">Search</a></li>
-                </ul>
-                <ul>
-                  <li><a href="about-us.html">About Us</a></li>
-                  <li><a href="404.html">404</a></li>
-                  <li><a href="elements.html">Elements</a></li>
-                  <li><a href="faq.html">Faq</a></li>
-                  <li><a href="sitemap.html">Sitemap</a></li>
-                  <li><a href="contact-us.html">Contact Us</a></li>
-                </ul>
-              </div>
-            </li>-->
+            </li>
             <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
           </ul>
         </div>
         </div>
-      </nav>
-    
+      </nav> 
     <!-- Main Menu End-->
   </div>

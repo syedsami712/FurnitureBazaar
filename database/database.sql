@@ -35,20 +35,24 @@ insert  into `category`(`ID`,`Category_Name`) values (1,'Living Room'),(2,'Bedro
 DROP TABLE IF EXISTS `customers`;
 
 CREATE TABLE `customers` (
-  `cust_ID` int(11) NOT NULL,
+  `uid` int(3) NOT NULL,
   `Fname` varchar(20) NOT NULL,
-  `Lname` varchar(10) NOT NULL,
-  `email` varchar(10) NOT NULL,
+  `Lname` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
   `contact_no` varchar(20) NOT NULL,
   `address1` varchar(100) NOT NULL,
   `address2` varchar(100) NOT NULL,
-  `city` varchar(30) DEFAULT NULL,
+  `city` varchar(30) NOT NULL,
   `state` varchar(20) NOT NULL,
   `pin` varchar(6) NOT NULL,
-  PRIMARY KEY (`cust_ID`)
+  `password` varchar(30) NOT NULL,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `EMAIL` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `customers` */
+
+insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (123,'fads','fsdf','123@ddd.com','sdf','fsadfasdf','sdfasdf','asdfasdf','sadfsdaf','sadfas','fsadf'),(432,'afdsf','dfasf','abc@xyz.com','asdfasd','fsdf','dsfdsf','asda','fdsafasd','fasdfa','asdfa'),(433,'asd','sdfasd','fsa','','','','','','',''),(434,'','','','','','','','','',''),(435,'qwre','rqwe','abc@xyz.comad','1111111111','sfdfa','agsdg','asdga','sgasdgas','111111','ASSa11111'),(436,'asd','asdd','ads@adasd.dsaa','1111111111','ads','dasddasdas','dasdasdsadasdsa','asdfasdf','111111','Ass11111'),(437,'asd','adsda','ads@adasd.dsasdas','1111111111','ad','ada','ads','adsd','111111','Ass11111'),(438,'Syed','Sami','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','Assasin712'),(439,'Syed','Sami','syedsami712@yahoo.co','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','Assasin712'),(440,'dhapoi','ofuqhpqwuf','uuifa@hnai.dauhp','1111111111','lakhd','iuhaspia','pdapsusa','sahdau','111111','Ashli1h2hw;oh1'),(441,'sunny','jain','uusah@jahd.xjcj','1111111111','jxiahcihaiu','iuhcoiusciua','hicspsih','hcioauc','111111','Aaaaa1111'),(442,'asdfdasdsfs','adfdsaf','asdfadsf@adad.f','1111111111','asdadsadasasf','asfasfas','asfaf','safasf','400059','Aaaa1111'),(443,'fsadf','sdafsd','sadff@dad.sdad','1111111111','adssad','asdasd','adsadass','asdasdas','400059','Aaaaa1111');
 
 /*Table structure for table `sub_categories` */
 

@@ -67,14 +67,12 @@
             <div class="tab-content">
               <div itemprop="description" id="tab-description" class="tab-pane active">
                 <div>
-                  <p><b>Intel Core 2 Duo processor</b></p>
-                  <p>Powered by an Intel Core 2 Duo processor at speeds up to 2.16GHz, the new MacBook is the fastest ever.</p>
-                  <p><b>1GB memory, larger hard drives</b></p>
-                  <p>The new MacBook now comes with 1GB of memory standard and larger hard drives for the entire line perfect for running more of your favorite applications and storing growing media collections.</p>
-                  <p><b>Sleek, 1.08-inch-thin design</b></p>
-                  <p>MacBook makes it easy to hit the road thanks to its tough polycarbonate case, built-in wireless technologies, and innovative MagSafe Power Adapter that releases automatically if someone accidentally trips on the cord.</p>
-                  <p><b>Built-in iSight camera</b></p>
-                  <p>Right out of the box, you can have a video chat with friends or family,2 record a video at your desk, or take fun pictures with Photo Booth</p>
+                  <p><b>Get bold legend</b></p>
+                  <p>Description data to get from the Database</p>
+                  <p><b>Get bold legend</b></p>
+                  <p>Description data to get from the Database</p></p>
+                  <p><b>Get bold legend</b></p>
+                  <p>Description data to get from the Database</p>
                 </div>
               </div>
             </div>
