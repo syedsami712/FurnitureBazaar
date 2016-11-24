@@ -15,7 +15,7 @@ function getcats_category()
 				$cat_ID = $row_cats['ID'];
 				$cat_title = $row_cats['Category_Name'];
 
-				echo "<li><a href='#'>$cat_title</a>";
+				echo "<li><a href='category.php'>$cat_title</a>";
 				echo '<span class="down"></span> ';
 				echo "<ul>";
 				getsubcats_category($cat_ID);
@@ -34,7 +34,23 @@ function getsubcats_category($cat_ID)
 		{
 			$subcat_name = $row_subcats['sub_category'];
 
-			echo "<li><a href='#'>$subcat_name</a></li>";
+			echo "<li><a href='category.php'>$subcat_name</a></li>";
 		}
 	}
+
+	function getcats_category1()
+	{
+		global $con;
+
+			$get_cats = "select * from category";
+
+			$run_cats = mysqli_query($con,$get_cats);
+
+			while($row_cats= mysqli_fetch_array($run_cats))
+			{
+				$cat_ID = $row_cats['ID'];
+				$cat_title = $row_cats['Category_Name'];
+				echo "$cat_title";
+			}
+		}
 ?>
