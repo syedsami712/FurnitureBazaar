@@ -56,6 +56,7 @@
                     test_input($city = $_POST["city"]);
                     test_input($state =$_POST["state"]);
                     test_input($pin = $_POST["pin"]);
+                    $password = $_POST['password'];
                    // }
                 }
                   function test_input($data) {
@@ -154,7 +155,8 @@
                       }
                       else 
                       {
-                        $flag = flase ;
+                        $conpasserr = "Passwords do not Match" ;
+                        $flag = false ;
                       }
                       return $flag ;
                     }
@@ -167,15 +169,13 @@
               <div class="form-group required">
                 <label for="input-password" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                  <input type="password" class="form-control" onchange="reg_form.confirm_password.pattern= this.value;" id="input-password" placeholder="Password" value="<?php print $password ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password">
-                  
+                  <input type="password" class="form-control" id="input-password" placeholder="Password" value="<?php print $password ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password">
               </div>
               </div>
               <div class="form-group required">
                 <label for="input-confirm" class="col-sm-2 control-label">Password Confirm</label>
                 <div class="col-sm-10">
                   <input type="password" class="form-control" id="input-confirm" placeholder="Password Confirm" value="" name="confirm_password">
-                  <span class="error-validation">* <?php echo $conpasserr; ?></span>
                 </div>
               </div>
             </fieldset>
@@ -193,10 +193,12 @@
               $uid = generateuid();
               if(isset($_POST['submit']))
               {
-                if(validpswd())
+                if(validpswd()==true)
                 {
-                  $query = "INSERT INTO `customers` (`uid`,`FName`, `LName`, `email`, `contact_no`, `address1`, `address2`, `city`,`state`,`pin`,`password`) VALUES ('$uid','$fname', '$lname', '$email', '$telephone','$address_1', '$address_2', '$city','$state','$pin','$password')";
+                  $pass = $_POST['password'] ;
+                  $query = "INSERT INTO `customers` (`uid`,`FName`, `LName`, `email`, `contact_no`, `address1`, `address2`, `city`,`state`,`pin`,`password`) VALUES ('$uid','$fname', '$lname', '$email', '$telephone','$address_1', '$address_2', '$city','$state','$pin','$pass' )";
                    $result=mysqli_query($conn,$query);
+                  
                    if(!$result)
                    {
                    print('<script>
@@ -211,7 +213,7 @@
                     print('<script>
                           function myFunction() {
                           alert("Registration Succesful");
-                          window.location.href = "http://localhost/FurnitureBazaar/login.php";
+                          window.location.href = "http://localhost:8012/FurnitureBazaar/login.php";
                           }
                           myFunction();
                           </script>');
