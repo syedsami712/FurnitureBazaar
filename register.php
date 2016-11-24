@@ -86,7 +86,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label for="input-telephone" class="col-sm-2 control-label">Contact No</label>
+                <label for="input-telephone" class="col-sm-2 control-label">Mobile No. (+91)</label>
                 <div class="col-sm-10">
                   <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" pattern="\d*" minlength="10" maxlength="10" value="<?php print $telephone; ?>" name="telephone" required>
                   
@@ -154,7 +154,6 @@
                       }
                       else 
                       {
-                        $conpasserr = "Passwords do not Match" ;
                         $flag = flase ;
                       }
                       return $flag ;
@@ -212,6 +211,7 @@
                     print('<script>
                           function myFunction() {
                           alert("Registration Succesful");
+                          window.location.href = "http://localhost/FurnitureBazaar/login.php";
                           }
                           myFunction();
                           </script>');
