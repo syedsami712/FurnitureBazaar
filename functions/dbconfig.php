@@ -1,14 +1,14 @@
 <?php
-	$dbhost="localhost";
+	$serverName="localhost";
 	$username="root";
-	$pwd="";
-	$mydb="furniture_shop";
-	$error_msg="Error in Connection";
+	$password="";
+	$databaseName="furniture_shop";
+	
 	//step 1: connect to server
 	global $conn;
-	$conn=@mysql_connect($dbhost, $username, $pwd) or die($error_msg);
-	// echo "Successfully Connected to Server<br>";
-	//step 2: connect to database
-	@mysql_select_db($mydb, $conn) or die($error_msg);
+$conn =  new mysqli($serverName, $username, $password, $databaseName);
+if ($conn->connect_error) {
+    die('Could not connect: ' . mysqli_error());
+}
 	// echo "Successfully Connected to DB";
 ?>

@@ -1,4 +1,12 @@
-<?php //include 'functions/dbconfig.php'; ?>
+<?php session_start();
+  
+  if(isset($_GET['status'])){
+    if($_GET['status'] === "loggedout") {
+      $_SESSION['username'] ="";
+    }
+  }
+  
+ ?>
 <html>
 <html>
 <head>
@@ -62,25 +70,24 @@
 // php section 
 include 'functions/dbconfig.php';
 if(isset($_POST['submitForm'])){
+
   if(!empty($_POST['email']) && !empty($_POST['password'])) {
       
     $email = $_POST['email'];
     $password = $_POST['password'];
 
     $row_count=0;
-
-    $result = $conn->prepare("Select count(*) as row_count from cutomers where email=? AND password=?");
+    $firstName = "";
+    $result = $conn->prepare("Select count(*) as row_count, Fname from customers where email=? AND password=?");
     $result->bind_param("ss", $email, $password);
     $result->execute();
     $result->store_result();
-    $result->bind_result($row_count);
+    $result->bind_result($row_count, $firstName);
     $result->fetch();
-    if($num_rows > 0) {
-      print('<script>
-                          function myFunction() {
-                          alert("Customer logged in");
-                          }
-                          myFunction();
+    if($row_count > 0) {
+        $_SESSION["username"] = $firstName;
+         print('<script>
+                         window.location.href= "http://localhost:8012/FurnitureBazaar/index.php";
                           </script>');
     }
     else {

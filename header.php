@@ -1,5 +1,6 @@
 
 <?php require("functions/function.php"); ?>
+
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
     <nav id="top" class="htop">
@@ -15,8 +16,20 @@
           </div>
           <div id="top-links" class="nav pull-right flip">
             <ul>
+            <?php 
+              if($_SESSION["username"] === "") {
+            ?>
+
               <li><a href="login.php">Login</a></li>
               <li><a href="register.php">Register</a></li>
+
+
+              <?php } else { ?>
+
+              <li style="padding-left: 4px; padding-right: 4px; font-style: bold;"><?php echo "Welcome ". "&nbsp;". $_SESSION["username"]; ?></li>
+                 <li><a href="login.php?status=loggedout">Logout</a></li>
+              
+               <?php } ?>
             </ul>
           </div>
         </div>
