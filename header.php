@@ -45,6 +45,7 @@
           </div>
           <!-- Logo End -->
           <!-- Mini Cart Start-->
+          <br><br><br>
           <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div id="cart">
               <button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="heading dropdown-toggle">

@@ -29,9 +29,6 @@
             </div>
           </div>
           <!-- Banner End -->
-          
-          
-         
         </div>
         <!--Middle Part End-->
       </div>
