@@ -50,10 +50,10 @@
           <div class="row products-category product-filter" id="grid-view">
             <div class="product-layout product-list col-xs-12">
               <div class="product-thumb">
-                <div class="image"><a href="product.html"><img src="image/product/macbook_pro_1-220x330.jpg" alt=" Strategies for Acquiring Your Own Laptop " title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
+                <div class="image"><a href="product.php?productid=1"><img src="image/product/macbook_pro_1-220x330.jpg" alt=" Strategies for Acquiring Your Own Laptop " title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
                 <div>
                   <div class="caption">
-                    <h4><a href="product.html"> Strategies for Acquiring Your Own Laptop </a></h4>
+                    <h4><a href="product.php?productid=1"> Strategies for Acquiring Your Own Laptop </a></h4>
                     <p class="description"> Latest Intel mobile architecture
                       
                       Powered by the most advanced mobile processors from Intel, t..</p>
