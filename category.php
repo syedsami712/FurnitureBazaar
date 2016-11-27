@@ -93,13 +93,23 @@ $ch = curl_init();
            <?php for($i = 0; $i < count($array_assoc['products']); $i++) { ?>
             <div class="product-layout product-list col-md-4 col-xs-12">
               <div class="product-thumb">
-                <div class="image"><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><img src='<?php echo DEFAULT_IMAGE_PATH."products/".$array_assoc['products'][$i]['productimg']; ?>' alt=" Strategies for Acquiring Your Own Laptop " title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
+               <?php  $returnedImagePath =  DEFAULT_IMAGE_PATH.'products/'.$array_assoc['products'][$i]['productimg'];
+                      $defaultImagePath =   DEFAULT_IMAGE_PATH.'products/logo.png';
+                      $image = file_exists($returnedImagePath) ? $returnedImagePath : $defaultImagePath;
+                      //echo '<PRE>'. $_SERVER[$returnedImagePath] . '</PRE>';
+               ?>
+                <div class="image"><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><img src='<?php echo $image; ?>' alt="No Image" title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
                 <div>
                   <div class="caption">
                     <h4><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"> <?php echo $array_assoc['products'][$i]['productname']; ?></a></h4>
                     
-                    <p class="price"> <span class="price-new"><?php echo $array_assoc['products'][$i]['cost']; ?></span> <span class="price-old"><?php echo $array_assoc['products'][$i]['mrp']; ?></span></p>
-                    <p>Stock</p>
+                    <p class="price"> <span class="price-new">Rs.<?php echo $array_assoc['products'][$i]['cost']; ?></span>&nbsp; &nbsp; &nbsp;  <span class="price-old">Rs.<?php echo $array_assoc['products'][$i]['mrp']; ?></span></p>
+                    <p><?php 
+
+                        $stockVal = $array_assoc['products'][$i]['availablestock'];
+                        $isInStock = $stockVal > 0 ? "<span style='font-size:12px; color:#008000;'>In Stock</b>" : "<span style='font-size:12px; color:#b30000;'>Out Of Stock</b>";
+                        echo $isInStock;
+                    ?></p>
                   </div>
                   <div class="button-group">
                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span></button>

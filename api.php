@@ -25,11 +25,11 @@
 			$subCategoryArray = $getSubCategory->fetch_assoc();
 			$subCategoryName = $subCategoryArray['sub_category'];
 			
-			$result = $conn->query("Select * from products where categoryid=$categoryId AND sub_categoryid=$subCategoryId");
+			$result = $conn->query("Select * from products product, productstock stock where product.categoryid=$categoryId AND product.sub_categoryid=$subCategoryId AND stock.productid = product.productid ");
 
 		}
 		else {
-			$result = $conn->query("Select * from products where categoryid=$categoryId");
+			$result = $conn->query("Select * from products product, productstock stock where categoryid=$categoryId AND stock.productid = product.productid ");
 		}
 
 		$resultSet = array();
