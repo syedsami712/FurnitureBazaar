@@ -95,7 +95,7 @@ $ch = curl_init();
               <div class="product-thumb">
                <?php  $returnedImagePath =  DEFAULT_IMAGE_PATH.'products/'.$array_assoc['products'][$i]['productimg'];
                       $defaultImagePath =   DEFAULT_IMAGE_PATH.'products/logo.png';
-                      $image = file_exists($returnedImagePath) ? $returnedImagePath : $defaultImagePath;
+                      $image = $returnedImagePath;
                       //echo '<PRE>'. $_SERVER[$returnedImagePath] . '</PRE>';
                ?>
                 <div class="image"><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><img src='<?php echo $image; ?>' alt="No Image" title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
