@@ -74,7 +74,7 @@ if(isset($_POST['submitForm'])){
   if(!empty($_POST['email']) && !empty($_POST['password'])) {
       
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
 
     $row_count=0;
     $firstName = "";
@@ -84,7 +84,11 @@ if(isset($_POST['submitForm'])){
     $result->store_result();
     $result->bind_result($row_count, $firstName);
     $result->fetch();
-    if($row_count > 0) {
+
+    echo '<pre>';
+      echo md5($_POST['password']);
+    echo '</pre>';
+        if($row_count > 0) {
         $_SESSION["username"] = $firstName;
          print('<script>
                          window.location.href= "http://localhost:8012/FurnitureBazaar/index.php";

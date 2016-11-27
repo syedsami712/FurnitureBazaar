@@ -27,19 +27,18 @@
       <ul class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-home"></i></a></li>
         <li><a href="login.html">Account</a></li>
-        <li><a href="register.html">Register</a></li>
+        <li><a href="register.html">Account Settings</a></li>
       </ul>
       <!-- Breadcrumb End-->
       
       <div class="row">
         <!--Middle Part Start-->
         <div class="col-sm-9" id="content">
-          <h1 class="title">Register Account</h1>
-          <p>If you already have an account with us, please login at the <a href="login.html">Login Page</a>.</p>
+          <h1 class="title">My Account</h1>
           <form class="form-horizontal" method="POST" action="">
             <fieldset id="account">
               <legend>Your Personal Details</legend>
-              <!-- PHP to check if fields are empty or not -->
+              <!-- PHP to test the input -->
               <?php 
                 $fname = $lname = $email = $telephone=$address_2=$address_1=$city=$state=$pin = "";
                 if(isset($_POST['submit']))
