@@ -35,6 +35,41 @@
         </div>
       </div>
     </nav>
+    <?php 
+      if(isset($_GET['productid'])){
+      $totalProductIds = $_GET['productid'];
+
+      
+      
+      $getCountOfEachProductId = array_count_values($totalProductIds);
+ 
+  
+      $segregatedProductIds = array_keys($getCountOfEachProductId);
+
+      
+
+      $masterArray = array();
+      //get all the details of each product id.
+      foreach($segregatedProductIds as $productid){
+      $result = $conn->query("Select * from products where productid = $productid");
+        $uniqueProductDetailArray = array();
+        $row = $result->fetch_assoc();
+        array_push($uniqueProductDetailArray, $productid);
+        array_push($uniqueProductDetailArray, $getCountOfEachProductId[$productid]);
+        array_push($uniqueProductDetailArray, $row['productname']);
+        array_push($uniqueProductDetailArray, $row['cost']);
+
+        array_push($masterArray, $uniqueProductDetailArray);
+
+    }
+    // print_r($masterArray);
+    // echo "<br>". str_replace("&productid[]=3", "", $_SERVER['REQUEST_URI']);//($_SERVER['REQUEST_URI'], "productid[]=3");
+    // echo "<br>". $_SERVER['REQUEST_URI'];
+    // echo '</PRE>';
+
+  }
+
+    ?>
     <!-- Header Start-->
     <header class="header-row">
       <div class="container">
@@ -47,6 +82,7 @@
           <!-- Mini Cart Start-->
           <br><br><br>
           <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
             <div id="cart">
               <button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="heading dropdown-toggle">
               <span class="cart-icon pull-left flip"></span>
@@ -55,18 +91,34 @@
                 <li>
                   <table class="table">
                     <tbody>
-                      <tr>
-                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
-                        <td class="text-right">x prodquantity</td>
-                        <td class="text-right">Price</td>
-                        <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
+                    <?php 
+                      if(!isset($masterArray)){ ?>
+                        
+                        <tr>
+                        <td > Your Cart is Empty.</td>
                       </tr>
+
+
+                     <?php 
+                      }
+                      else {
+                    ?>
+                      <?php for($i = 0; $i < count($masterArray); $i++){ ?>
+                     
                       <tr>
-                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
-                        <td class="text-right">x prodquantity</td>
-                        <td class="text-right">Price</td>
-                        <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
+                        <td class="text-left"><a href="product.html"><?php echo $masterArray[$i][2]; ?></a></td>
+                        <td class="text-right">x <?php echo $masterArray[$i][1]; ?></td>
+                        <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
+                        <td class="text-center"><a href="<?php 
+                            $stringToBeReplaced = "&productid[]=".$masterArray[$i][0];
+                            $urlString = str_replace($stringToBeReplaced, "", $_SERVER['REQUEST_URI']);
+                            echo $urlString;
+                          
+                        ?>"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
                       </tr>
+                      <?php } 
+                      } ?>
+
                     </tbody>
                   </table>
                 </li>
@@ -79,7 +131,7 @@
                           <td class="text-right">get cartprice()</td>
                         </tr>
                           <td class="text-right"><strong>Total</strong></td>
-                          <td class="text-right">get cartprice()/td>
+                          <td class="text-right">get cartprice()</td>
                         </tr>
                       </tbody>
                     </table>

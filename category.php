@@ -2,6 +2,7 @@
 
 //includes 
 include 'GlobalVariables.php';
+include 'functions/dbconfig.php';
 
  ?>
 <html>
@@ -23,6 +24,13 @@ include 'GlobalVariables.php';
 <link rel="stylesheet" type="text/css" href="css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
 <!-- CSS Part End-->
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+
 </head>
 
 <body>
@@ -65,10 +73,7 @@ $ch = curl_init();
 <div id="container">
     <div class="container">
       <!-- Breadcrumb Start-->
-      <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="category.html">Electronics</a></li>
-      </ul>
+     
       <!-- Breadcrumb End-->
       <div class="row">
         <!--Left Part Start -->
@@ -112,7 +117,9 @@ $ch = curl_init();
                     ?></p>
                   </div>
                   <div class="button-group">
-                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span></button>
+                   <!--  <input type = "hidden" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" /> -->
+                   <?php $productid = $array_assoc['products'][$i]['productid']; ?>
+                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productid[]=$productid"; ?>"><button class="btn-primary addToCart" type="button"><span>Add to Cart</span></button></a>
                   </div>
                 </div>
               </div>
@@ -125,13 +132,34 @@ $ch = curl_init();
   </div>
 <?php include "footer.php"; ?>
 
+<!-- <script type="text/javascript">
+  
+  $(document).ready(function(){
+  
+     $('.addToCart').click(function() {
+      var productId = $(".ProductId").val();
+      $.ajax({
+      type: "POST",
+      url: "http://localhost:8012/FurnitureBazaar/api.php?functionName=addToCart",
+      data: { ProductId : productId  }
+    }).done(function( msg ) {
+    alert( "Data Saved: " + msg );
+});    
+
+    });
+  });
+
+  </script> -->
+  <?php echo "<PRE>".$_COOKIE['ProductId']."</PRE>"; ?>
 <!-- JS Part Start-->
+
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.easing-1.3.min.js"></script>
 <script type="text/javascript" src="js/jquery.dcjqaccordion.min.js"></script>
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
+
 <!-- JS Part End-->
 </body>
 </html>
