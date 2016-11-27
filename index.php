@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+	  include "GlobalVariables.php" ;
+	  ?>
 <html>
 <head>
 <meta charset="UTF-8" />

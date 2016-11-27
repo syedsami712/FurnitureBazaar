@@ -7,7 +7,7 @@
         <div id="content" class="col-xs-12">
           <!-- Slideshow Start-->
           <div class="slideshow single-slider owl-carousel">
-            <div class="item"> <a href="#"><img class="img-responsive" src="images/slider/banner-2.jpg" alt="banner 2" /></a> </div>
+            <div class="item"> <a href="<?php echo DEFAULT_WEB_PATH."category.php?sub_category_id=1&category_id=1"; ?>"><img class="img-responsive" src="images/slider/banner-2.jpg" alt="banner 2" /></a> </div>
             <div class="item"> <a href="#"><img class="img-responsive" src="images/slider/banner-1.jpg" alt="banner 1" /></a> </div>
           </div>
           <!-- Slideshow End-->

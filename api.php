@@ -12,6 +12,15 @@
 		return json_encode($resultSet);
 	}
 
+	function retrieveUserDetailsforUpdate($conn,$userid){
+		$result = $conn->query("select * from customers where uid = $userid");
+		$resultSet = array();
+		while($row = $result->fetch_assoc())
+		{
+			array_push($resultSet,$row);
+		}	
+		return json_encode($resultSet);
+	}
 
 	function retrieveProductsDetailsWithRespectToCategoryId($conn, $categoryId, $subCategoryId = 0){
 		//getting category name
@@ -71,6 +80,14 @@
 			}
 
 		break;
+
+		case 'retrieveUserDetailsforUpdate' :
+			if(isset($_POST['uid'])){
+				echo retrieveUserDetailsforUpdate($conn,$_POST['uid']);
+			}
+			break;
+
+
 		default:
 			# code...
 			break;
