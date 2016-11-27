@@ -19,7 +19,10 @@
 <!-- CSS Part End-->
 </head>
 <body>
-<?php include "header.php"; ?>
+<?php include "header.php"; 
+  alert();
+?>
+
  <div id="container">
     <div class="container">
       <!-- Breadcrumb Start-->
@@ -208,13 +211,8 @@
                    }
                   else
                   {
-                    print('<script>
-                          function myFunction() {
-                          alert("Registration Succesful");
-                          window.location.href = "http://localhost:8012/FurnitureBazaar/index.php";
-                          }
-                          myFunction();
-                          </script>');
+                    alert();
+                    echo "<script>setTimeout(\"location.href = 'login.php';\",1500);</script>";
                   }
                 }
                 else
@@ -227,6 +225,11 @@
                           </script>');
               }
               }        
+          ?>
+          <?php 
+            function alert(){
+              echo '<div class="alert alert-success"><i class="fa fa-check-circle"></i> Registration Successfull.Please wait while we redirect you to Login.</div>' ;
+            }
           ?>
         </div>
         <!--Middle Part End -->
