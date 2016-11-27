@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php session_start();
+
+//includes 
+include 'GlobalVariables.php';
+
+ ?>
 <html>
 <head>
 <?php require("functions/cats.php"); ?>
@@ -19,9 +24,42 @@
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
 <!-- CSS Part End-->
 </head>
+
 <body>
 <!--php get header-->
 <?php include "header.php"; ?>
+<?php 
+//php part of the code
+
+$url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS_WITH_RESPECT_TO_CATEGORY_ID;
+$categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : 0;
+$subCategoryId = isset($_GET['sub_category_id']) ? $_GET['sub_category_id'] : 0;
+
+$postfields = array('categoryId' => $categoryId, 'subCategoryId' => $subCategoryId);
+$ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        // echo '<PRE>';
+        // echo $url."<br>";
+        // echo $result;
+        // echo '</PRE>';
+        $array_assoc = json_decode($result, true);
+        
+        // echo '<PRE>';  
+        // echo $categoryId;
+        // echo $subCategoryId;
+        // print_r($array_assoc);
+        // echo "<br>".count($array_assoc);
+        // echo '</PRE>';
+
+?>
 
 <!--Category page conatainer -->
 <div id="container">
@@ -45,20 +83,23 @@
         <!--Left Part End -->
         <!--Middle Part Start-->
         <div id="content" class="col-sm-9">
-          <h1 class="title">php categoryname()</h1>
+          <h1 class="title"><?php 
+          //setting the title.
+          $subCategoryName = $array_assoc['subCategoryName'] === "" ? "" : "> &nbsp;".$array_assoc['subCategoryName'];
+          echo $array_assoc['categoryName']." &nbsp;". $subCategoryName; ?> </h1>
           <br />
           <div class="row products-category product-filter" id="grid-view">
-            <div class="product-layout product-list col-xs-12">
+
+           <?php for($i = 0; $i < count($array_assoc['products']); $i++) { ?>
+            <div class="product-layout product-list col-md-4 col-xs-12">
               <div class="product-thumb">
-                <div class="image"><a href="product.php?productid=1"><img src="image/product/macbook_pro_1-220x330.jpg" alt=" Strategies for Acquiring Your Own Laptop " title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
+                <div class="image"><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><img src='<?php echo DEFAULT_IMAGE_PATH."products/".$array_assoc['products'][$i]['productimg']; ?>' alt=" Strategies for Acquiring Your Own Laptop " title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
                 <div>
                   <div class="caption">
-                    <h4><a href="product.php?productid=1"> Strategies for Acquiring Your Own Laptop </a></h4>
-                    <p class="description"> Latest Intel mobile architecture
-                      
-                      Powered by the most advanced mobile processors from Intel, t..</p>
-                    <p class="price"> <span class="price-new">$1,400.00</span> <span class="price-old">$1,900.00</span></p>
-                    <p>php stockStatus()</p>
+                    <h4><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"> <?php echo $array_assoc['products'][$i]['productname']; ?></a></h4>
+                    
+                    <p class="price"> <span class="price-new"><?php echo $array_assoc['products'][$i]['cost']; ?></span> <span class="price-old"><?php echo $array_assoc['products'][$i]['mrp']; ?></span></p>
+                    <p>Stock</p>
                   </div>
                   <div class="button-group">
                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span></button>
@@ -66,6 +107,7 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
           </div>
         <!--Middle Part End -->
       </div>
