@@ -128,7 +128,6 @@
                 <label for="input-postcode" class="col-sm-2 control-label">Post Code</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php print $pin; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
-                  
                 </div>
               </div>
                 <!--Password Validation Start -->

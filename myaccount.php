@@ -40,8 +40,7 @@
             <fieldset id="account">
               <legend>Your Personal Details</legend>
             <!--php get data through api -->
-            <?php 
-  
+            <?php
   //php section for retrieving product details.
 $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_USER_DETAILS;
 $userid = $_SESSION['userid'];
@@ -60,15 +59,12 @@ $ch = curl_init();
         echo '<pre>';
         echo "Make the changes and Click Update";
         echo '</pre>';
-
         ?>
               <!-- PHP to test the input -->
               <?php 
                 $fname = $lname = $email = $telephone=$address_2=$address_1=$city=$state=$pin = "";
-                if(isset($_POST['submit']))
+                if(isset($_POST['accountinfo']))
                 {
-                  //if(emailavailable(_POST['email']))
-                    //{
                     test_input($fname = $_POST['fname']);
                     test_input($lname = $_POST["lname"]);
                     test_input($lname = $_POST["lname"]);
@@ -79,9 +75,12 @@ $ch = curl_init();
                     test_input($city = $_POST["city"]);
                     test_input($state =$_POST["state"]);
                     test_input($pin = $_POST["pin"]);
-                    $password = $_POST['password'];
-                   // }
                 }
+                if(isset($_POST['accountcredentials']))
+                {
+                  $password = $_POST['password'];
+                }
+
                   function test_input($data) {
                   $data = trim($data);
                   $data = stripslashes($data);
@@ -151,9 +150,39 @@ $ch = curl_init();
                 <label for="input-postcode" class="col-sm-2 control-label">Post Code</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php echo $array_assoc[0]['pin']; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
-                  
                 </div>
               </div>
+              <div class="buttons">
+              <div class="pull-right">
+                <input type="submit" class="btn btn-primary" value="Save Changes" name="accountinfo">
+              </div>
+            </div>
+            <?php 
+              require('functions/dbconfig.php');
+                if(isset($_POST['accountinfo']))
+                {
+                    $query = "UPDATE customers SET Fname='$fname',Lname='$lname',contact_no='$telephone',address1='$address_1',address2='$address_2',city='$city',state='$state',pin='$pin' WHERE uid  = $userid";
+                    $result=mysqli_query($conn,$query);
+                    if(!$result)
+                    {
+                      print('<script>
+                          function myFunction() {
+                          alert("Error Occured");
+                          }
+                          myFunction();
+                          </script>');
+                    }
+                    else
+                    {
+                      print('<script>
+                          function myFunction() {
+                          alert("Changes Saved");
+                          }
+                          myFunction();
+                          </script>');
+                    }
+                }
+            ?>
                 <!--Password Validation Start -->
               <?php 
                   $pwderr = $conpasserr = "";
@@ -169,7 +198,8 @@ $ch = curl_init();
                     {
                       $conpasserr = "Password cannot be empty";
                     }
-                    function validpswd()
+                  }
+                  function validpswd()
                     {
                       $flag = false ;
                       if ($_POST['password'] == $_POST['confirm_password'])
@@ -183,7 +213,6 @@ $ch = curl_init();
                       }
                       return $flag ;
                     }
-                  }
               ?>
               <!--Password validation end -->
             </fieldset>
@@ -204,23 +233,21 @@ $ch = curl_init();
             </fieldset>
             <div class="buttons">
               <div class="pull-right">
-                <input type="submit" class="btn btn-primary" value="Update" name="submit">
+                <input type="submit" class="btn btn-primary" value="Save Password" name="accountcredentials">
               </div>
             </div>
           </form>
           <!--Final Call to write the data in database -->
           <?php 
               require('functions/dbconfig.php');
-              //require_once('functions/function1.php');
-              $uid = generateuid();
-              if(isset($_POST['submit']))
+              if(isset($_POST['accountcredentials']))
               {
                 if(validpswd()==true)
                 {
                   $pass = $_POST['password'];
                   $enpass = md5($pass);
-                  $query = "UPDATE customers SET Fname='$fname',Lname='$lname',contact_no='$telephone',address1='$address_1',address2='$address_2',city='$city',state='$state',pin='$pin',password='$enpass' WHERE uid  = $userid";
-                   $result=mysqli_query($conn,$query);
+                  $query = "UPDATE customers SET password='$enpass' WHERE uid  = $userid";
+                  $result=mysqli_query($conn,$query);
                   echo $query;
                    if(!$result)
                    {
@@ -233,17 +260,16 @@ $ch = curl_init();
                    }
                   else
                   {
-                    echo $result ;
-                    // print('<script>
-                    //       function myFunction() {
-                    //       alert("Account Information Updated Succesfully");
-                    //       }
-                    //       myFunction();
-                    //       </script>');
-                    // echo "<script>setTimeout(\"location.href = 'myaccount.php';\",1500);</script>";
+                    print('<script>
+                          function myFunction() {
+                          alert("Password changed Sucessfully");
+                          }
+                          myFunction();
+                          </script>');
+                    echo "<script>setTimeout(\"location.href = 'myaccount.php';\",1500);</script>";
                   }
                 }
-                else
+              else
               {
                 print('<script>
                           function myFunction() {
