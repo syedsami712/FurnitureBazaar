@@ -9,16 +9,16 @@
           <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
             <h5>Information</h5>
             <ul>
-              <li><a href="about-us.html">About Us</a></li>
-              <li><a href="about-us.html">Delivery Information</a></li>
-              <li><a href="about-us.html">Privacy Policy</a></li>
-              <li><a href="about-us.html">Terms &amp; Conditions</a></li>
+              <li><a href="about-us.php">About Us</a></li>
+              <li><a href="about-us.php">Delivery Information</a></li>
+              <li><a href="about-us.php">Privacy Policy</a></li>
+              <li><a href="about-us.php">Terms &amp; Conditions</a></li>
             </ul>
           </div>
           <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
             <h5>Customer Service</h5>
             <ul>
-              <li><a href="contact-us.html">Contact Us</a></li>
+              <li><a href="contact-us.php">Contact Us</a></li>
               <li><a href="#">Returns</a></li>
               </ul>
           </div>

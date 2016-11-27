@@ -25,9 +25,9 @@
     <div class="container">
       <!-- Breadcrumb Start-->
       <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="login.html">Account</a></li>
-        <li><a href="register.html">Register</a></li>
+        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
+        <li><a href="login.php">Account</a></li>
+        <li><a href="register.php">Register</a></li>
       </ul>
       <!-- Breadcrumb End-->
       
@@ -35,7 +35,7 @@
         <!--Middle Part Start-->
         <div class="col-sm-9" id="content">
           <h1 class="title">Register Account</h1>
-          <p>If you already have an account with us, please login at the <a href="login.html">Login Page</a>.</p>
+          <p>If you already have an account with us, please login at the <a href="login.php">Login Page</a>.</p>
           <form class="form-horizontal" method="POST" action="">
             <fieldset id="account">
               <legend>Your Personal Details</legend>
@@ -128,7 +128,6 @@
                 <label for="input-postcode" class="col-sm-2 control-label">Post Code</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php print $pin; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
-                  
                 </div>
               </div>
                 <!--Password Validation Start -->

@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+      include "GlobalVariables.php" ;
+       ?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -19,14 +21,14 @@
 <!-- CSS Part End-->
 </head>
 <body>
-<?php include "header.php" ?>
+<?php include "header.php" ; ?>
 <div id="container">
     <div class="container">
       <!-- Breadcrumb Start-->
       <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="cart.html">Shopping Cart</a></li>
-        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
+        <li><a href="cart.php">Shopping Cart</a></li>
+        <li><a href="checkout.php">Checkout</a></li>
       </ul>
       <!-- Breadcrumb End-->
       <div class="row">
@@ -39,23 +41,40 @@
                 <div class="panel-heading">
                   <h4 class="panel-title"><i class="fa fa-user"></i> Your Personal Details</h4>
                 </div>
+                <?php
+  //php section for retrieving product details.
+                $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_USER_DETAILS;
+                $userid = $_SESSION['userid'];
+                $postfields = array('uid' => $userid);
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $array_assoc = json_decode($result, true);
+                ?>
                   <div class="panel-body">
                         <fieldset id="account">
                           <div class="form-group required">
                             <label for="input-payment-firstname" class="control-label">First Name</label>
-                            <input type="text" class="form-control" id="input-payment-firstname" placeholder="First Name" value="" name="firstname">
+                            <input type="text" class="form-control" id="input-payment-firstname" placeholder="First Name" value="<?php echo $array_assoc[0]['Fname'] ?>" name="firstname" readonly>
                           </div>
                           <div class="form-group required">
                             <label for="input-payment-lastname" class="control-label">Last Name</label>
-                            <input type="text" class="form-control" id="input-payment-lastname" placeholder="Last Name" value="" name="lastname">
+                            <input type="text" class="form-control" id="input-payment-lastname" placeholder="Last Name" value="<?php echo $array_assoc[0]['Lname'] ?>" name="lastname" readonly>
                           </div>
                           <div class="form-group required">
                             <label for="input-payment-email" class="control-label">E-Mail</label>
-                            <input type="text" class="form-control" id="input-payment-email" placeholder="E-Mail" value="" name="email">
+                            <input type="text" class="form-control" id="input-payment-email" placeholder="E-Mail" value="<?php echo $array_assoc[0]['email'] ?>" name="email" readonly>
                           </div>
                           <div class="form-group required">
                             <label for="input-payment-telephone" class="control-label">Telephone</label>
-                            <input type="text" class="form-control" id="input-payment-telephone" placeholder="Telephone" value="" name="telephone">
+                            <input type="text" class="form-control" id="input-payment-telephone" placeholder="Telephone" value="<?php echo $array_assoc[0]['contact_no'] ?>" name="telephone" readonly>
                           </div>
                         </fieldset>
                       </div>
@@ -67,14 +86,26 @@
             <div id="collapse-shipping" class="panel-collapse collapse in">
               <div class="panel-body">
                 <p>Please Update you profile to make changes in address</p>
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="POST" action="?">
                   <div class="form-group required">
                     <div class="col-sm-10">
-                  		<textarea class="form-control" id="confirm_comment" name="comments" style="resize: none" rows="6" cols="60" readonly>php populate the address from databases</textarea>
+                  		<textarea class="form-control" id="confirm_comment" name="comments" style="resize: none" rows="6" cols="60" readonly><?php
+                       
+                            print($array_assoc[0]['address1']);
+                            echo "\n"; 
+                            print($array_assoc[0]['address2']);
+                            echo "\n";
+                            print($array_assoc[0]['city']);
+                            echo "\n";
+                            print($array_assoc[0]['state']);
+                            echo "\n";
+                            print($array_assoc[0]['pin']);
+                      ?> 
+                      </textarea>
                   	</div>
                   </div>
 					<div class="buttons">
-            			<div class="pull-left"><a href="index.php" class="btn btn-primary">Account Settings</a></div>
+            			<div class="pull-left"><a href="myaccount.php" class="btn btn-primary">Account Settings</a></div>
                 </form>
               </div>
             </div>
@@ -147,8 +178,8 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td class="text-center"><a href="product.html"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.html">php get product name</a></td>
+                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
+                                <td class="text-left"><a href="product.php">php get product name</a></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                                     <input type="text" name="quantity" value="1" size="1" class="form-control">
                                     <span class="input-group-btn">
@@ -159,8 +190,8 @@
                                 <td class="text-right">price</td>
                               </tr>
                               <tr>
-                                <td class="text-center"><a href="product.html"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.html">php get product name</a></td>
+                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
+                                <td class="text-left"><a href="product.php">php get product name</a></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                                     <input type="text" name="quantity" value="1" size="1" class="form-control">
                                     <span class="input-group-btn">
@@ -198,6 +229,7 @@
                       </div>
                   </div>
                 </div>
+                <form method="POST" action="?">
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -207,18 +239,47 @@
                         <textarea rows="4" class="form-control" id="confirm_comment" name="comments"></textarea>
                         <br>
                         <label class="control-label" for="confirm_agree">
-                          <input type="checkbox" checked="checked" value="1" required="" class="validate required" id="confirm_agree" name="confirm agree">
+                          <input type="checkbox" checked="checked" value="1" class="validate required" id="confirm_agree" name="confirmagree">
                           <span>I have read and agree to the <a class="agree" href="#"><b>Terms &amp; Conditions</b></a></span> </label>
                         <div class="buttons">
                           <div class="pull-right">
-                            <input type="button" class="btn btn-primary" id="button-confirm" value="Confirm Order">
+                            <input type="button" class="btn btn-primary" id="button-confirm" value="Confirm Order" name="submit">
                           </div>
                         </div>
                       </div>
                   </div>
                 </div>
+                </form>
               </div>
             </div>
+            <!--Final php check to plsce order -->
+            <?php
+              if(isset($_POST['submit']))
+              {
+                   if(isset($_POST['Delivery']))
+                   {
+                       if(isset($_POST['payment']))
+                       {
+                           if(isset($_POST['confirmagree']))
+                           {
+                           print('<script>alert("Your order has been confimed");</script>');
+                           }
+                           else
+                           {
+                              print('<script>alert("Please Agree the terms and conditions");</script>');
+                           }
+                       }
+                       else
+                       {
+                         print('<script>alert("Please select a Payment methode. ");</script>');
+                       }
+                   }
+                   else
+                   {
+                     print('<script>alert("Please select a delivery methode. ");</script>');
+                   }
+                }
+            ?>
 </div> <!-- content -->
 </div> <!-- row -->
 </div> <!-- container -->

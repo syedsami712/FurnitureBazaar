@@ -49,8 +49,8 @@ echo '</PRE>';
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center"><a href="product.html"><img src="image/product/samsung_tab_1-50x75.jpg" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
-                    <td class="text-left"><a href="product.html">php cartproduct()</a><br />
+                    <td class="text-center"><a href="product.php"><img src="images/logo.png" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
+                    <td class="text-left"><a href="product.php">php cartproduct()</a><br />
                       <small>Material : php getmaterial()</small></td>
                     <td class="text-left">php getproductID</td>
                     <td class="text-left"><div class="input-group btn-block quantity">
@@ -63,8 +63,8 @@ echo '</PRE>';
                     <td class="text-right">calculated price = quantity * price</td>
                   </tr>
                   <tr>
-                    <td class="text-center"><a href="product.html"><img src="image/product/samsung_tab_1-50x75.jpg" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
-                    <td class="text-left"><a href="product.html">php cartproduct()</a><br />
+                    <td class="text-center"><a href="product.php"><img src="images/logo.png" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
+                    <td class="text-left"><a href="product.php">php cartproduct()</a><br />
                       <small>Material : php getmaterial()</small></td>
                     <td class="text-left">php getproductID</td>
                     <td class="text-left"><div class="input-group btn-block quantity">
@@ -129,8 +129,8 @@ echo '</PRE>';
           </div>
           </div>
           <div class="buttons">
-            <div class="pull-left"><a href="index.html" class="btn btn-default">Continue Shopping</a></div>
-            <div class="pull-right"><a href="checkout.html" class="btn btn-primary">Checkout</a></div>
+            <div class="pull-left"><a href="index.php" class="btn btn-default">Continue Shopping</a></div>
+            <div class="pull-right"><a href="checkout.php" class="btn btn-primary">Checkout</a></div>
           </div>
         </div>
         <!--Middle Part End -->
