@@ -36,14 +36,14 @@ DROP TABLE IF EXISTS `customers`;
 
 CREATE TABLE `customers` (
   `uid` int(3) NOT NULL,
-  `Fname` varchar(20) NOT NULL,
-  `Lname` varchar(20) NOT NULL,
-  `email` varchar(20) NOT NULL,
+  `Fname` varchar(30) NOT NULL,
+  `Lname` varchar(30) NOT NULL,
+  `email` varchar(60) NOT NULL,
   `contact_no` varchar(20) NOT NULL,
   `address1` varchar(100) NOT NULL,
   `address2` varchar(100) NOT NULL,
   `city` varchar(30) NOT NULL,
-  `state` varchar(20) NOT NULL,
+  `state` varchar(30) NOT NULL,
   `pin` varchar(6) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`uid`),
@@ -51,6 +51,8 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `customers` */
+
+insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (1,'Samiuddin','Syed','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1');
 
 /*Table structure for table `products` */
 
