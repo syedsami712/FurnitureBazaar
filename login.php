@@ -78,11 +78,12 @@ if(isset($_POST['submitForm'])){
 
     $row_count=0;
     $firstName = "";
-    $result = $conn->prepare("Select count(*) as row_count, Fname from customers where email=? AND password=?");
+    $uid = 0 ;
+    $result = $conn->prepare("Select count(*) as row_count, Fname ,uid from customers where email=? AND password=?");
     $result->bind_param("ss", $email, $password);
     $result->execute();
     $result->store_result();
-    $result->bind_result($row_count, $firstName);
+    $result->bind_result($row_count, $firstName,$uid);
     $result->fetch();
 
     echo '<pre>';
@@ -90,6 +91,7 @@ if(isset($_POST['submitForm'])){
     echo '</pre>';
         if($row_count > 0) {
         $_SESSION["username"] = $firstName;
+        $_SESSION["userid"] = $uid ;
          print('<script>
                          window.location.href= "http://localhost:8012/FurnitureBazaar/index.php";
                           </script>');

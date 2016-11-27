@@ -1,4 +1,5 @@
 <?php session_start(); 
+      include "GlobalVariables.php" ;
        ?>
 <html>
 <head>
@@ -38,6 +39,29 @@
           <form class="form-horizontal" method="POST" action="">
             <fieldset id="account">
               <legend>Your Personal Details</legend>
+            <!--php get data through api -->
+            <?php 
+  
+  //php section for retrieving product details.
+$url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_USER_DETAILS;
+$userid = $_SESSION['userid'];
+$postfields = array('userid' => $userid);
+$ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $array_assoc = json_decode($result, true);
+        echo '<pre>';
+        echo $result ;
+        echo '</pre>';
+
+        ?>
               <!-- PHP to test the input -->
               <?php 
                 $fname = $lname = $email = $telephone=$address_2=$address_1=$city=$state=$pin = "";
