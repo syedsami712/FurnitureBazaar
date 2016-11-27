@@ -210,7 +210,14 @@
                    }
                   else
                   {
-                    //echo "<script>setTimeout(\"location.href = 'login.php';\",1500);</script>";
+
+                    print('<script>
+                          function myFunction() {
+                          alert("Registration Succesfull");
+                          }
+                          myFunction();
+                          </script>');
+                    echo "<script>setTimeout(\"location.href = 'login.php';\",1500);</script>";
                   }
                 }
                 else

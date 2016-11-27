@@ -35,7 +35,7 @@
       <div class="row">
         <!--Middle Part Start-->
         <div class="col-sm-9" id="content">
-          <h1 class="title">My Account</h1>
+          <h1 class="title">My Account Settings</h1>
           <form class="form-horizontal" method="POST" action="">
             <fieldset id="account">
               <legend>Your Personal Details</legend>
@@ -45,7 +45,7 @@
   //php section for retrieving product details.
 $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_USER_DETAILS;
 $userid = $_SESSION['userid'];
-$postfields = array('userid' => $userid);
+$postfields = array('uid' => $userid);
 $ch = curl_init();
         $options = array (
                   CURLOPT_URL => $url,
@@ -58,7 +58,7 @@ $ch = curl_init();
         curl_close($ch);
         $array_assoc = json_decode($result, true);
         echo '<pre>';
-        echo $result ;
+        echo "Make the changes and Click Update";
         echo '</pre>';
 
         ?>
@@ -91,28 +91,28 @@ $ch = curl_init();
               <div class="form-group required">
                 <label for="input-firstname" class="col-sm-2 control-label">First Name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" width="12" id="input-firstname" placeholder="First Name" name="fname" pattern="[A-Za-z]+" value="<?php print($fname); ?>" required >
+                  <input type="text" class="form-control" width="12" id="input-firstname" placeholder="First Name" name="fname" pattern="[A-Za-z]+" value="<?php echo $array_assoc[0]['Fname']; ?>" required >
                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-lastname" class="col-sm-2 control-label">Last Name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="<?php print $lname; ?>" pattern="[A-Za-z]+" name="lname" required>
+                  <input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="<?php echo $array_assoc[0]['Lname'] ?>" pattern="[A-Za-z]+" name="lname" required>
                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-email" class="col-sm-2 control-label">E-Mail</label>
                 <div class="col-sm-10">
-                  <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="<?php print $email ?>" name="email" required>
+                  <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="<?php echo $array_assoc[0]['email'] ?>" name="email" readonly>
                   <span class="error-validation"> <?php $emailerr="" ; echo "$emailerr" ; ?></span>
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-telephone" class="col-sm-2 control-label">Mobile No. (+91)</label>
                 <div class="col-sm-10">
-                  <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" pattern="\d*" minlength="10" maxlength="10" value="<?php print $telephone; ?>" name="telephone" required>
+                  <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" pattern="\d*" minlength="10" maxlength="10" value="<?php echo $array_assoc[0]['contact_no'] ?>" name="telephone" required>
                   
                 </div>
               </div>
@@ -122,35 +122,35 @@ $ch = curl_init();
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">Address 1</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="<?php print $address_1; ?>" name="address_1" required>
+                  <input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="<?php echo $array_assoc[0]['address1']; ?>" name="address_1" required>
                   
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">Address 2</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-address-2" placeholder="Address 2" value="<?php print $address_2; ?>" name="address_2" required>
+                  <input type="text" class="form-control" id="input-address-2" placeholder="Address 2" value="<?php echo $array_assoc[0]['address2'] ?>" name="address_2" required>
                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-city" class="col-sm-2 control-label">City</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-city" placeholder="City" value="<?php print $city; ?>"  pattern="[A-Za-z]+" name="city" required>
+                  <input type="text" class="form-control" id="input-city" placeholder="City" value="<?php echo $array_assoc[0]['city']; ?>"  pattern="[A-Za-z]+" name="city" required>
                  
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-address-1" class="col-sm-2 control-label">State</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-state" placeholder="state" value="<?php print $state; ?>" pattern="[A-Za-z]+" name="state" required>
+                  <input type="text" class="form-control" id="input-state" placeholder="state" value="<?php echo $array_assoc[0]['state'] ?>" pattern="[A-Za-z]+" name="state" required>
                   
                 </div>
               </div>
               <div class="form-group required">
                 <label for="input-postcode" class="col-sm-2 control-label">Post Code</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php print $pin; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
+                  <input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="<?php echo $array_assoc[0]['pin']; ?>" pattern="\d*" minlength="6" maxlength="6" name="pin" required>
                   
                 </div>
               </div>
@@ -188,15 +188,15 @@ $ch = curl_init();
               <!--Password validation end -->
             </fieldset>
             <fieldset>
-              <legend>Your Password</legend>
+              <legend>Change Password</legend>
               <div class="form-group required">
-                <label for="input-password" class="col-sm-2 control-label">Password</label>
+                <label for="input-password" class="col-sm-2 control-label">New Password</label>
                 <div class="col-sm-10">
                   <input type="password" class="form-control" id="input-password" placeholder="Password" value="<?php print $password ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password">
               </div>
               </div>
               <div class="form-group required">
-                <label for="input-confirm" class="col-sm-2 control-label">Password Confirm</label>
+                <label for="input-confirm" class="col-sm-2 control-label">Confirm New Password</label>
                 <div class="col-sm-10">
                   <input type="password" class="form-control" id="input-confirm" placeholder="Password Confirm" value="" name="confirm_password">
                 </div>
@@ -204,7 +204,7 @@ $ch = curl_init();
             </fieldset>
             <div class="buttons">
               <div class="pull-right">
-                <input type="submit" class="btn btn-primary" value="Continue" name="submit">
+                <input type="submit" class="btn btn-primary" value="Update" name="submit">
               </div>
             </div>
           </form>
@@ -219,21 +219,28 @@ $ch = curl_init();
                 {
                   $pass = $_POST['password'];
                   $enpass = md5($pass);
-                  $query = "INSERT INTO `customers` (`uid`,`FName`, `LName`, `email`, `contact_no`, `address1`, `address2`, `city`,`state`,`pin`,`password`) VALUES ('$uid','$fname', '$lname', '$email', '$telephone','$address_1', '$address_2', '$city','$state','$pin','$enpass' )";
+                  $query = "UPDATE customers SET Fname='$fname',Lname='$lname',contact_no='$telephone',address1='$address_1',address2='$address_2',city='$city',state='$state',pin='$pin',password='$enpass' WHERE uid  = $userid";
                    $result=mysqli_query($conn,$query);
                   echo $query;
                    if(!$result)
                    {
                    print('<script>
                           function myFunction() {
-                          alert("Email Already Exist");
+                          alert("Error Occured");
                           }
                           myFunction();
                           </script>');
                    }
                   else
                   {
-                    echo "<script>setTimeout(\"location.href = 'login.php';\",1500);</script>";
+                    echo $result ;
+                    // print('<script>
+                    //       function myFunction() {
+                    //       alert("Account Information Updated Succesfully");
+                    //       }
+                    //       myFunction();
+                    //       </script>');
+                    // echo "<script>setTimeout(\"location.href = 'myaccount.php';\",1500);</script>";
                   }
                 }
                 else
