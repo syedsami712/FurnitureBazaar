@@ -210,6 +210,7 @@
                    }
                   else
                   {
+
                     print('<script>
                           function myFunction() {
                           alert("Registration Succesfull");
