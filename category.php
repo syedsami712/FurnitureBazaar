@@ -66,8 +66,8 @@ $ch = curl_init();
     <div class="container">
       <!-- Breadcrumb Start-->
       <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="category.html">Electronics</a></li>
+        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
+        <li><a href="category.php">Electronics</a></li>
       </ul>
       <!-- Breadcrumb End-->
       <div class="row">

@@ -34,9 +34,9 @@
     <div class="container">
       <!-- Breadcrumb Start-->
       <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="login.html">Account</a></li>
-        <li><a href="register.html">Forgot Password</a></li>
+        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
+        <li><a href="login.php">Account</a></li>
+        <li><a href="register.php">Forgot Password</a></li>
       </ul>
       <!-- Breadcrumb End-->
       <div class="row">

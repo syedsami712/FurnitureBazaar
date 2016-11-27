@@ -26,9 +26,9 @@
     <div class="container">
       <!-- Breadcrumb Start-->
       <ul class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="cart.html">Shopping Cart</a></li>
-        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
+        <li><a href="cart.php">Shopping Cart</a></li>
+        <li><a href="checkout.php">Checkout</a></li>
       </ul>
       <!-- Breadcrumb End-->
       <div class="row">
@@ -86,7 +86,7 @@
             <div id="collapse-shipping" class="panel-collapse collapse in">
               <div class="panel-body">
                 <p>Please Update you profile to make changes in address</p>
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="POST" action="?">
                   <div class="form-group required">
                     <div class="col-sm-10">
                   		<textarea class="form-control" id="confirm_comment" name="comments" style="resize: none" rows="6" cols="60" readonly><?php
@@ -178,8 +178,8 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td class="text-center"><a href="product.html"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.html">php get product name</a></td>
+                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
+                                <td class="text-left"><a href="product.php">php get product name</a></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                                     <input type="text" name="quantity" value="1" size="1" class="form-control">
                                     <span class="input-group-btn">
@@ -190,8 +190,8 @@
                                 <td class="text-right">price</td>
                               </tr>
                               <tr>
-                                <td class="text-center"><a href="product.html"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.html">php get product name</a></td>
+                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
+                                <td class="text-left"><a href="product.php">php get product name</a></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                                     <input type="text" name="quantity" value="1" size="1" class="form-control">
                                     <span class="input-group-btn">
@@ -229,6 +229,7 @@
                       </div>
                   </div>
                 </div>
+                <form method="POST" action="?">
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -248,6 +249,7 @@
                       </div>
                   </div>
                 </div>
+                </form>
               </div>
             </div>
             <!--Final php check to plsce order -->

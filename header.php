@@ -56,13 +56,13 @@
                   <table class="table">
                     <tbody>
                       <tr>
-                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
+                        <td class="text-left"><a href="product.php">get cartitemname()</a></td>
                         <td class="text-right">x prodquantity</td>
                         <td class="text-right">Price</td>
                         <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
                       </tr>
                       <tr>
-                        <td class="text-left"><a href="product.html">get cartitemname()</a></td>
+                        <td class="text-left"><a href="product.php">get cartitemname()</a></td>
                         <td class="text-right">x prodquantity</td>
                         <td class="text-right">Price</td>
                         <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
@@ -83,7 +83,7 @@
                         </tr>
                       </tbody>
                     </table>
-                    <p class="checkout"><a href="cart.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="checkout.html" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
+                    <p class="checkout"><a href="cart.php" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="checkout.php" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
                   </div>
                 </li>
               </ul>
