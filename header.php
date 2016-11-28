@@ -91,21 +91,6 @@
                 <li>
                   <table class="table">
                     <tbody>
-<<<<<<< HEAD
-                    <?php 
-                      if(!isset($masterArray)){ ?>
-                        
-                        <tr>
-                        <td > Your Cart is Empty.</td>
-=======
-                      <tr>
-                        <td class="text-left"><a href="product.php">get cartitemname()</a></td>
-                        <td class="text-right">x prodquantity</td>
-                        <td class="text-right">Price</td>
-                        <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
->>>>>>> c1d365ea38aadf45df534530dcea062d49362715
-                      </tr>
-
 
                      <?php 
                       }
@@ -114,7 +99,7 @@
                       <?php for($i = 0; $i < count($masterArray); $i++){ ?>
                      
                       <tr>
-<<<<<<< HEAD
+
                         <td class="text-left"><a href="product.html"><?php echo $masterArray[$i][2]; ?></a></td>
                         <td class="text-right">x <?php echo $masterArray[$i][1]; ?></td>
                         <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
@@ -124,12 +109,12 @@
                             echo $urlString;
                           
                         ?>"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
-=======
+
                         <td class="text-left"><a href="product.php">get cartitemname()</a></td>
                         <td class="text-right">x prodquantity</td>
                         <td class="text-right">Price</td>
                         <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
->>>>>>> c1d365ea38aadf45df534530dcea062d49362715
+
                       </tr>
                       <?php } 
                       } ?>
