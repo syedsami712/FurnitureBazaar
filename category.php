@@ -5,6 +5,18 @@ include 'GlobalVariables.php';
 include 'functions/dbconfig.php';
 
  ?>
+
+ <?php  
+
+//setting the cart
+
+   $productidArray = array();
+    if(isset($_POST['addToCart'])){
+     
+      setcookie("productid", $_POST['productId']  , time()+30*24*60*60);
+      //echo '<script> alert("test"); </script>';
+  }
+   ?>
 <html>
 <head>
 <?php require("functions/cats.php"); ?>
@@ -97,6 +109,7 @@ $ch = curl_init();
 
            <?php for($i = 0; $i < count($array_assoc['products']); $i++) { ?>
             <div class="product-layout product-list col-md-4 col-xs-12">
+            <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
               <div class="product-thumb">
                <?php  $returnedImagePath =  DEFAULT_IMAGE_PATH.'products/'.$array_assoc['products'][$i]['productimg'];
                       $defaultImagePath =   DEFAULT_IMAGE_PATH.'products/logo.png';
@@ -117,12 +130,13 @@ $ch = curl_init();
                     ?></p>
                   </div>
                   <div class="button-group">
-                   <!--  <input type = "hidden" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" /> -->
+                   <input type = "hidden" name="productId" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" />
                    <?php $productid = $array_assoc['products'][$i]['productid']; ?>
-                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productid[]=$productid"; ?>"><button class="btn-primary addToCart" type="button"><span>Add to Cart</span></button></a>
+                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productidArr[]=$productid"; ?>"><button type="button" name="addToCart" class="btn-primary" value="Add to Cart" >Add To Cart</button></a>
                   </div>
                 </div>
               </div>
+              </form>
             </div>
             <?php } ?>
           </div>
@@ -130,6 +144,7 @@ $ch = curl_init();
       </div>
     </div>
   </div>
+
 <?php include "footer.php"; ?>
 
 <!-- <script type="text/javascript">
@@ -150,7 +165,7 @@ $ch = curl_init();
   });
 
   </script> -->
-  <?php echo "<PRE>".$_COOKIE['ProductId']."</PRE>"; ?>
+  <!--  -->
 <!-- JS Part Start-->
 
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>

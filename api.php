@@ -52,7 +52,15 @@
 
 
 
+	function retrieveSearchDetails($conn, $searchString) {
+		$result = $conn->query("Select * from products where tags LIKE '%$searchString%' ");
+		$resultSet = array();
+		while($row = $result->fetch_assoc()) {
+			array_push($resultSet, $row);
+		}
+		return json_encode($resultSet);
 
+	}
 
 
 	switch ($functionName) {
@@ -87,6 +95,12 @@
 			}
 			break;
 
+		case 'retrieveSearchDetails' :
+		if(isset($_POST['searchString'])){
+			$searchString = $_POST['searchString'];
+			$searchString = preg_replace('/\s+/', ",", $searchString);
+			echo retrieveSearchDetails($conn, $searchString);
+		}
 
 		default:
 			# code...

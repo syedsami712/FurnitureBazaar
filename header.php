@@ -36,6 +36,17 @@
       </div>
     </nav>  
     <?php 
+    $testArr = array();
+    $masterArray = array(); 
+      if(isset($_COOKIE['productid'])){
+
+          array_push($testArr, $_COOKIE['productid']);
+          // echo '<PRE>';
+          // print_r($masterArray);
+          // echo '</PRE>';
+
+      }
+
       if(isset($_GET['productidArr'])){
       $totalProductIds = $_GET['productidArr'];
 
@@ -48,7 +59,7 @@
 
       
 
-      $masterArray = array();
+      
       //get all the details of each product id.
       foreach($segregatedProductIds as $productid){
       $result = $conn->query("Select * from products where productid = $productid");
