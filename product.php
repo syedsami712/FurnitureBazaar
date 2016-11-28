@@ -2,6 +2,7 @@
 
 //inlcudes
 include 'GlobalVariables.php';
+include 'functions/dbconfig.php';
 
  ?>
 <html>

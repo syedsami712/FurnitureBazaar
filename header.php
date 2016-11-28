@@ -34,10 +34,10 @@
           </div>
         </div>
       </div>
-    </nav>
+    </nav>  
     <?php 
-      if(isset($_GET['productid'])){
-      $totalProductIds = $_GET['productid'];
+      if(isset($_GET['productidArr'])){
+      $totalProductIds = $_GET['productidArr'];
 
       
       
@@ -92,6 +92,15 @@
                   <table class="table">
                     <tbody>
 
+                    <?php 
+                      if(!isset($masterArray)){ ?>
+                        
+                        <tr>
+                        <td > Your Cart is Empty.</td>
+
+                      </tr>
+
+
                      <?php 
                       }
                       else {
@@ -104,17 +113,11 @@
                         <td class="text-right">x <?php echo $masterArray[$i][1]; ?></td>
                         <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
                         <td class="text-center"><a href="<?php 
-                            $stringToBeReplaced = "&productid[]=".$masterArray[$i][0];
+                            $stringToBeReplaced = "&productidArr[]=".$masterArray[$i][0];
                             $urlString = str_replace($stringToBeReplaced, "", $_SERVER['REQUEST_URI']);
                             echo $urlString;
                           
                         ?>"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
-
-                        <td class="text-left"><a href="product.php">get cartitemname()</a></td>
-                        <td class="text-right">x prodquantity</td>
-                        <td class="text-right">Price</td>
-                        <td class="text-center"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></td>
-
                       </tr>
                       <?php } 
                       } ?>
