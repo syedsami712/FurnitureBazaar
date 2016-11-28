@@ -96,7 +96,6 @@ $ch = curl_init();
           <div class="row products-category product-filter" id="grid-view">
 
            <?php for($i = 0; $i < count($array_assoc['products']); $i++) { ?>
-           <form method="POST" action="?">
             <div class="product-layout product-list col-md-4 col-xs-12">
               <div class="product-thumb">
                <?php  $returnedImagePath =  DEFAULT_IMAGE_PATH.'products/'.$array_assoc['products'][$i]['productimg'];
@@ -107,9 +106,7 @@ $ch = curl_init();
                 <div class="image"><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><img src='<?php echo $image; ?>' alt="No Image" title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a></div>
                 <div>
                   <div class="caption">
-                    <h4><a href="product.php?productid=<?php 
-                    
-                    echo $array_assoc['products'][$i]['productid']; ?>"> <?php echo $array_assoc['products'][$i]['productname']; ?></a></h4>
+                    <h4><a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"> <?php echo $array_assoc['products'][$i]['productname']; ?></a></h4>
                     
                     <p class="price"> <span class="price-new">Rs.<?php echo $array_assoc['products'][$i]['cost']; ?></span>&nbsp; &nbsp; &nbsp;  <span class="price-old">Rs.<?php echo $array_assoc['products'][$i]['mrp']; ?></span></p>
                     <p><?php 
@@ -122,23 +119,16 @@ $ch = curl_init();
                   <div class="button-group">
                    <!--  <input type = "hidden" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" /> -->
                    <?php $productid = $array_assoc['products'][$i]['productid']; ?>
-                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productidArr[]=$productid"; ?>"><button class="btn-primary addToCart" type="button"><span>Add to Cart</span></button></a>
+                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productid[]=$productid"; ?>"><button class="btn-primary addToCart" type="button"><span>Add to Cart</span></button></a>
                   </div>
                 </div>
               </div>
             </div>
-            </form>
             <?php } ?>
-
           </div>
         <!--Middle Part End -->
       </div>
     </div>
-    <?php 
-      if(isset($_POST['addToCart'])){
-        echo "<script> alert('hello'); </script>";
-      }
-    ?>
   </div>
 <?php include "footer.php"; ?>
 
