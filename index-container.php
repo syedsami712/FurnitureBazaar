@@ -8,13 +8,13 @@
           <!-- Slideshow Start-->
           <div class="slideshow single-slider owl-carousel">
             <div class="item"> <a href="<?php echo DEFAULT_WEB_PATH."category.php?sub_category_id=1&category_id=1"; ?>"><img class="img-responsive" src="images/slider/banner-2.jpg" alt="banner 2" /></a> </div>
-            <div class="item"> <a href="#"><img class="img-responsive" src="images/slider/banner-1.jpg" alt="banner 1" /></a> </div>
+            <div class="item"> <a href="<?php echo DEFAULT_WEB_PATH."category.php?sub_category_id=1&category_id=1"; ?>"><img class="img-responsive" src="images/slider/banner-1.jpg" alt="banner 1" /></a> </div>
           </div>
           <!-- Slideshow End-->
           <!-- Banner Start-->
           <div class="marketshop-banner">
             <div class="row">
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="images/banner/chairs.jpg" alt="Chairs" title="Chairs" /></a></div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="<?php echo DEFAULT_WEB_PATH."category.php?sub_category_id=2&category_id=1"; ?>"><img src="images/banner/chairs.jpg" alt="Chairs" title="Chairs" /></a></div>
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="images/banner/tables.jpg" alt="Tables" title="Tables" /></a></div>
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="images/banner/beds.jpg" alt="Beds" title="Beds" /></a></div>
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="images/banner/wardrobe.jpg" alt="Wardrobe" title="Wardrobe" /></a></div>

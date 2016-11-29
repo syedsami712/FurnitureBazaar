@@ -22,6 +22,16 @@
 		return json_encode($resultSet);
 	}
 
+	function retrieveAllUsersDetails($conn){
+		$result = $conn->query("select * from customers ");
+		$resultSet = array();
+		while($row = $result->fetch_assoc())
+		{
+			array_push($resultSet,$row);
+		}	
+		return json_encode($resultSet);
+	}
+
 	function retrieveProductsDetailsWithRespectToCategoryId($conn, $categoryId, $subCategoryId = 0){
 		//getting category name
 		$getCategory = $conn->query("Select Category_Name from category where ID = $categoryId");
@@ -121,6 +131,7 @@
 			echo retrieveSearchDetails($conn, $searchString);
 		}
 
+<<<<<<< HEAD
 		case 'addProductToCart' :
 				$productid = $_POST['productid'];
 				$productQuantity = $_POST['productQuantity'];
@@ -137,6 +148,10 @@
 
 				}
 			break;
+=======
+		case 'retrieveAllUsersDetails' :
+			echo retrieveAllUsersDetails($conn);
+>>>>>>> 9fe0c24b5c6f26f66d02cc4cdd14a16daa4ac0b4
 
 		default:
 			# code...
