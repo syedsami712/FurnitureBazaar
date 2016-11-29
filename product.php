@@ -4,7 +4,42 @@
 include 'GlobalVariables.php';
 include 'functions/dbconfig.php';
 
- ?>
+
+    if(isset($_POST['addToCart'])) {
+      $url = DEFAULT_WEB_PATH.API_PAGE.ADD_TO_CART;
+      $productid = $_GET['productid'];
+      $productQuantity = $_POST['quantity'];
+
+      //check first whether cart is details is present or not!.
+      if(isset($_COOKIE['cart'])){
+        $cartDetails = $_COOKIE['cart'];
+        // echo $cartDetails;
+        
+        $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity, 'cartDetails' => $cartDetails );
+      }
+      else {
+      $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity);
+    }
+      $ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result1 = curl_exec($ch);
+        curl_close($ch);
+
+        //setting the cookie here.
+        setcookie("cart", $result1, time()+60*60*24*30);
+        $urlRefresh = $_SERVER['REQUEST_URI'];
+        echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+      
+    }
+
+  ?>
+
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -25,7 +60,9 @@ include 'functions/dbconfig.php';
 <!-- CSS Part End-->
 </head>
 <?php 
-  
+  // echo '<PRE>'; 
+  // print_r($_COOKIE);
+  // echo '</PRE>';
   //php section for retrieving product details.
 $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS;
 $productid = $_GET['productid'];
@@ -68,7 +105,8 @@ $ch = curl_init();
                 </ul>
                 <div id="product">
                   <div class="cart">
-                    <div>
+                    <div>   
+                    <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                       <div class="qty">
                         <label class="control-label" for="input-quantity">Qty</label>
                         <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control" />
@@ -76,7 +114,9 @@ $ch = curl_init();
                         <a class="qtyBtn mines" href="javascript:void(0);">-</a>
                         <div class="clear"></div>
                       </div>
-                      <button type="button" id="button-cart" class="btn btn-primary btn-lg">Add to Cart</button>
+
+                      <input type="submit" name="addToCart" id="button-cart" class="btn btn-primary btn-lg" value="Add To Cart" />
+                      </form>
                     </div>
               </div>
                 </div>
@@ -105,6 +145,7 @@ $ch = curl_init();
       </div>
     </div>
   </div>
+
 <?php include "footer.php" ?>
 <!-- JS Part Start-->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>

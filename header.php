@@ -1,5 +1,7 @@
 
-<?php require("functions/function.php"); ?>
+<?php require("functions/function.php");
+      include 'functions/dbconfig.php';
+   ?>
 
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
@@ -37,48 +39,45 @@
     </nav>  
     <?php 
     $testArr = array();
+    
+    if(isset($_GET['clearCookie'])){
+    if (isset($_SERVER['HTTP_COOKIE'])) {
+    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+    foreach($cookies as $cookie) {
+        $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+        setcookie($name, '', time()-1000);
+        setcookie($name, '', time()-1000, '/');
+    }
+}
+}
     $masterArray = array(); 
-      if(isset($_COOKIE['productid'])){
+    
+      if(isset($_COOKIE['cart'])){
+        $testArray = array();
+        $testArray = json_decode($_COOKIE['cart'], true);
+        // echo '<PRE>';
+        // print_r($testArray);
+        // echo '</PRE>'; 
 
-          array_push($testArr, $_COOKIE['productid']);
-          // echo '<PRE>';
-          // print_r($masterArray);
-          // echo '</PRE>';
+        for($i = 0; $i < count($testArray); $i++) {
+          $productId = $testArray[$i][0]['productId'];
+          $result = $conn->query("Select * from products where productid = $productId");
+          $uniqueProductDetailArray = array();
+          $row = $result->fetch_assoc();
+          array_push($uniqueProductDetailArray, $productId);
+          array_push($uniqueProductDetailArray, $testArray[$i][0]['productQuantity']);
+          array_push($uniqueProductDetailArray, $row['productname']);
+          array_push($uniqueProductDetailArray, $row['cost']);
+
+          array_push($masterArray, $uniqueProductDetailArray);
+        }
+        // echo '<PRE>';
+        // print_r($masterArray);
+        // echo '</PRE>';
 
       }
 
-      if(isset($_GET['productidArr'])){
-      $totalProductIds = $_GET['productidArr'];
-
-      
-      
-      $getCountOfEachProductId = array_count_values($totalProductIds);
- 
-  
-      $segregatedProductIds = array_keys($getCountOfEachProductId);
-
-      
-
-      
-      //get all the details of each product id.
-      foreach($segregatedProductIds as $productid){
-      $result = $conn->query("Select * from products where productid = $productid");
-        $uniqueProductDetailArray = array();
-        $row = $result->fetch_assoc();
-        array_push($uniqueProductDetailArray, $productid);
-        array_push($uniqueProductDetailArray, $getCountOfEachProductId[$productid]);
-        array_push($uniqueProductDetailArray, $row['productname']);
-        array_push($uniqueProductDetailArray, $row['cost']);
-
-        array_push($masterArray, $uniqueProductDetailArray);
-
-    }
-    // print_r($masterArray);
-    // echo "<br>". str_replace("&productid[]=3", "", $_SERVER['REQUEST_URI']);//($_SERVER['REQUEST_URI'], "productid[]=3");
-    // echo "<br>". $_SERVER['REQUEST_URI'];
-    // echo '</PRE>';
-
-  }
 
     ?>
     <!-- Header Start-->
@@ -97,14 +96,14 @@
             <div id="cart">
               <button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="heading dropdown-toggle">
               <span class="cart-icon pull-left flip"></span>
-              <span id="cart-total">SHOW CART DETAILS HERE</span></button>
+              <span id="cart-total"><?php echo  isset($testArray) ? count($testArray) : 0; ?>&nbsp; Item(s) - </span></button>
               <ul class="dropdown-menu">
                 <li>
                   <table class="table">
                     <tbody>
 
                     <?php 
-                      if(!isset($masterArray)){ ?>
+                      if(!isset($testArray)){ ?>
                         
                         <tr>
                         <td > Your Cart is Empty.</td>
@@ -114,7 +113,9 @@
 
                      <?php 
                       }
-                      else {
+                      else { 
+                        //sum of the products.
+                        $totalAmount = 0;
                     ?>
                       <?php for($i = 0; $i < count($masterArray); $i++){ ?>
                      
@@ -122,13 +123,10 @@
 
                         <td class="text-left"><a href="product.html"><?php echo $masterArray[$i][2]; ?></a></td>
                         <td class="text-right">x <?php echo $masterArray[$i][1]; ?></td>
-                        <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
-                        <td class="text-center"><a href="<?php 
-                            $stringToBeReplaced = "&productidArr[]=".$masterArray[$i][0];
-                            $urlString = str_replace($stringToBeReplaced, "", $_SERVER['REQUEST_URI']);
-                            echo $urlString;
-                          
-                        ?>"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
+                        <td class="text-right"><?php 
+                        $totalAmount += $masterArray[$i][3]*$masterArray[$i][1];
+                        echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
+                        <td class="text-center"><a href="#"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
                       </tr>
                       <?php } 
                       } ?>
@@ -140,12 +138,9 @@
                   <div>
                     <table class="table table-bordered">
                       <tbody>
-                        <tr>
-                          <td class="text-right"><strong>Sub-Total</strong></td>
-                          <td class="text-right">get cartprice()</td>
-                        </tr>
                           <td class="text-right"><strong>Total</strong></td>
-                          <td class="text-right">get cartprice()</td>
+                          <td class="text-right"><?php echo isset($totalAmount) ? $totalAmount : 0; ?>
+                          </td>
                         </tr>
                       </tbody>
                     </table>

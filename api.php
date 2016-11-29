@@ -61,6 +61,25 @@
 		return json_encode($resultSet);
 
 	}
+	function addProductToCart($conn, $productId, $productQuantity, $cartDetails = "") {
+		//if cart is not set then set the cart.
+
+		if($cartDetails === "") {
+			$product = array(array("productId" => $productId, "productQuantity" => $productQuantity));
+			$cartProducts =array($product);
+			$cartProductToJsonString = json_encode($cartProducts);
+			//setcookie("cart", $cartProductToJsonString,time()+60*60*24*30);
+			return $cartProductToJsonString;
+			}
+		else {
+			
+			$cartArray = json_decode($cartDetails, true);
+			$product = array(array("productId" => $productId, "productQuantity" => $productQuantity));
+			array_push($cartArray, $product);
+			return json_encode($cartArray);
+
+		}
+	}
 
 
 	switch ($functionName) {
@@ -101,6 +120,23 @@
 			$searchString = preg_replace('/\s+/', ",", $searchString);
 			echo retrieveSearchDetails($conn, $searchString);
 		}
+
+		case 'addProductToCart' :
+				$productid = $_POST['productid'];
+				$productQuantity = $_POST['productQuantity'];
+				if(!isset($_POST['cartDetails'])){
+				echo addProductToCart($conn, $productid, $productQuantity);
+				}
+				else {
+					$jsonString = $_POST['cartDetails'];
+					echo addProductToCart($conn, $productid, $productQuantity, $jsonString);
+					// echo '<PRE>'; print_r(json_decode($jsonString)); echo '</PRE>';
+					// echo $jsonString;
+
+
+
+				}
+			break;
 
 		default:
 			# code...
