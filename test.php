@@ -1,7 +1,15 @@
 <?php 
 
-$a ="SunnyJain03";
+$productDetails = array(array("productId" => 1, "productName" => "sofa"), 
+	array("productId" => 1, "productName" => "sofa"),
+	array("productId" => 1, "productName" => "sofa"),
+	array("productId" => 1, "productName" => "sofa"),
+	array("productId" => 1, "productName" => "sofa"));
 
-echo md5($a);
+$cartArray = array("Cart" => $productDetails);
 
+
+echo '<PRE>';
+echo json_encode($cartArray);
+echo '</PRE>';
 ?>
