@@ -131,7 +131,7 @@
 			echo retrieveSearchDetails($conn, $searchString);
 		}
 
-<<<<<<< HEAD
+
 		case 'addProductToCart' :
 				$productid = $_POST['productid'];
 				$productQuantity = $_POST['productQuantity'];
@@ -148,10 +148,10 @@
 
 				}
 			break;
-=======
+
 		case 'retrieveAllUsersDetails' :
-			echo retrieveAllUsersDetails($conn);
->>>>>>> 9fe0c24b5c6f26f66d02cc4cdd14a16daa4ac0b4
+				echo retrieveAllUsersDetails($conn);
+			break;
 
 		default:
 			# code...
