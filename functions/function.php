@@ -49,6 +49,7 @@ function getsubcats($cat_ID)
 		$rowSQL1 = mysqli_query($con, "SELECT count( uid ) AS count FROM `customers`;" );
 		$row1 = mysqli_fetch_array($rowSQL1);
 		$count = $row1['count'];
+		
 		if($count==0)
 		{
 			return 1 ;

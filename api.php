@@ -22,6 +22,16 @@
 		return json_encode($resultSet);
 	}
 
+	function retrieveAllUsersDetails($conn){
+		$result = $conn->query("select * from customers ");
+		$resultSet = array();
+		while($row = $result->fetch_assoc())
+		{
+			array_push($resultSet,$row);
+		}	
+		return json_encode($resultSet);
+	}
+
 	function retrieveProductsDetailsWithRespectToCategoryId($conn, $categoryId, $subCategoryId = 0){
 		//getting category name
 		$getCategory = $conn->query("Select Category_Name from category where ID = $categoryId");
@@ -101,6 +111,9 @@
 			$searchString = preg_replace('/\s+/', ",", $searchString);
 			echo retrieveSearchDetails($conn, $searchString);
 		}
+
+		case 'retrieveAllUsersDetails' :
+			echo retrieveAllUsersDetails($conn);
 
 		default:
 			# code...
