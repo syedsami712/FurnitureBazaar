@@ -6,17 +6,7 @@ include 'functions/dbconfig.php';
 
  ?>
 
- <?php  
 
-//setting the cart
-
-   $productidArray = array();
-    if(isset($_POST['addToCart'])){
-     
-      setcookie("productid", $_POST['productId']  , time()+30*24*60*60);
-      //echo '<script> alert("test"); </script>';
-  }
-   ?>
 <html>
 <head>
 <?php require("functions/cats.php"); ?>
@@ -130,9 +120,9 @@ $ch = curl_init();
                     ?></p>
                   </div>
                   <div class="button-group">
-                   <input type = "hidden" name="productId" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" />
+                   <input type = "hidden" name="productId" id="productId" class="ProductId" value="<?php echo $array_assoc['products'][$i]['productid']; ?>" />
                    <?php $productid = $array_assoc['products'][$i]['productid']; ?>
-                    <a href="<?php echo $_SERVER['REQUEST_URI']."&productidArr[]=$productid"; ?>"><button type="button" name="addToCart" class="btn-primary" value="Add to Cart" >Add To Cart</button></a>
+                    <a href="product.php?productid=<?php echo $array_assoc['products'][$i]['productid']; ?>"><button type="button" name="addToCart" class="btn-primary"  addToCart" value="Add to Cart" >View Product</button></a>
                   </div>
                 </div>
               </div>
@@ -147,24 +137,13 @@ $ch = curl_init();
 
 <?php include "footer.php"; ?>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   
-  $(document).ready(function(){
-  
-     $('.addToCart').click(function() {
-      var productId = $(".ProductId").val();
-      $.ajax({
-      type: "POST",
-      url: "http://localhost:8012/FurnitureBazaar/api.php?functionName=addToCart",
-      data: { ProductId : productId  }
-    }).done(function( msg ) {
-    alert( "Data Saved: " + msg );
-});    
-
-    });
-  });
-
-  </script> -->
+  function onAddCartClick(){
+    var productid = document.getElementById("productId").value ;
+    document.cookie = "productid=".productid;
+  }
+  </script>
   <!--  -->
 <!-- JS Part Start-->
 
