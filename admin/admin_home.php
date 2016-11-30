@@ -38,13 +38,7 @@
               </ul>
             </div>
           </div>
-          <div id="top-links" class="nav pull-right flip">
             <ul>
-              <li><a href="login.php">Login</a></li>
-              <li style="padding-left: 4px; padding-right: 4px; font-style: bold;">Login/logout</li>
-              <li><a href="login.php?status=loggedout">Logout</a></li>
-            </ul>
-          </div>
         </div>
       </div>
     </nav>  
@@ -88,7 +82,35 @@
 
 
 <!-- Mail Start -->
-<?php echo "display orderss" ; ?>
+<div id="container">
+    <div class="container">
+      <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-9">
+          <br>
+          <h1 class="title">Admin Login</h1>
+          <div class="row">
+          <form mclass="form-horizontal" method="POST" action="">
+            <div class="col-sm-9">
+              <h2 class="subtitle">Admin Credentials</h2>
+              <p><strong>Please enter the admin credentials.</strong></p>
+                <div class="form-group">
+                <label for="input-password" class="col-sm-2 control-label" style="font-size: 20px;">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="input-password" placeholder="Password" value="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password">
+              </div>
+              </div>
+              <div class="buttons">
+              <div class="pull-right">
+                <input type="submit" class="btn btn-primary" value="Continue" name="submit">
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Main ENd --> 
 
 

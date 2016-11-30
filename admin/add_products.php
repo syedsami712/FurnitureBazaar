@@ -22,8 +22,26 @@
 </head>
 <body>
 <!-- Header Start -->
-
-<?php require("../functions/function.php"); ?>
+<?php
+  //php section for retrieving product details.
+                $url = DEFAULT_WEB_PATH.API_PAGE.RETREIVE_CATEGORIES;
+                $postfields = array();
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $array_assoc = json_decode($result, true);
+                echo '<pre>';
+       			print_r($array_assoc);
+       			echo $array_assoc[1]['ID'];
+        		echo '</pre>';
+                ?>
 
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
@@ -88,34 +106,94 @@
 
 
 <!-- Mail Start -->
-<form>
-<div class="col-sm-4">
+<div id="container">
+    <div class="container">
+      <div class="row">
+          <div id="content" class="col-sm-9">
+          <br>
+			<h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspAdd Products Customers</h1>
+				<form class="form-horizontal">
+					<div class="form-group required">
+
+                <label for="input-country" class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-4">
                   <select class="form-control" name="category">
-                    <option value="1">abc</option>
-                    <option value="2">ada</option>
+                  	<?php
+                  		$count = count($array_assoc);
+                  		for($x=0;$x<$count;$x++)
+                  		{
+                  			echo "<option value=";
+                  			echo $array_assoc[$x]['ID'];
+                  			echo ">";
+                  			echo $array_assoc[$x]['Category_Name'];
+                  			echo '</option>';
+                  		}
+                  	?>
                   </select>
                 </div>
-
-                <div class="form-group required">
+			</div>
+			<div class="form-group required">
+                <label for="input-country" class="col-sm-2 control-label">Sub-Category</label>
+                <div class="col-sm-4">
+                  <select class="form-control" name="sub_category">
+                  		<option value="1"> ad</option>
+                  </select>
+                </div>
+			</div>
+			<div class="form-group required">
                 <label for="input-firstname" class="col-sm-2 control-label">Product Name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" width="12" id="input-name" placeholder="Product Name" name="prodname">
+                  <input type="text" class="form-control" width="12" id="input-name" placeholder="Product Name" name="prodname" required >
                 </div>
               </div>
-              <?php 
-                if(isset($_POST['category']))
-                {
-                  echo "<pre>";
-                  echo $test ;
-                  echo "</pre>";
-                }
-              ?>
+              <div class="form-group required">
+              		 <label for="input-country" class="col-sm-2 control-label">Product Description</label>
+                    <div class="col-sm-10">
+                  		<textarea class="form-control" id="confirm_comment" name="product_desc" style="resize: none" rows="6" cols="60">Please Enter Product Description.
+                      </textarea>
+                  	</div>
+                  </div>
+               <div class="form-group required">
+                <label class="col-sm-2 control-label">Product Image File</label>
+                <div class="col-sm-10">
+                  <input type="file" class="form-control" name="prodimg_file" required >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Product Material</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="12" id="input-name" placeholder="Product Material" name="prodmaterial" required >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Product MRP</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Product MRP" pattern="\d*" name="prodmrp" required >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Product Cost</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Product Cost" pattern="\d*" name="prodmrp" required >
+                </div>
+              </div>
+               <div class="form-group required">
+                <label class="col-sm-2 control-label">Product Tags</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Tags for search" pattern="\d*" name="prodmrp" required >
+                </div>
+              </div>
+              <div class="buttons">
+              <div class="pull-right">
+                <input type="submit" class="btn btn-primary" value="Save Product" name="save_product">
+              </div>
+            </div>
+			</form>
+		</div>
+	   </div>
+    </div>
+</div>
 <!-- Main ENd --> 
-
-
-
-
-</form>
 <!--Footer Start-->
 <footer id="footer">
     <div class="fpart-first">
@@ -146,14 +224,8 @@
         </div>
       </div>
     </div>
-    </div>
   </footer>
 <!--Footer End-->
-
-
-
-
-
 <!-- JS Part Start-->
 <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
@@ -164,39 +236,3 @@
 <!-- JS Part End-->
 </body>
 </html>
-
-
-<?php echo "Display customer Table" ; ?> 
-<h4 class="text-uppercase">Bordered Table</h4>
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Aaron</td>
-                      <td>Seth</td>
-                      <td>@aaron</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Daichi</td>
-                      <td>Barbal</td>
-                      <td>@daichi</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Tabor</td>
-                      <td>Guju</td>
-                      <td>@tabor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>

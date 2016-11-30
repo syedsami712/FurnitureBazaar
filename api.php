@@ -22,6 +22,26 @@
 		return json_encode($resultSet);
 	}
 
+	function retrievecategories($conn){
+		$result = $conn->query("select * from category");
+		$resultSet = array();
+		while($row=$result->fetch_assoc())
+		{
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
+
+	function retreiveSubCategoriesWithRespectToCategoryID($conn,$categoryid){
+		$result = $conn->query("select * from sub_categories where categoryID = $categoryid");
+		$resultSet = array();
+		while($row=$result->fetch_assoc())
+		{
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
+
 	function retrieveAllUsersDetails($conn){
 		$result = $conn->query("select * from customers ");
 		$resultSet = array();
@@ -153,6 +173,13 @@
 				echo retrieveAllUsersDetails($conn);
 			break;
 
+		case 'retrievecategories' :
+				echo retrievecategories($conn);
+			break;
+
+		case 'retreiveSubCategoriesWithRespectToCategoryID' :
+				echo retreiveSubCategoriesWithRespectToCategoryID($conn,$categoryid);
+			break;
 		default:
 			# code...
 			break;
