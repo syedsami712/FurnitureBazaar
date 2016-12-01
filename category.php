@@ -44,7 +44,6 @@ include 'functions/dbconfig.php';
 $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS_WITH_RESPECT_TO_CATEGORY_ID;
 $categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : 0;
 $subCategoryId = isset($_GET['sub_category_id']) ? $_GET['sub_category_id'] : 0;
-
 $postfields = array('categoryId' => $categoryId, 'subCategoryId' => $subCategoryId);
 $ch = curl_init();
         $options = array (

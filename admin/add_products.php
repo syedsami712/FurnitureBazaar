@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 <link rel="stylesheet" type="text/css" href="../css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- CSS Part End-->
 </head>
 <body>
@@ -25,7 +26,8 @@
 <?php
   //php section for retrieving product details.
                 $url = DEFAULT_WEB_PATH.API_PAGE.RETREIVE_CATEGORIES;
-                $postfields = array();
+                $url1 = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID;
+                $postfields = array('catID'=> $categoryID);
                 $ch = curl_init();
                 $options = array (
                   CURLOPT_URL => $url,
@@ -117,26 +119,30 @@
 
                 <label for="input-country" class="col-sm-2 control-label">Category</label>
                 <div class="col-sm-4">
-                  <select class="form-control" name="category">
+                  <select class="form-control" name="category" id="category">
                   	<?php
                   		$count = count($array_assoc);
                   		for($x=0;$x<$count;$x++)
                   		{
-                  			echo "<option value=";
-                  			echo $array_assoc[$x]['ID'];
-                  			echo ">";
-                  			echo $array_assoc[$x]['Category_Name'];
-                  			echo '</option>';
+                  			echo '<option value="'.$array_assoc[$x]['ID'].'">'.$array_assoc[$x]['Category_Name'].'</option>';
                   		}
                   	?>
                   </select>
                 </div>
+                <script>
+                	$(function() {
+    					$('#category').change(function() {
+    						var x = $('#category').val();
+    	 				   document.location = 'http://localhost:8012/FurnitureBazaar/admin/add_products.php?catid='+ x;
+   							 });
+						});
+                </script>
 			</div>
 			<div class="form-group required">
                 <label for="input-country" class="col-sm-2 control-label">Sub-Category</label>
                 <div class="col-sm-4">
                   <select class="form-control" name="sub_category">
-                  		<option value="1"> ad</option>
+                  		<option value="1"></option>
                   </select>
                 </div>
 			</div>
