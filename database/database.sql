@@ -52,7 +52,68 @@ CREATE TABLE `customers` (
 
 /*Data for the table `customers` */
 
-insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (1,'Samiuddin','Syed','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1');
+insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (1,'Sami','Syed','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1'),(2,'Sunny','Jain','sunny@gmail.com','1111111111','Sterling Court,201','MIDC,Kondivita','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1');
+
+/*Table structure for table `invoice` */
+
+DROP TABLE IF EXISTS `invoice`;
+
+CREATE TABLE `invoice` (
+  `invoice_no` int(2) NOT NULL AUTO_INCREMENT,
+  `uid` int(3) DEFAULT NULL,
+  `delivery_methode` varchar(50) DEFAULT NULL,
+  `payment methode` varchar(50) DEFAULT NULL,
+  `comments` varchar(1000) DEFAULT NULL,
+  `mrp` int(3) DEFAULT NULL,
+  `sellingprice` int(3) DEFAULT NULL,
+  PRIMARY KEY (`invoice_no`),
+  KEY `invoice_no` (`invoice_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `invoice` */
+
+/*Table structure for table `invoiceitems` */
+
+DROP TABLE IF EXISTS `invoiceitems`;
+
+CREATE TABLE `invoiceitems` (
+  `invoice_no` int(3) DEFAULT NULL,
+  `product_id` int(3) DEFAULT NULL,
+  `quantity` int(4) DEFAULT NULL,
+  KEY `invoice_no` (`invoice_no`),
+  CONSTRAINT `invoice_no` FOREIGN KEY (`invoice_no`) REFERENCES `invoice` (`invoice_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `invoiceitems` */
+
+/*Table structure for table `orderitems` */
+
+DROP TABLE IF EXISTS `orderitems`;
+
+CREATE TABLE `orderitems` (
+  `orderID` int(10) NOT NULL,
+  `productID` int(10) NOT NULL,
+  `productname` varchar(200) NOT NULL,
+  `quantity` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `orderitems` */
+
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `orderID` int(3) NOT NULL,
+  `uid` int(3) NOT NULL,
+  `total_mrp` int(10) NOT NULL,
+  `total_cost` int(10) NOT NULL,
+  PRIMARY KEY (`orderID`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `customers` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `orders` */
 
 /*Table structure for table `products` */
 
