@@ -80,7 +80,7 @@
                       </div>
               </div> 
               <div class="panel panel-default">
-            	<div class="panel-heading">
+              <div class="panel-heading">
               <h4 class="panel-title">Shipping Address</h4>
             </div>
             <div id="collapse-shipping" class="panel-collapse collapse in">
@@ -89,7 +89,7 @@
                 <form class="form-horizontal" method="POST" action="?">
                   <div class="form-group required">
                     <div class="col-sm-10">
-                  		<textarea class="form-control" id="confirm_comment" name="comments" style="resize: none" rows="6" cols="60" readonly><?php
+                      <textarea class="form-control" id="confirm_comment" name="comments" style="resize: none" rows="6" cols="60" readonly><?php
                        
                             print($array_assoc[0]['address1']);
                             echo "\n"; 
@@ -102,15 +102,15 @@
                             print($array_assoc[0]['pin']);
                       ?> 
                       </textarea>
-                  	</div>
+                    </div>
                   </div>
-					<div class="buttons">
-            			<div class="pull-left"><a href="myaccount.php" class="btn btn-primary">Account Settings</a></div>
-                </form>
+          <div class="buttons">
+                  <div class="pull-left"><a href="myaccount.php" class="btn btn-primary">Account Settings</a></div>
+                
               </div>
             </div>
-		</div>
-</div> <!-- col sm4 -->				
+    </div>
+</div> <!-- col sm4 -->       
 </div> <!-- row -->
 <div class="col-sm-8">
               <div class="row">
@@ -229,7 +229,6 @@
                       </div>
                   </div>
                 </div>
-                <form method="POST" action="?">
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -243,7 +242,7 @@
                           <span>I have read and agree to the <a class="agree" href="#"><b>Terms &amp; Conditions</b></a></span> </label>
                         <div class="buttons">
                           <div class="pull-right">
-                            <input type="button" class="btn btn-primary" id="button-confirm" value="Confirm Order" name="submit">
+                            <input type="submit" class="btn btn-primary" value="Confirm Order" name="submit">
                           </div>
                         </div>
                       </div>
@@ -256,7 +255,7 @@
             <?php
               if(isset($_POST['submit']))
               {
-                   if(isset($_POST['Delivery']))
+                   if(isset($_POST['delivery']))
                    {
                        if(isset($_POST['payment']))
                        {

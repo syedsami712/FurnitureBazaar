@@ -81,41 +81,80 @@
     <!-- Main Menu End-->
   </div>
 <!-- Header End  -->
-
-
-
-
-
-
+<?php
+  //php section for retrieving product details.
+                $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_ALL_USER_DETAILS;
+                $postfields = array();
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $array_assoc = json_decode($result, true);
+?>
 <!-- Mail Start -->
-<form>
-<div class="col-sm-4">
-                  <select class="form-control" name="category">
-                    <option value="1">abc</option>
-                    <option value="2">ada</option>
-                  </select>
-                </div>
-
-                <div class="form-group required">
-                <label for="input-firstname" class="col-sm-2 control-label">Product Name</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" width="12" id="input-name" placeholder="Product Name" name="prodname">
-                </div>
+        <br>
+          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspExisting Customers</h1>
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Customers Registered</p>  
+              <div id="col-sm-9">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>OrderID</th>
+                      <th>UserID</th>
+                      <th>First Name</th>
+                      <th>Contact No</th>
+                      <th>Address</th>
+                      <th>MRP</th>
+                      <th>Cost</th>
+                      <th>Payment Methode</th>
+                      <th>Delivery Method</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php populatetable($array_assoc); ?>
+                  </tbody>
+                </table>
+                <
               </div>
-              <?php 
-                if(isset($_POST['category']))
-                {
-                  echo "<pre>";
-                  echo $test ;
-                  echo "</pre>";
-                }
-              ?>
+            </div>
+            <script>
+            function content()
+            {
+              var p = document.getElementbyID['table'];
+              alert(p);
+            }
+            </script>
 <!-- Main ENd --> 
+<!--php functions start-->
+<?php 
+    function populatetable($array_assoc){
+      $row = count($array_assoc);
+      for($x=0;$x<$row;$x++)
+      {?>
+          <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content(this)">
+          <td><?php echo $array_assoc[$x]['uid']; ?></td>
+          <td><?php echo $array_assoc[$x]['Fname']; ?></td>
+          <td><?php echo $array_assoc[$x]['Lname']; ?></td>
+          <td><?php echo $array_assoc[$x]['email']; ?></td>
+          <td><?php echo $array_assoc[$x]['contact_no']; ?></td>
+          <td><?php echo $array_assoc[$x]['address1'];echo "<br>" ;echo $array_assoc[$x]['address2']; ?></td>
+          <td><?php echo $array_assoc[$x]['city']; ?></td>
+          <td><?php echo $array_assoc[$x]['state']; ?></td>
+          <td><?php echo $array_assoc[$x]['pin']; ?></td>
+          </tr>        
+     <?php }
+    }
+?>
+<!--php function end-->
 
 
-
-
-</form>
 <!--Footer Start-->
 <footer id="footer">
     <div class="fpart-first">
@@ -164,39 +203,3 @@
 <!-- JS Part End-->
 </body>
 </html>
-
-
-<?php echo "Display customer Table" ; ?> 
-<h4 class="text-uppercase">Bordered Table</h4>
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Aaron</td>
-                      <td>Seth</td>
-                      <td>@aaron</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Daichi</td>
-                      <td>Barbal</td>
-                      <td>@daichi</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Tabor</td>
-                      <td>Guju</td>
-                      <td>@tabor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>

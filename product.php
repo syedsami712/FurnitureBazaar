@@ -30,7 +30,6 @@ include 'functions/dbconfig.php';
         curl_setopt_array($ch, $options);
         $result1 = curl_exec($ch);
         curl_close($ch);
-
         //setting the cookie here.
         setcookie("cart", $result1, time()+60*60*24*30);
         $urlRefresh = $_SERVER['REQUEST_URI'];
