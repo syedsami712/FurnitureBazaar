@@ -78,33 +78,42 @@
     <!-- Main Menu End-->
   </div>
 <!-- Header End  -->
-
-
-
-
-
-
 <!-- Mail Start -->
 <?php
   //php section for retrieving product details.
                 $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_USER_DETAILS_WITH_RESPECT_TO_ORDERID;
+                $url1 = DEFAULT_WEB_PATH.API_PAGE.RETREIVE_ORDERITEMS_WITH_RESPECT_TO_ORDERID;
                 $orderID = $_GET['orderID'];
                 $postfields = array('orderID' => $orderID);
+                $postfields1 = array('orderID'=> $orderID);
                 $ch = curl_init();
+                $ch1 = curl_init();
                 $options = array (
                   CURLOPT_URL => $url,
                   CURLOPT_POST => 1,
                   CURLOPT_POSTFIELDS => $postfields,
                   CURLOPT_RETURNTRANSFER => true
                 );
+                $options1 = array (
+                  CURLOPT_URL => $url1,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields1,
+                  CURLOPT_RETURNTRANSFER => true
+                );
                 curl_setopt_array($ch, $options);
+                curl_setopt_array($ch1, $options1);
                 $result = curl_exec($ch);
+                $result1 = curl_exec($ch1);
                 curl_close($ch);
+                curl_close($ch1);
                 $array_assoc = json_decode($result, true);
+                $array_assoc1 = json_decode($result1,true);
                 echo "<pre>";
                 print_r($array_assoc);
+                print_r($array_assoc1);
                 echo "</pre>";
                 ?>
+
 <div id="container">
     <div class="container">
       <div class="row">
@@ -166,7 +175,8 @@
                   </div>
             </div>
     </div>
-</div> <!-- col sm4 -->       
+</div>    
+
 </div> <!-- row -->
 
 <div class="col-sm-8">
@@ -187,8 +197,8 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-center">delivey Method</td>
-                              <td class="text-center">Payment Method</td>
+                              <td class="text-center"><?php echo $array_assoc[0]['delivery_method']; ?></td>
+                              <td class="text-center"><?php echo $array_assoc[0]['payment_type']; ?></td>
                             </tr>
                           </tbody>
                         </table>
@@ -199,7 +209,7 @@
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h4 class="panel-title"><i class="fa fa-shopping-cart"></i> Shopping cart</h4>
+                      <h4 class="panel-title"><i class="fa fa-shopping-cart"></i> Booked Items</h4>
                     </div>
                       <div class="panel-body">
                         <div class="table-responsive">
@@ -214,20 +224,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td class="text-center"><img src="../image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></td>
-                                <td class="text-left">php get product name</a></td>
-                                <td class="text-left">Quantity</td>
-                                <td class="text-right">mrp</td>
-                                <td class="text-right">price</td>
-                              </tr>
-                              <tr>
-                                <td class="text-center"><img src="../image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left">php get product name</td>
-                                <td class="text-left">Quantity</td>
-                                <td class="text-right">mrp</td>
-                                <td class="text-right">price</td>
-                              </tr>
+                                <?php populatecart($array_assoc1); ?> 
                             </tbody>
                             <tfoot>
                               <tr>
@@ -235,15 +232,11 @@
                                 <td class="text-right">$750.00</td>
                               </tr>
                               <tr>
-                                <td class="text-right" colspan="4"><strong>Flat Shipping Rate:</strong></td>
+                                <td class="text-right" colspan="4"><strong>Shipping Charges</strong></td>
                                 <td class="text-right">add delivery price</td>
                               </tr>
                               <tr>
-                                <td class="text-right" colspan="4"><strong>Eco Tax (-2.00):</strong></td>
-                                <td class="text-right">$4.00</td>
-                              </tr>
-                              <tr>
-                                <td class="text-right" colspan="4"><strong>VAT (20%):</strong></td>
+                                <td class="text-right" colspan="4"><strong>VAT (12%):</strong></td>
                                 <td class="text-right">$151.00</td>
                               </tr>
                               <tr>
@@ -255,38 +248,37 @@
                         </div>
                       </div>
                   </div>
+                  <?php 
+                    function populatecart($array_assoc1){
+                      $count = count($array_assoc1);
+                      for($x=0;$x<$count;$x++)
+                      {
+                        echo "<tr>";
+                        echo '<td class="text-center"><img src="'.DEFAULT_IMAGE_PATH.'products/'.$array_assoc1[$x]['productimg'].'" width="150" height="150" alt="'.$array_assoc1[$x]['productname'].'" title="'.$array_assoc1[$x]['productname'].'" class="img-thumbnail"></td>';
+                        echo '<td class="text-left">'.$array_assoc1[$x]['productname'].'</a></td>';
+                        echo '<td class="text-left">'.$array_assoc1[$x]['quantity'].'</td>';
+                        echo '<td class="text-right">'.$array_assoc1[$x]['mrp'].'</td>';
+                        echo '<td class="text-right">'.$array_assoc1[$x]['cost'].'</td>';
+                        echo "</tr>";
+                      }
+                    }
+                  ?>
+                  <div class="col-sm-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title"><i class="fa fa-pencil"></i> User Comment</h4>
+                    </div>
+                      <div class="panel-body">
+                        <textarea rows="4" class="form-control" id="confirm_comment" name="comments" readonly><?php echo $array_assoc[0]['comments']; ?></textarea>
+                        </div>
+                      </div>
+                  </div>
                 </div>
                 </form>
               </div>
             </div>
             <!--Final php check to plsce order -->
-            <?php
-              if(isset($_POST['submit']))
-              {
-                   if(isset($_POST['delivery']))
-                   {
-                       if(isset($_POST['payment']))
-                       {
-                           if(isset($_POST['confirmagree']))
-                           {
-                           print('<script>alert("Your order has been confimed");</script>');
-                           }
-                           else
-                           {
-                              print('<script>alert("Please Agree the terms and conditions");</script>');
-                           }
-                       }
-                       else
-                       {
-                         print('<script>alert("Please select a Payment methode. ");</script>');
-                       }
-                   }
-                   else
-                   {
-                     print('<script>alert("Please select a delivery methode. ");</script>');
-                   }
-                }
-            ?>
+            
 </div> <!-- content -->
 </div> <!-- row -->
 </div> <!-- container -->

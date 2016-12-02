@@ -22,7 +22,7 @@
 	}
 
 	function retriveUserDetailsWithRespectToOrderID($conn,$orderID){
-		$result=$conn->query("SELECT orders.orderID, customers.Fname,customers.Lname,customers.email,customers.contact_no,customers.address1,customers.city,customers.state,customers.pin,customers.address2,orders.total_mrp,orders.total_cost,orders.payment_type,orders.delivery_method FROM orders INNER JOIN customers ON orders.uid=customers.uid where orderID=$orderID");
+		$result=$conn->query("SELECT orders.orderID, customers.Fname,customers.Lname,customers.email,customers.contact_no,customers.address1,customers.city,customers.state,customers.pin,customers.address2,orders.total_mrp,orders.total_cost,orders.payment_type,orders.delivery_method,orders.comments FROM orders INNER JOIN customers ON orders.uid=customers.uid where orderID=$orderID");
 		$resultSet = array();
 		while($row=$result->fetch_assoc()){
 			array_push($resultSet,$row);
@@ -153,7 +153,23 @@
 		return json_encode($resultToEncode);
 	}
 
+	function retreiveOrderItemsWithRespectToOrderItem($conn,$orderID){
+		$result=$conn->query("SELECT orderitems.orderID,orderitems.productID,orderitems.quantity,products.productname,products.productimg,products.mrp,products.cost FROM orderitems INNER JOIN products ON orderitems.productID=products.productid WHERE orderID=$orderID");
+		$resultSet = array();
+		while($row=$result->fetch_assoc()){
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
 
+	function retreiveProductsDetailsAndStock($conn){
+		$result = $conn->query('SELECT products.productid,products.mrp,products.cost,products.productname,productstock.availablestock FROM products INNER JOIN productstock ON products.productid=productstock.productid');
+		$resultSet = array();
+		while($row=$result->fetch_assoc()){
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
 
 	switch ($functionName) {
 		case 'retrieveProductDetails':
@@ -244,6 +260,15 @@
 				$orderID = $_POST['orderID'];
 				echo retriveUserDetailsWithRespectToOrderID($conn,$orderID);
 			break;
+
+		case 'retreiveOrderItemsWithRespectToOrderItem':
+				$orderID = $_POST['orderID'];
+				echo retreiveOrderItemsWithRespectToOrderItem($conn,$orderID);
+			break;
+
+		case 'retreiveProductsDetailsAndStock' :
+				echo retreiveProductsDetailsAndStock($conn);
+			break;	
 
 		default:
 			# code...
