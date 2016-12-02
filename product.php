@@ -4,7 +4,7 @@
 include 'GlobalVariables.php';
 include 'functions/dbconfig.php';
 
-
+    //add to the cart
     if(isset($_POST['addToCart'])) {
       $url = DEFAULT_WEB_PATH.API_PAGE.ADD_TO_CART;
       $productid = $_GET['productid'];
@@ -37,6 +37,43 @@ include 'functions/dbconfig.php';
         echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
       
     }
+
+
+    //delete from the cart.
+    if(isset($_POST['deleteFromCart'])){
+
+        $quants = $_POST['quants'];
+        $prodId = $_POST['id'];
+
+        $url = DEFAULT_WEB_PATH.API_PAGE.DELETE_FROM_CART;
+
+      //check first whether cart is details is present or not!.
+      if(isset($_COOKIE['cart'])){
+        $cartDetails = $_COOKIE['cart'];
+        // echo $cartDetails;
+        
+        $postfields = array('productid' => $prodId, 'productQuantity' => $quants, 'cartDetails' => $cartDetails );
+      }
+      else {
+      //something went wrong
+    }
+      $ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result1 = curl_exec($ch);
+        curl_close($ch);
+        // echo '<PRE>';
+        //  echo $result1;
+        // echo '</PRE>';
+        setcookie("cart", $result1, time()+60*60*24*30);
+        $urlRefresh = $_SERVER['REQUEST_URI'];
+        echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+      }
 
   ?>
 

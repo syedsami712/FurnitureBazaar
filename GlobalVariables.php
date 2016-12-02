@@ -13,6 +13,7 @@ define('RETRIEVE_PRODUCTS_DETAILS', "retrieveProductDetails");
 define('RETRIEVE_PRODUCTS_DETAILS_WITH_RESPECT_TO_CATEGORY_ID', "retrieveProductsDetailsWithRespectToCategoryId");
 define('RETRIEVE_USER_DETAILS', "retrieveUserDetailsforUpdate");
 define('ADD_TO_CART', "addProductToCart");
+define('DELETE_FROM_CART', "deleteFromCart");
 define('RETRIEVE_ALL_USER_DETAILS',"retrieveAllUsersDetails");
 
 

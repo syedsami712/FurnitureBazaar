@@ -91,6 +91,31 @@
 		}
 	}
 
+	function deleteFromCart($conn, $productId, $productQuantity, $cartDetails) {
+		$cartArray = json_decode($cartDetails, true);
+		$resultToEncode = array();
+		
+		//make the product into json string.
+		$product = array(json_encode(array("productId" => $productId, "productQuantity" => $productQuantity)));
+
+		//convert the value inside each cart to json string.
+		for($i =0 ; $i<count($cartArray); $i++){
+			$cartArray[$i] = json_encode($cartArray[$i][0]);
+		}
+		
+		//take the difference and store it in result
+		$result = array_diff($cartArray, $product);
+		
+		//re arranging all the key values to 0, 1, 2, ...
+			foreach($result as $key => $value){
+				array_push($resultToEncode, array(json_decode($result[$key], true)));
+			}
+
+		//all this because of the notice on array convert string something.
+		return json_encode($resultToEncode);
+	}
+
+
 
 	switch ($functionName) {
 		case 'retrieveProductDetails':
@@ -143,10 +168,21 @@
 					echo addProductToCart($conn, $productid, $productQuantity, $jsonString);
 					// echo '<PRE>'; print_r(json_decode($jsonString)); echo '</PRE>';
 					// echo $jsonString;
-
-
-
 				}
+			break;
+
+		case 'deleteFromCart':
+			$productid = $_POST['productid'];
+			$productQuantity = $_POST['productQuantity'];
+			if(!isset($_POST['cartDetails'])){
+				//something went wrong.
+				}
+				else {
+					$jsonString = $_POST['cartDetails'];
+					print_r(deleteFromCart($conn, $productid, $productQuantity, $jsonString));
+					
+				}
+			
 			break;
 
 		case 'retrieveAllUsersDetails' :

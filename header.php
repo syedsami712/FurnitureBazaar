@@ -1,6 +1,7 @@
 
 <?php require("functions/function.php");
       include 'functions/dbconfig.php';
+
    ?>
 
 <div id="header">
@@ -46,7 +47,6 @@
     foreach($cookies as $cookie) {
         $parts = explode('=', $cookie);
         $name = trim($parts[0]);
-        setcookie($name, '', time()-1000);
         setcookie($name, '', time()-1000, '/');
     }
 }
@@ -58,6 +58,7 @@
         $testArray = json_decode($_COOKIE['cart'], true);
         // echo '<PRE>';
         // print_r($testArray);
+        // // echo "<br>". DEFAULT_WEB_PATH.API_PAGE."deleteFromCart&".$_SERVER['QUERY_STRING'];
         // echo '</PRE>'; 
 
         for($i = 0; $i < count($testArray); $i++) {
@@ -77,6 +78,8 @@
         // echo '</PRE>';
 
       }
+
+      
 
 
     ?>
@@ -118,16 +121,27 @@
                         $totalAmount = 0;
                     ?>
                       <?php for($i = 0; $i < count($masterArray); $i++){ ?>
-                     
+                     <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                       <tr>
 
-                        <td class="text-left"><a href="product.html"><?php echo $masterArray[$i][2]; ?></a></td>
+                        <td class="text-left"><a href='<?php echo DEFAULT_WEB_PATH."product.php?productid=".$masterArray[$i][0]; ?>' ><?php echo $masterArray[$i][2]; ?></a></td>
+                        <input type="hidden" name="quants" value="<?php echo $masterArray[$i][1]; ?>" />
+                          <input type="hidden" name="id" value="<?php echo $masterArray[$i][0]; ?>" />
                         <td class="text-right">x <?php echo $masterArray[$i][1]; ?></td>
                         <td class="text-right"><?php 
-                        $totalAmount += $masterArray[$i][3]*$masterArray[$i][1];
+                        $totalAmount += $masterArray[$i][3]*$masterArray[$i][1];  
                         echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
-                        <td class="text-center"><a href="#"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a></td>
+                        <td class="text-center">
+
+                        <!--<a href="#"><button class="btn btn-danger btn-xs remove" title="Remove" onClick="" type="button"><i class="fa fa-times"></i></button></a>-->
+
+                        
+                        <button class="btn btn-danger btn-xs remove" title="Remove" onClick="" name="deleteFromCart" type="submit"><i class="fa fa-times"></i></button>
+                        <!--<input type="submit" class="btn btn-danger btn-xs remove" name="deleteFromCart" value="x" ></input>-->
+                       
+                        </td>
                       </tr>
+                      </form>
                       <?php } 
                       } ?>
 
@@ -149,6 +163,7 @@
                 </li>
               </ul>
             </div>
+       
           </div>
           <!-- Mini Cart End-->
           <!-- Search Start-->
