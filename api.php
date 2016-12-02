@@ -178,7 +178,8 @@
 			break;
 
 		case 'retreiveSubCategoriesWithRespectToCategoryID' :
-				echo retreiveSubCategoriesWithRespectToCategoryID($conn,$categoryid);
+				$categoryId = isset($_POST['catid']) ? $_POST['catid'] : 0;
+				echo retreiveSubCategoriesWithRespectToCategoryID($conn,$categoryId);
 			break;
 		default:
 			# code...

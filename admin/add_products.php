@@ -22,12 +22,26 @@
 <!-- CSS Part End-->
 </head>
 <body>
+<script>
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+  }
+   $( window ).load(function() {s
+}); 
+</script>
 <!-- Header Start -->
 <?php
   //php section for retrieving product details.
+                $categoryId = isset($_GET['catid']) ? $_GET['catid'] : 0;
+
                 $url = DEFAULT_WEB_PATH.API_PAGE.RETREIVE_CATEGORIES;
-                $url1 = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID;
-                $postfields = array('catID'=> $categoryID);
+                $postfields = array('catid'=> $categoryId);
                 $ch = curl_init();
                 $options = array (
                   CURLOPT_URL => $url,
@@ -40,9 +54,31 @@
                 curl_close($ch);
                 $array_assoc = json_decode($result, true);
                 echo '<pre>';
-       			print_r($array_assoc);
-       			echo $array_assoc[1]['ID'];
-        		echo '</pre>';
+       			    print_r($array_assoc);
+       			    
+                // echo "<br>". $categoryId;
+        		    echo '</pre>';
+
+                if(isset($_GET['catid'])) {
+                  $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID;
+                $postfields = array('catid'=> $categoryId);
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $array_assoc1 = json_decode($result, true);
+                echo '<pre>';
+                print_r($array_assoc1);
+                
+                // echo "<br>". $categoryId;
+                echo '</pre>';
+                }
                 ?>
 
 <div id="header">
@@ -102,11 +138,6 @@
   </div>
 <!-- Header End  -->
 
-
-
-
-
-
 <!-- Mail Start -->
 <div id="container">
     <div class="container">
@@ -114,12 +145,13 @@
           <div id="content" class="col-sm-9">
           <br>
 			<h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspAdd Products Customers</h1>
-				<form class="form-horizontal">
+				<form class="form-horizontal" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 					<div class="form-group required">
 
                 <label for="input-country" class="col-sm-2 control-label">Category</label>
                 <div class="col-sm-4">
                   <select class="form-control" name="category" id="category">
+                  <option value="0">Select the Category</option>
                   	<?php
                   		$count = count($array_assoc);
                   		for($x=0;$x<$count;$x++)
@@ -131,18 +163,28 @@
                 </div>
                 <script>
                 	$(function() {
-    					$('#category').change(function() {
-    						var x = $('#category').val();
-    	 				   document.location = 'http://localhost:8012/FurnitureBazaar/admin/add_products.php?catid='+ x;
-   							 });
-						});
+                  $('#category').change(function() {
+                  var x = $('#category').val();
+                  document.location = 'http://localhost:8012/FurnitureBazaar/admin/add_products.php?catid='+ x;
+                 });
+                  });
+                  var catid = $.urlParam('catid');
+                  $("#category").get(0).selectedIndex = catid;
                 </script>
+            <!--  -->
 			</div>
 			<div class="form-group required">
                 <label for="input-country" class="col-sm-2 control-label">Sub-Category</label>
                 <div class="col-sm-4">
-                  <select class="form-control" name="sub_category">
-                  		<option value="1"></option>
+                  <select class="form-control" name="sub_category" id="sub_category">
+                  		<option value="0">Select the Sub-Category</option>
+                      <?php 
+                          $count=count($array_assoc1);
+                          for($x=0;$x<$count;$x++)
+                          {
+                            echo '<option value="'.$array_assoc1[1]['ID'].'">'.$array_assoc1[$x]['sub_category'].'</option>';
+                          }
+                      ?>
                   </select>
                 </div>
 			</div>

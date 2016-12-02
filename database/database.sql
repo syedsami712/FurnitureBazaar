@@ -52,7 +52,7 @@ CREATE TABLE `customers` (
 
 /*Data for the table `customers` */
 
-insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (1,'Sami','Syed','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711/712,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1'),(2,'Sunny','Jain','sunny@gmail.com','1111111111','Sterling Court,201','MIDC,Kondivita','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1');
+insert  into `customers`(`uid`,`Fname`,`Lname`,`email`,`contact_no`,`address1`,`address2`,`city`,`state`,`pin`,`password`) values (1,'Sami','Syed','ka.boom.tm@gmail.com','8692880768','Lok Sarita E-711,','Marol Miltery Road,Andheri(EAST)','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1'),(2,'Sunny','Jain','sunny@gmail.com','1111111111','Sterling Court,201','MIDC,Kondivita','Mumbai','Maharashtra','400059','532fd2e909d40e440ac2cb243bd79aa1');
 
 /*Table structure for table `invoice` */
 
@@ -99,6 +99,8 @@ CREATE TABLE `orderitems` (
 
 /*Data for the table `orderitems` */
 
+insert  into `orderitems`(`orderID`,`productID`,`productname`,`quantity`) values (1,1,'Asdsadasd',22),(1,0,'',0);
+
 /*Table structure for table `orders` */
 
 DROP TABLE IF EXISTS `orders`;
@@ -108,12 +110,16 @@ CREATE TABLE `orders` (
   `uid` int(3) NOT NULL,
   `total_mrp` int(10) NOT NULL,
   `total_cost` int(10) NOT NULL,
+  `payment_type` varchar(50) NOT NULL,
+  `delivery_method` varchar(50) NOT NULL,
   PRIMARY KEY (`orderID`),
   KEY `uid` (`uid`),
   CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `customers` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `orders` */
+
+insert  into `orders`(`orderID`,`uid`,`total_mrp`,`total_cost`,`payment_type`,`delivery_method`) values (1,1,33333,121222,'','');
 
 /*Table structure for table `products` */
 

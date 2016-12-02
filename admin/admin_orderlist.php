@@ -103,34 +103,32 @@
             <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Customers Registered</p>  
               <div id="col-sm-9">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="customers">
-                <p>
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
+                      <th>OrderID</th>
                       <th>UserID</th>
                       <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
                       <th>Contact No</th>
                       <th>Address</th>
-                      <th>City</th>
-                      <th>State</th>
-                      <th>Pin</th>
+                      <th>MRP</th>
+                      <th>Cost</th>
+                      <th>Payment Methode</th>
+                      <th>Delivery Method</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php populatetable($array_assoc); ?>
                   </tbody>
                 </table>
-                </p>
+                <
               </div>
             </div>
             <script>
             function content()
             {
-              var table = document.getElementById('customers');
-              var row = table.row[0];
-              alert(row.id);
+              var p = document.getElementbyID['table'];
+              alert(p);
             }
             </script>
 <!-- Main ENd --> 
@@ -140,7 +138,7 @@
       $row = count($array_assoc);
       for($x=0;$x<$row;$x++)
       {?>
-          <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content()">
+          <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content(this)">
           <td><?php echo $array_assoc[$x]['uid']; ?></td>
           <td><?php echo $array_assoc[$x]['Fname']; ?></td>
           <td><?php echo $array_assoc[$x]['Lname']; ?></td>
