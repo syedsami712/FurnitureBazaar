@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 <link rel="stylesheet" type="text/css" href="../css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- CSS Part End-->
 </head>
 <body>
@@ -103,7 +104,7 @@
             <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Customers Registered</p>  
               <div id="col-sm-9">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="customers">
+                <table class="table table-bordered table-hover">
                 <p>
                   <thead>
                     <tr>
@@ -125,14 +126,7 @@
                 </p>
               </div>
             </div>
-            <script>
-            function content()
-            {
-              var table = document.getElementById('customers');
-              var row = table.row[0];
-              alert(row.id);
-            }
-            </script>
+            
 <!-- Main ENd --> 
 <!--php functions start-->
 <?php 
@@ -140,7 +134,7 @@
       $row = count($array_assoc);
       for($x=0;$x<$row;$x++)
       {?>
-          <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content()">
+          <tr>
           <td><?php echo $array_assoc[$x]['uid']; ?></td>
           <td><?php echo $array_assoc[$x]['Fname']; ?></td>
           <td><?php echo $array_assoc[$x]['Lname']; ?></td>
@@ -155,8 +149,6 @@
     }
 ?>
 <!--php function end-->
-
-
 <!--Footer Start-->
 <footer id="footer">
     <div class="fpart-first">

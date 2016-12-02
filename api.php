@@ -12,6 +12,24 @@
 		return json_encode($resultSet);
 	}
 
+	function retriveDataForOrders($conn){
+		$result=$conn->query('SELECT orders.orderID, customers.uid,customers.Fname, customers.contact_no,customers.address1,orders.total_mrp,orders.total_cost,orders.payment_type,orders.delivery_method FROM orders INNER JOIN customers ON orders.uid=customers.uid;');
+		$resultSet = array();
+		while($row=$result->fetch_assoc()){
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
+
+	function retriveUserDetailsWithRespectToOrderID($conn,$orderID){
+		$result=$conn->query("SELECT orders.orderID, customers.Fname,customers.Lname,customers.email,customers.contact_no,customers.address1,customers.city,customers.state,customers.pin,customers.address2,orders.total_mrp,orders.total_cost,orders.payment_type,orders.delivery_method FROM orders INNER JOIN customers ON orders.uid=customers.uid where orderID=$orderID");
+		$resultSet = array();
+		while($row=$result->fetch_assoc()){
+			array_push($resultSet,$row);
+		}
+		return json_encode($resultSet);
+	}
+
 	function retrieveUserDetailsforUpdate($conn,$userid){
 		$result = $conn->query("select * from customers where uid = $userid");
 		$resultSet = array();
@@ -217,6 +235,16 @@
 				$categoryId = isset($_POST['catid']) ? $_POST['catid'] : 0;
 				echo retreiveSubCategoriesWithRespectToCategoryID($conn,$categoryId);
 			break;
+
+		case 'retriveDataForOrders':
+				echo retriveDataForOrders($conn);
+			break;
+
+		case 'retriveUserDetailsWithRespectToOrderID':
+				$orderID = $_POST['orderID'];
+				echo retriveUserDetailsWithRespectToOrderID($conn,$orderID);
+			break;
+
 		default:
 			# code...
 			break;

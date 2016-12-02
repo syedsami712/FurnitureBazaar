@@ -17,4 +17,6 @@ define('DELETE_FROM_CART', "deleteFromCart");
 define('RETRIEVE_ALL_USER_DETAILS',"retrieveAllUsersDetails");
 define('RETREIVE_CATEGORIES',"retrievecategories");
 define('RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID',"retreiveSubCategoriesWithRespectToCategoryID");
+define('RETREIVE_DATA_FOR_ORDERS',"retriveDataForOrders");
+define('RETRIEVE_USER_DETAILS_WITH_RESPECT_TO_ORDERID',"retriveUserDetailsWithRespectToOrderID");
 ?>

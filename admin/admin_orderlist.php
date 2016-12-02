@@ -83,7 +83,7 @@
 <!-- Header End  -->
 <?php
   //php section for retrieving product details.
-                $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_ALL_USER_DETAILS;
+                $url = DEFAULT_WEB_PATH.API_PAGE.RETREIVE_DATA_FOR_ORDERS;
                 $postfields = array();
                 $ch = curl_init();
                 $options = array (
@@ -96,11 +96,14 @@
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $array_assoc = json_decode($result, true);
+                echo "<pre>";
+                print_r($array_assoc);
+                echo "</pre>";
 ?>
 <!-- Mail Start -->
         <br>
-          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspExisting Customers</h1>
-            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Customers Registered</p>  
+          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspOrder List</h1>
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Orders</p>  
               <div id="col-sm-9">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -113,7 +116,7 @@
                       <th>Address</th>
                       <th>MRP</th>
                       <th>Cost</th>
-                      <th>Payment Methode</th>
+                      <th>Payment Type</th>
                       <th>Delivery Method</th>
                     </tr>
                   </thead>
@@ -125,10 +128,10 @@
               </div>
             </div>
             <script>
-            function content()
+            function content(elem)
             {
-              var p = document.getElementbyID['table'];
-              alert(p);
+              var x = elem.getAttribute("id");
+              window.location = "http://localhost:8012/FurnitureBazaar/admin/order.php?orderID="+x;
             }
             </script>
 <!-- Main ENd --> 
@@ -139,15 +142,15 @@
       for($x=0;$x<$row;$x++)
       {?>
           <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content(this)">
+          <td><?php echo $array_assoc[$x]['orderID']; ?></td>
           <td><?php echo $array_assoc[$x]['uid']; ?></td>
           <td><?php echo $array_assoc[$x]['Fname']; ?></td>
-          <td><?php echo $array_assoc[$x]['Lname']; ?></td>
-          <td><?php echo $array_assoc[$x]['email']; ?></td>
           <td><?php echo $array_assoc[$x]['contact_no']; ?></td>
-          <td><?php echo $array_assoc[$x]['address1'];echo "<br>" ;echo $array_assoc[$x]['address2']; ?></td>
-          <td><?php echo $array_assoc[$x]['city']; ?></td>
-          <td><?php echo $array_assoc[$x]['state']; ?></td>
-          <td><?php echo $array_assoc[$x]['pin']; ?></td>
+          <td><?php echo $array_assoc[$x]['address1']; ?></td>
+          <td><?php echo $array_assoc[$x]['total_mrp']; ?></td>
+          <td><?php echo $array_assoc[$x]['total_cost']; ?></td>
+          <td><?php echo $array_assoc[$x]['payment_type']; ?></td>
+          <td><?php echo $array_assoc[$x]['delivery_method']; ?></td>
           </tr>        
      <?php }
     }
