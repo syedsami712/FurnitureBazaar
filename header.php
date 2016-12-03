@@ -1,16 +1,48 @@
 
 <?php require("functions/function.php");
       include 'functions/dbconfig.php';
-
    ?>
 <?php 
  //delete from the cart.
     if(isset($_POST['deleteFromCart'])){
-
         $quants = $_POST['quants'];
         $prodId = $_POST['id'];
-
         $url = DEFAULT_WEB_PATH.API_PAGE.DELETE_FROM_CART;
+      //check first whether cart is details is present or not!.
+      if(isset($_COOKIE['cart'])){
+        $cartDetails = $_COOKIE['cart'];
+        // echo $cartDetails;
+        
+        $postfields = array('productid' => $prodId, 'productQuantity' => $quants, 'cartDetails' => $cartDetails );
+      }
+      else {
+      //something went wrong
+    }
+      $ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result1 = curl_exec($ch);
+        curl_close($ch);
+        echo '<PRE>';
+         echo $result1;
+        echo '</PRE>';
+        setcookie("cart", $result1, time()+60*60*24*30);
+        $urlRefresh = $_SERVER['REQUEST_URI'];
+        // echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+      }
+
+
+         //updateCart
+      if(isset($_POST['updateCart'])){
+        $quants = $_POST['quantity'];
+        $prodId = $_POST['prodId'];
+
+        $url = DEFAULT_WEB_PATH.API_PAGE.UPDATE_CART;
 
       //check first whether cart is details is present or not!.
       if(isset($_COOKIE['cart'])){
@@ -38,8 +70,9 @@
         setcookie("cart", $result1, time()+60*60*24*30);
         $urlRefresh = $_SERVER['REQUEST_URI'];
         echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+  
+          
       }
-
 ?>
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
@@ -97,7 +130,6 @@
         // print_r($testArray);
         // // echo "<br>". DEFAULT_WEB_PATH.API_PAGE."deleteFromCart&".$_SERVER['QUERY_STRING'];
         // echo '</PRE>'; 
-
         for($i = 0; $i < count($testArray); $i++) {
           $productId = $testArray[$i][0]['productId'];
           $result = $conn->query("Select * from products where productid = $productId");
@@ -107,18 +139,15 @@
           array_push($uniqueProductDetailArray, $testArray[$i][0]['productQuantity']);
           array_push($uniqueProductDetailArray, $row['productname']);
           array_push($uniqueProductDetailArray, $row['cost']);
-
+          array_push($uniqueProductDetailArray, $row['productimg']);
+          array_push($uniqueProductDetailArray, $row['prodmaterial']);
           array_push($masterArray, $uniqueProductDetailArray);
         }
         // echo '<PRE>';
         // print_r($masterArray);
         // echo '</PRE>';
-
       }
-
       
-
-
     ?>
     <!-- Header Start-->
     <header class="header-row">

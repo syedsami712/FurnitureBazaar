@@ -14,6 +14,7 @@ define('RETRIEVE_PRODUCTS_DETAILS_WITH_RESPECT_TO_CATEGORY_ID', "retrieveProduct
 define('RETRIEVE_USER_DETAILS', "retrieveUserDetailsforUpdate");
 define('ADD_TO_CART', "addProductToCart");
 define('DELETE_FROM_CART', "deleteFromCart");
+define('UPDATE_CART', "updateCart");
 define('RETRIEVE_ALL_USER_DETAILS',"retrieveAllUsersDetails");
 define('RETREIVE_CATEGORIES',"retrievecategories");
 define('RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID',"retreiveSubCategoriesWithRespectToCategoryID");
