@@ -72,20 +72,6 @@ CREATE TABLE `invoice` (
 
 /*Data for the table `invoice` */
 
-/*Table structure for table `invoiceitems` */
-
-DROP TABLE IF EXISTS `invoiceitems`;
-
-CREATE TABLE `invoiceitems` (
-  `invoice_no` int(3) DEFAULT NULL,
-  `product_id` int(3) DEFAULT NULL,
-  `quantity` int(4) DEFAULT NULL,
-  KEY `invoice_no` (`invoice_no`),
-  CONSTRAINT `invoice_no` FOREIGN KEY (`invoice_no`) REFERENCES `invoice` (`invoice_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `invoiceitems` */
-
 /*Table structure for table `orderitems` */
 
 DROP TABLE IF EXISTS `orderitems`;
@@ -99,7 +85,7 @@ CREATE TABLE `orderitems` (
 
 /*Data for the table `orderitems` */
 
-insert  into `orderitems`(`orderID`,`productID`,`productname`,`quantity`) values (1,1,'Asdsadasd',22),(1,0,'',0);
+insert  into `orderitems`(`orderID`,`productID`,`productname`,`quantity`) values (1,1,'Asdsadasd',22),(1,3,'fasfas',44);
 
 /*Table structure for table `orders` */
 
@@ -112,6 +98,7 @@ CREATE TABLE `orders` (
   `total_cost` int(10) NOT NULL,
   `payment_type` varchar(50) NOT NULL,
   `delivery_method` varchar(50) NOT NULL,
+  `comments` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`orderID`),
   KEY `uid` (`uid`),
   CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `customers` (`uid`)
@@ -119,7 +106,7 @@ CREATE TABLE `orders` (
 
 /*Data for the table `orders` */
 
-insert  into `orders`(`orderID`,`uid`,`total_mrp`,`total_cost`,`payment_type`,`delivery_method`) values (1,1,33333,121222,'','');
+insert  into `orders`(`orderID`,`uid`,`total_mrp`,`total_cost`,`payment_type`,`delivery_method`,`comments`) values (1,1,33333,121222,'cash on delivery','home delivery','ghar pe chod dena pls');
 
 /*Table structure for table `products` */
 
