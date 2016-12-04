@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+  include 'GlobalVariables.php';
+?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -18,16 +20,17 @@
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
 <!-- CSS Part End-->
 </head>
-<?php 
 
-echo '<PRE>';
-
-echo '</PRE>';
-
-
-?>
 <body>
 <?php include "header.php" ?>
+<?php 
+
+// echo '<PRE>';
+// print_r($masterArray);
+// // echo "<br>".DEFAULT_WEB_PATH."products/".$masterArray[$i][4];
+// echo '</PRE>';
+
+?>
 <div id="container">
     <div class="container">
       <div class="row">
@@ -48,41 +51,50 @@ echo '</PRE>';
                   </tr>
                 </thead>
                 <tbody>
+
+                  <?php 
+                  $totalPrice = 0;
+                  for($i = 0; $i < count($masterArray); $i++){ 
+
+                  $totalPrice += $masterArray[$i][3]*$masterArray[$i][1];
+                  ?>
                   <tr>
-                    <td class="text-center"><a href="product.php"><img src="images/logo.png" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
-                    <td class="text-left"><a href="product.php">php cartproduct()</a><br />
-                      <small>Material : php getmaterial()</small></td>
-                    <td class="text-left">php getproductID</td>
+                    <td class="text-center"><a href="product.php"><img src='<?php echo DEFAULT_IMAGE_PATH."products/".$masterArray[$i][4]; ?>' alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" height="150" width="150" /></a></td>
+                    <td class="text-left"><a href="product.php"><?php echo $masterArray[$i][2]; ?></a><br />
+                      <!-- <small>Material : php getmaterial()</small> -->
+                      <!-- <div itemprop="description" id="tab-description" class="tab-pane active">
+                          <div>
+                            <?php 
+                              echo $masterArray[$i][6];
+                            ?>
+                          </div>
+                       </div> -->
+
+                      </td>
+                    <td class="text-left"><?php echo $masterArray[$i][5]; ?></td>
                     <td class="text-left"><div class="input-group btn-block quantity">
-                        <input type="text" name="quantity" value="1" size="1" class="form-control" />
+                    <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                    <input type="hidden" name="prodId" value="<?php echo $masterArray[$i][0]; ?>">
+                        <input type="text" name="quantity" value="<?php echo $masterArray[$i][1]; ?>" size="3" class="form-control" />
                         <span class="input-group-btn">
-                        <button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                        <button type="submit" name="updateCart" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
                         <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
-                        </span></div></td>
-                    <td class="text-right">php getpriceofproduct()</td>
-                    <td class="text-right">calculated price = quantity * price</td>
+                        </span></div>
+                        </form>
+                        </td>
+                    <td class="text-right"><?php echo $masterArray[$i][3]; ?></td>
+                    <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
                   </tr>
-                  <tr>
-                    <td class="text-center"><a href="product.php"><img src="images/logo.png" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
-                    <td class="text-left"><a href="product.php">php cartproduct()</a><br />
-                      <small>Material : php getmaterial()</small></td>
-                    <td class="text-left">php getproductID</td>
-                    <td class="text-left"><div class="input-group btn-block quantity">
-                        <input type="text" name="quantity" value="1" size="1" class="form-control" />
-                        <span class="input-group-btn">
-                        <button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                        <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
-                        </span></div></td>
-                    <td class="text-right">php getpriceofproduct()</td>
-                    <td class="text-right">calculated price = quantity * price</td>
-                  </tr>
+
+
+                <?php } ?>
                 </tbody>
               </table>
             </div>
-          <h2 class="subtitle">What would you like to do next?</h2>
-          <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+          
+          <!-- <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p> -->
           <div class="row">
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">Use Coupon Code</h4>
@@ -98,8 +110,8 @@ echo '</PRE>';
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-6">
+            </div> -->
+            <div class="col-sm-6" style="float: right;">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">Amount Summary</h4>
@@ -108,19 +120,20 @@ echo '</PRE>';
                   <table class="table table-bordered">
                 <tr>
                   <td class="text-right"><strong>Sub-Total:</strong></td>
-                  <td class="text-right">$940.00</td>
+                  <td class="text-right"><?php echo "Rs.".(float)$totalPrice; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><strong>Eco Tax (-2.00):</strong></td>
-                  <td class="text-right">$4.00</td>
-                </tr>
-                <tr>
-                  <td class="text-right"><strong>VAT (20%):</strong></td>
-                  <td class="text-right">$188.00</td>
+                  <td class="text-right"><strong>VAT (12%):</strong></td>
+                  <td class="text-right"><?php 
+                      $VAT = (12/100)*$totalPrice;
+                      echo "Rs.".$VAT;
+                  ?></td>
                 </tr>
                 <tr>
                   <td class="text-right"><strong>Total:</strong></td>
-                  <td class="text-right">$1,132.00</td>
+                  <td class="text-right"><?php $grandTotal = $totalPrice + $VAT;
+                  echo "Rs.". $grandTotal;
+                   ?></td>
                 </tr>
               </table>
                 </div>

@@ -1,23 +1,28 @@
 <?php session_start();
-
 //inlcudes
 include 'GlobalVariables.php';
 include 'functions/dbconfig.php';
-
     //add to the cart
     if(isset($_POST['addToCart'])) {
+
       $url = DEFAULT_WEB_PATH.API_PAGE.ADD_TO_CART;
       $productid = $_GET['productid'];
       $productQuantity = $_POST['quantity'];
-
       //check first whether cart is details is present or not!.
+      // echo '<PRE>';
+      // echo $productid." ".$productQuantity;
+      // echo '</PRE>';
       if(isset($_COOKIE['cart'])){
+        echo '<PRE>';
+        print_r($_COOKIE);
+        echo '</PRE>';
         $cartDetails = $_COOKIE['cart'];
-        // echo $cartDetails;
+        // // echo $cartDetails;
         
         $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity, 'cartDetails' => $cartDetails );
       }
       else {
+        // echo '<script> alert("cart is not there"); </script>';
       $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity);
     }
       $ch = curl_init();
@@ -36,10 +41,7 @@ include 'functions/dbconfig.php';
         echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
       
     }
-
-
    
-
   ?>
 
 <html>
@@ -86,7 +88,7 @@ $ch = curl_init();
 <?php include "header.php"; ?>
 <div id="container">
     <div class="container">
-    	<br/>
+      <br/>
         <div class="row">
         <!--Middle Part Start-->
         <div id="content" class="col-sm-9">
