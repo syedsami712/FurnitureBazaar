@@ -2,46 +2,7 @@
 //inlcudes
 include 'GlobalVariables.php';
 include 'functions/dbconfig.php';
-    //add to the cart
-    if(isset($_POST['addToCart'])) {
-
-      $url = DEFAULT_WEB_PATH.API_PAGE.ADD_TO_CART;
-      $productid = $_GET['productid'];
-      $productQuantity = $_POST['quantity'];
-      //check first whether cart is details is present or not!.
-      // echo '<PRE>';
-      // echo $productid." ".$productQuantity;
-      // echo '</PRE>';
-      if(isset($_COOKIE['cart'])){
-        echo '<PRE>';
-        print_r($_COOKIE);
-        echo '</PRE>';
-        $cartDetails = $_COOKIE['cart'];
-        // // echo $cartDetails;
-        
-        $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity, 'cartDetails' => $cartDetails );
-      }
-      else {
-        // echo '<script> alert("cart is not there"); </script>';
-      $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity);
-    }
-      $ch = curl_init();
-        $options = array (
-                  CURLOPT_URL => $url,
-                  CURLOPT_POST => 1,
-                  CURLOPT_POSTFIELDS => $postfields,
-                  CURLOPT_RETURNTRANSFER => true
-          );
-        curl_setopt_array($ch, $options);
-        $result1 = curl_exec($ch);
-        curl_close($ch);
-        //setting the cookie here.
-        setcookie("cart", $result1, time()+60*60*24*30);
-        $urlRefresh = $_SERVER['REQUEST_URI'];
-        echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
-      
-    }
-   
+    
   ?>
 
 <html>
@@ -86,6 +47,7 @@ $ch = curl_init();
         ?>
 <body>
 <?php include "header.php"; ?>
+<?php //echo '<PRE>'. $masterArray[1][1]. '</PRE>'; ?>
 <div id="container">
     <div class="container">
       <br/>
@@ -104,7 +66,7 @@ $ch = curl_init();
                   <li><b>Product Code:</b> <span itemprop="mpn"><?php echo $array_assoc[0]['productid']; ?></span></li>
                 </ul>
                 <ul class="price-box">
-                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old"><?php echo $array_assoc[0]['mrp']; ?></span> <span itemprop="price"><?php echo $array_assoc[0]['cost']; ?><span itemprop="availability" content="In Stock"></span></span></li>
+                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old"><?php echo "Rs. ".$array_assoc[0]['mrp']; ?></span> <span itemprop="price"><?php echo "Rs. ".  $array_assoc[0]['cost']; ?><span itemprop="availability" content="In Stock"></span></span></li>
                   <li></li>
                 </ul>
                 <div id="product">
@@ -113,7 +75,21 @@ $ch = curl_init();
                     <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                       <div class="qty">
                         <label class="control-label" for="input-quantity">Qty</label>
-                        <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control" />
+                        <?php 
+                        $proquant = 1;
+                          for($i = 0; $i < count($masterArray); $i++) {
+                          if($masterArray[$i][0] == $array_assoc[0]['productid']){
+                            $proquant =  $masterArray[$i][1];
+                            break;
+                          }
+                          else {
+                            $proquant = 1;
+                          }
+                        }
+                        ?>
+                        <input type="text" name="quantity" value="<?php
+                         echo $proquant;
+                        ?>" size="20" id="input-quantity" class="form-control" />
                         <a class="qtyBtn plus" href="javascript:void(0);">+</a><br />
                         <a class="qtyBtn mines" href="javascript:void(0);">-</a>
                         <div class="clear"></div>

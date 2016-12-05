@@ -28,19 +28,19 @@
         curl_setopt_array($ch, $options);
         $result1 = curl_exec($ch);
         curl_close($ch);
-        echo '<PRE>';
-         echo $result1;
-        echo '</PRE>';
+        // echo '<PRE> delete';
+        //  echo $result1;
+        // echo '</PRE>';
         setcookie("cart", $result1, time()+60*60*24*30);
         $urlRefresh = $_SERVER['REQUEST_URI'];
-        // echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+        echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
       }
 
 
          //updateCart
       if(isset($_POST['updateCart'])){
-        $quants = $_POST['quantity'];
-        $prodId = $_POST['prodId'];
+        $quants = $_POST['quants'];
+        $prodId = $_POST['id'];
 
         $url = DEFAULT_WEB_PATH.API_PAGE.UPDATE_CART;
 
@@ -64,7 +64,7 @@
         curl_setopt_array($ch, $options);
         $result1 = curl_exec($ch);
         curl_close($ch);
-        // echo '<PRE>';
+        // echo '<PRE> update';
         //  echo $result1;
         // echo '</PRE>';
         setcookie("cart", $result1, time()+60*60*24*30);
@@ -73,6 +73,78 @@
   
           
       }
+
+      //add to the cart
+    if(isset($_POST['addToCart'])) {
+
+      $url = DEFAULT_WEB_PATH.API_PAGE.ADD_TO_CART;
+      $productid = $_GET['productid'];
+      $productQuantity = $_POST['quantity'];
+      //check first whether cart is details is present or not!.
+      // echo '<PRE>';
+      // echo $productid." ".$productQuantity;
+      // echo '</PRE>';
+      if(isset($_COOKIE['cart'])){
+        // echo '<PRE>';
+        // print_r($_COOKIE);
+        // echo '</PRE>';
+        $cartDetails = $_COOKIE['cart'];
+        // // echo $cartDetails;
+        
+        $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity, 'cartDetails' => $cartDetails );
+      }
+      else {
+        // echo '<script> alert("cart is not there"); </script>';
+      $postfields = array('productid' => $productid, 'productQuantity' => $productQuantity);
+    }
+      $ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result1 = curl_exec($ch);
+        curl_close($ch);
+        // echo '<PRE>';
+        // print_r($result1);
+        // echo '</PRE>';
+        //setting the cookie here.
+        setcookie("cart", $result1, time()+60*60*24*30);
+        $urlRefresh = $_SERVER['REQUEST_URI'];
+        echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
+      
+    }
+   
+
+      if(isset($_POST['search'])){
+$url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_SEARCH_RESULTSET;
+$searchString = $_POST['searchString'];
+$postfields = array('searchString' => $searchString);
+$ch = curl_init();
+        $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+          );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch); 
+        curl_close($ch);
+        // echo '<PRE>';
+        // echo $url."<br>";
+        // echo $result;
+        // echo '</PRE>';
+        $array_assoc = json_decode($result, true);
+        
+          // echo '<PRE>';  
+          
+          // print_r($array_assoc);
+          // echo "<br>".count($array_assoc);
+          // echo '</PRE>';
+      }
+
 ?>
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
@@ -224,7 +296,16 @@
                         </tr>
                       </tbody>
                     </table>
-                    <p class="checkout"><a href="cart.php" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="checkout.php" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
+                    <p class="checkout"><a href="cart.php" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a href="<?php 
+
+                    if(isset($_SESSION['username']) && $_SESSION['username'] != '') {
+                      echo 'checkout.php';
+                    }
+                    else {
+                      echo "login.php";
+                    }
+
+                    ?>" class="btn btn-primary"><i class="fa fa-share"></i> Checkout</a></p>
                   </div>
                 </li>
               </ul>
@@ -233,12 +314,14 @@
           </div>
           <!-- Mini Cart End-->
           <!-- Search Start-->
+          <form method="POST" action="<?php echo DEFAULT_WEB_PATH."searchResult.php"; ?>">
           <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
             <div id="search" class="input-group">
-              <input id="filter_name" type="text" name="search" value="" placeholder="Search" class="form-control input-lg" />
-              <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+              <input id="filter_name" type="text" name="searchString" value="" placeholder="Search" class="form-control input-lg" style="color:#000000;" />
+              <button type="submit" name="search" class="button-search"><i class="fa fa-search"></i></button>
             </div>
           </div>
+          </form>
           <!-- Search End-->
         </div>
       </div>

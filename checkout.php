@@ -22,6 +22,11 @@
 </head>
 <body>
 <?php include "header.php" ; ?>
+<?php 
+echo '<PRE>';
+print_r($masterArray);
+echo '</PRE>';
+?>
 <div id="container">
     <div class="container">
       <!-- Breadcrumb Start-->

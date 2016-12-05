@@ -21,5 +21,6 @@ define('RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID',"retreiveSubCategories
 define('RETREIVE_DATA_FOR_ORDERS',"retriveDataForOrders");
 define('RETRIEVE_USER_DETAILS_WITH_RESPECT_TO_ORDERID',"retriveUserDetailsWithRespectToOrderID");
 define('RETREIVE_ORDERITEMS_WITH_RESPECT_TO_ORDERID',"retreiveOrderItemsWithRespectToOrderItem");
-define('RETRIEVE_PRODUCTS_DETAILS_AND_STOCK',"retreiveProductsDetailsAndStock")
+define('RETRIEVE_PRODUCTS_DETAILS_AND_STOCK',"retreiveProductsDetailsAndStock");
+define('RETRIEVE_SEARCH_RESULTSET', "retrieveSearchDetails");
 ?>

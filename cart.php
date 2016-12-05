@@ -74,11 +74,11 @@
                     <td class="text-left"><?php echo $masterArray[$i][5]; ?></td>
                     <td class="text-left"><div class="input-group btn-block quantity">
                     <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-                    <input type="hidden" name="prodId" value="<?php echo $masterArray[$i][0]; ?>">
-                        <input type="text" name="quantity" value="<?php echo $masterArray[$i][1]; ?>" size="3" class="form-control" />
+                    <input type="hidden" name="id" value="<?php echo $masterArray[$i][0]; ?>">
+                        <input type="text" name="quants" value="<?php echo $masterArray[$i][1]; ?>" size="3" class="form-control" />
                         <span class="input-group-btn">
                         <button type="submit" name="updateCart" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                        <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
+                        <button type="submit" data-toggle="tooltip" name="deleteFromCart" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
                         </span></div>
                         </form>
                         </td>

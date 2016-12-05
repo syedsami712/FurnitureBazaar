@@ -90,12 +90,12 @@
 
 
 	function retrieveSearchDetails($conn, $searchString) {
-		$result = $conn->query("Select * from products where tags LIKE '%$searchString%' ");
+		$result = $conn->query("Select * from products product, productstock stock where stock.productid = product.productid and tags LIKE '%$searchString%'  ");
 		$resultSet = array();
 		while($row = $result->fetch_assoc()) {
 			array_push($resultSet, $row);
 		}
-		return json_encode($resultSet);
+		return json_encode(array("products" => $resultSet));
 	}
 
 
@@ -154,7 +154,7 @@
 	}
 
 
-	function updateCart($conn, $productId, $productQuantity, $cartDetails) {
+	function updateCart($conn, $productId, $productQuantity = 0, $cartDetails) {
 		$cartArray = json_decode($cartDetails, true);
 
 		for($i = 0; $i < count($cartArray); $i++) {
@@ -163,6 +163,7 @@
 			}
 		}
 		return json_encode($cartArray);
+	}
 
 	function retreiveOrderItemsWithRespectToOrderItem($conn,$orderID){
 		$result=$conn->query("SELECT orderitems.orderID,orderitems.productID,orderitems.quantity,products.productname,products.productimg,products.mrp,products.cost FROM orderitems INNER JOIN products ON orderitems.productID=products.productid WHERE orderID=$orderID");
@@ -220,9 +221,10 @@
 			$searchString = preg_replace('/\s+/', ",", $searchString);
 			echo retrieveSearchDetails($conn, $searchString);
 		}
+		break;
 		case 'addProductToCart' :
-				$productid = $_POST['productid'];
-				$productQuantity = $_POST['productQuantity'];
+				$productid = isset($_POST['productid']) ? $_POST['productid'] : 0;
+				$productQuantity = isset($_POST['productQuantity']) ? (int) $_POST['productQuantity'] : 0;
 				if(!isset($_POST['cartDetails'])){
 				echo addProductToCart($conn, $productid, $productQuantity);
 				}
@@ -235,13 +237,13 @@
 			break;
 		case 'deleteFromCart':
 			$productid = $_POST['productid'];
-			$productQuantity = $_POST['productQuantity'];
+			$productQuantity = (int) $_POST['productQuantity'];
 			if(!isset($_POST['cartDetails'])){
 				//something went wrong.
 				}
 				else {
 					$jsonString = $_POST['cartDetails'];
-					print_r(deleteFromCart($conn, $productid, $productQuantity, $jsonString));
+					echo deleteFromCart($conn, $productid, $productQuantity, $jsonString);
 					
 				}
 			
@@ -249,7 +251,7 @@
 
 		case 'updateCart' :
 			$productid = $_POST['productid'];
-			$productQuantity = $_POST['productQuantity'];
+			$productQuantity = (int) $_POST['productQuantity'];
 			if(!isset($_POST['cartDetails'])){
 				//something went wrong.
 				}
@@ -278,8 +280,7 @@
 				$orderID = $_POST['orderID'];
 				echo retriveUserDetailsWithRespectToOrderID($conn,$orderID);
 			break;
-<<<<<<< HEAD
-=======
+
 
 		case 'retreiveOrderItemsWithRespectToOrderItem':
 				$orderID = $_POST['orderID'];
@@ -290,7 +291,7 @@
 				echo retreiveProductsDetailsAndStock($conn);
 			break;	
 
->>>>>>> e0b68ca2db7f51734182eb3676c3b04ffac1c2fc
+
 		default:
 			# code...
 			break;
