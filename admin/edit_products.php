@@ -18,19 +18,32 @@
 <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 <link rel="stylesheet" type="text/css" href="../css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
-<script>
-  function content(elem)
-  {
-    var x = elem.getAttribute("id");
-    window.location = "http://localhost:8012/FurnitureBazaar/admin/edit_products.php?prodId="+x;
-  }
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- CSS Part End-->
 </head>
 <body>
 <!-- Header Start -->
-
-<?php require("../functions/function.php"); ?>
+<?php
+  //php section for retrieving product details.
+                $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS_AND_STOCK;
+                $prodID = $_GET['prodId'] - 1 ;
+                $postfields = array();
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $array_assoc = json_decode($result, true);
+                echo "<pre>";
+                print_r($array_assoc);
+                echo $prodID;
+                echo "</pre>";
+?>
 
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
@@ -87,68 +100,85 @@
       </nav> 
     <!-- Main Menu End-->
   </div>
-  <?php
-  //php section for retrieving product details.
-                $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_PRODUCTS_DETAILS_AND_STOCK;
-                $postfields = array();
-                $ch = curl_init();
-                $options = array (
-                  CURLOPT_URL => $url,
-                  CURLOPT_POST => 1,
-                  CURLOPT_POSTFIELDS => $postfields,
-                  CURLOPT_RETURNTRANSFER => true
-                );
-                curl_setopt_array($ch, $options);
-                $result = curl_exec($ch);
-                curl_close($ch);
-                $array_assoc = json_decode($result, true);
-                echo "<pre>";
-                print_r($array_assoc);
-                echo "</pre>";
-?>
 <!-- Header End  -->
-<!-- Mail Start -->
-<br>
 
-          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspStock Managemrnt</h1>
-            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspClick on Stock to Edit.</p>  
-              <div id="col-sm-9">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                <p>
-                  <thead>
-                    <tr>
-                      <th>ProductID</th>
-                      <th>Product Name</th>
-                      <th>MRP</th>
-                      <th>Cost</th>
-                      <th>Stock</th>
-                      <th>&nbsp</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                       <?php populate_table($array_assoc); ?>
-                  </tbody>
-                </table>
-                </p>
+<!-- Mail Start -->
+<div id="container">
+    <div class="container">
+      <div class="row">
+          <div id="content" class="col-sm-9">
+          <br>
+			<h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspEdit Products</h1>
+				<form class="form-horizontal" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+      <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">Product ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="12" id="input-name" value="<?php echo $array_assoc[$prodID]['productid'] ; ?>" placeholder="Product Name" name="prodname" readonly >
+                </div>
+              </div>
+			<div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">Product Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="12" id="input-name" value="<?php echo $array_assoc[$prodID]['productname'] ; ?>" placeholder="Product Name" name="prodname" readonly >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Product MRP</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" id="input-name" value="<?php echo $array_assoc[$prodID]['mrp'] ; ?>" placeholder="Product MRP" pattern="\d*" name="prodmrp" required >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Product Cost</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" id="input-name" value="<?php echo $array_assoc[$prodID]['cost'] ; ?>" placeholder="Product Cost" pattern="\d*" name="prodcost" required >
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label">Stock Available</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" width="6" placeholder="Available Stock" value="<?php echo $array_assoc[$prodID]['availablestock'] ; ?>" pattern="\d*" name="availablestock" required >
+                </div>
+              </div>
+              <div class="buttons">
+              <div class="pull-right">
+                <input type="submit" class="btn btn-primary" value="Update Product" name="update_product">
               </div>
             </div>
-<!-- Main ENd --> 
+			</form>
+		</div>
+	   </div>
+    </div>
+</div>
 <?php 
-    function populate_table($array_assoc)
+    require('../functions/dbconfig.php');
+    if(isset($_POST['update_product']))
     {
-      $count = count($array_assoc);
-      for($x=0;$x<$count;$x++)
+      $query = "UPDATE products SET mrp=".$_POST['prodmrp'].",cost=".$_POST['prodcost']." WHERE productid=".$array_assoc[$prodID]['productid']." " ;
+      $query1 = "UPDATE productstock SET availablestock=".$_POST['availablestock']." WHERE productid=".$array_assoc[$prodID]['productid']." " ;
+      $result=mysqli_query($conn,$query);
+      if($result)
       {
-        echo '<tr id='.$array_assoc[$x]['productid'].' onclick="content(this)">';
-        echo "<td>".$array_assoc[$x]['productid']."</td>";
-        echo "<td>".$array_assoc[$x]['productname']."</td>";
-        echo '<td><input type="text" id="mrp" value="'.$array_assoc[$x]['mrp'].'" pattern="\d*" readonly required></td>';
-        echo '<td><input type="text" id="cost" value="'.$array_assoc[$x]['cost'].'"pattern="\d*" readonly required ></td>';
-        echo '<td><input type="text" id="availablestock" value="'.$array_assoc[$x]['availablestock'].'" pattern="\d*" readonly required></td>';
+        $result1 = mysqli_query($conn,$query1);
+        if($result1)
+        {
+          echo "<script>alert('All Details Updated Succesfully');
+            window.location.href = 'http://localhost:8012/FurnitureBazaar/admin/admin_stockmgmt.php';
+           </script>";
+
+        }
+        else
+        {
+          echo "<script>alert('Stock Table Error');</script>";
+        }
+      }
+      else
+      {
+        echo "<script>alert('Product Table error');</script>";
       }
     }
 ?>
+<!-- Main ENd --> 
 <!--Footer Start-->
 <footer id="footer">
     <div class="fpart-first">
@@ -178,7 +208,6 @@
           </div>
         </div>
       </div>
-    </div>
     </div>
   </footer>
 <!--Footer End-->
