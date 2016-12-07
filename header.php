@@ -64,9 +64,9 @@
         curl_setopt_array($ch, $options);
         $result1 = curl_exec($ch);
         curl_close($ch);
-        // echo '<PRE> update';
-        //  echo $result1;
-        // echo '</PRE>';
+        echo '<PRE> update';
+         echo $result1;
+        echo '</PRE>';
         setcookie("cart", $result1, time()+60*60*24*30);
         $urlRefresh = $_SERVER['REQUEST_URI'];
         echo "<script> setTimeout(\"location.href = '$urlRefresh' \", 150); </script>";
