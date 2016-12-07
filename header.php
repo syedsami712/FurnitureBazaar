@@ -337,7 +337,7 @@ $ch = curl_init();
             <li class="dropdown">
             <?php  getcats(); ?>
             </li>
-            <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
+            <li class="custom-link-right"><a href="checkout.php" target="_blank">Checkout</a></li>
           </ul>
         </div>
         </div>

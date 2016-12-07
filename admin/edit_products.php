@@ -44,7 +44,6 @@
                 curl_close($ch);
                 $array_assoc = json_decode($result, true);
 ?>
-
 <div id="header">
     <!-- Top Bar Start the first strip including only the phone number email info and login and register-->
     <nav id="top" class="htop">
