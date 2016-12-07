@@ -1,6 +1,6 @@
 <?php session_start(); 
       include "GlobalVariables.php" ;
-       ?>
+?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -19,22 +19,69 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
 <!-- CSS Part End-->
+
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#SelfPick').on('change', function(){
+      $.ajax({
+      type: "POST",
+      url : "deliveryModeResponse.php",
+      data: {deliveryMode:'0'},
+      dataType: 'text',
+      success:function(data){
+       // Test what is returned from the server
+         var deliveryMode = data;
+         window.location.href = "http://localhost:8012/FurnitureBazaar/checkout.php?deliveryMode=" + data;
+      }
+    }); 
+    });
+
+      $('#InstallOnly').on('change', function(){
+      $.ajax({
+      type: "POST",
+      url : "deliveryModeResponse.php",
+      data: {deliveryMode:'300'},
+      dataType: 'text',
+      success:function(data){
+       // Test what is returned from the server
+         var deliveryMode = data;
+         window.location.href = "http://localhost:8012/FurnitureBazaar/checkout.php?deliveryMode=" + data;
+      }
+    }); 
+    });
+
+      $('#DeliveryAndInstall').on('change', function(){
+      $.ajax({
+      type: "POST",
+      url : "deliveryModeResponse.php",
+      data: {deliveryMode:'700'},
+      dataType: 'text',
+      success:function(data){
+       // Test what is returned from the server
+         var deliveryMode = data;
+         window.location.href = "http://localhost:8012/FurnitureBazaar/checkout.php?deliveryMode=" + data;
+      }
+    }); 
+    });
+                    
+  // });
+   });
+</script>
 </head>
 <body>
 <?php include "header.php" ; ?>
 <?php 
-echo '<PRE>';
-print_r($masterArray);
-echo '</PRE>';
+// echo '<PRE>';
+// print_r($masterArray);
+// echo '</PRE>';
+
 ?>
+
 <div id="container">
     <div class="container">
       <!-- Breadcrumb Start-->
-      <ul class="breadcrumb">
-        <li><a href="index.php"><i class="fa fa-home"></i></a></li>
-        <li><a href="cart.php">Shopping Cart</a></li>
-        <li><a href="checkout.php">Checkout</a></li>
-      </ul>
+
       <!-- Breadcrumb End-->
       <div class="row">
         <!--Middle Part Start-->
@@ -67,6 +114,7 @@ echo '</PRE>';
                         <fieldset id="account">
                           <div class="form-group">
                             <label for="input-payment-firstname" class="control-label">First Name</label>
+
                             <input type="text" class="form-control" id="input-payment-firstname" placeholder="First Name" value="<?php echo $array_assoc[0]['Fname'] ?>" name="firstname" readonly>
                           </div>
                           <div class="form-group">
@@ -126,22 +174,50 @@ echo '</PRE>';
                     </div>
                       <div class="panel-body">
                         <p>Please select the preferred shipping method to use on this order.</p>
+                        <form method="POST" id="myForm" name="deliveryTypeForm" action="?">
                         <div class="radio">
+                        <?php if(isset($_GET['deliveryMode']) && $_GET['deliveryMode'] == "0") { ?>
                           <label>
-                            <input type="radio" name="delivery">
+                            <input type="radio" id="SelfPick" name="delivery" value="0" checked="true" />
                             Self Pickup and installation - No Charges</label>
-                        </div>
-                        <div class="radio">
+                        <?php } else { ?>
                           <label>
-                            <input type="radio" name="delivery">
+                            <input type="radio" id="SelfPick" name="delivery" value="0"  />
+                            Self Pickup and installation - No Charges</label>
+                        <?php } ?>
+                        </div>
+
+
+                        
+                        <div class="radio" />
+                        <?php if(isset($_GET['deliveryMode']) && $_GET['deliveryMode'] == "300"){ ?>
+                          <label>
+                            <input type="radio" id="InstallOnly" name="delivery" value="300" checked="true" />
                             Installation Only - Rs.300</label>
+                            <?php } else { ?>
+
+                            <label>
+                            <input type="radio" id="InstallOnly" name="delivery" value="300" />
+                            Installation Only - Rs.300</label>
+                            <?php  } ?>
                         </div>
-                        <div class="radio">
+
+
+                        <div class="radio" />
+                        <?php if(isset($_GET['deliveryMode']) && $_GET['deliveryMode'] == "300"){ ?>
                           <label>
-                            <input type="radio" name="delivery">
+                            <input type="radio" id="DeliveryAndInstall" name="delivery" value="700" >
                             Delivery and Installaion - Rs.700</label>
+                            <?php } else {  ?>
+
+                            <label>
+                            <input type="radio" id="DeliveryAndInstall" name="delivery" value="700" >
+                            Delivery and Installaion - Rs.700</label>
+                            <?php } ?>
                         </div>
+                        </form>
                       </div>
+                      
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -182,51 +258,43 @@ echo '</PRE>';
                               </tr>
                             </thead>
                             <tbody>
+                            <?php $subtotal = 0; ?>
+                            <?php for($i = 0; $i < count($masterArray); $i++) {
+
+                              ?>
+                              <form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                               <tr>
-                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.php">php get product name</a></td>
+                                <td class="text-center"><a href="product.php"><img src="<?php echo DEFAULT_IMAGE_PATH."products/".$masterArray[$i][4]; ?>" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail" height="75" width="75"></a></td>
+                                <td class="text-left"><a href="<?php echo DEFAULT_WEB_PATH."product.php?productid=".$masterArray[$i][0]; ?>" ><?php echo $masterArray[$i][2]; ?></a></td>
                                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                                    <input type="text" name="quantity" value="1" size="1" class="form-control">
+                                    <input type="hidden" name="id" value="<?php echo $masterArray[$i][0]; ?>" />
+                                    <input type="text" name="quants" value="<?php echo $masterArray[$i][1]; ?>" size="1" class="form-control">
                                     <span class="input-group-btn">
-                                    <button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                                    <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
+                                    <button type="submit" data-toggle="tooltip" name="updateCart" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                    <button type="submit" data-toggle="tooltip" name="deleteFromCart" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
                                     </span></div></td>
-                                <td class="text-right">mrp</td>
-                                <td class="text-right">price</td>
+                                <td class="text-right"><?php echo $masterArray[$i][3]; ?></td>
+                                <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
                               </tr>
-                              <tr>
-                                <td class="text-center"><a href="product.php"><img src="image/product/sony_vaio_1-50x75.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
-                                <td class="text-left"><a href="product.php">php get product name</a></td>
-                                <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                                    <input type="text" name="quantity" value="1" size="1" class="form-control">
-                                    <span class="input-group-btn">
-                                    <button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                                    <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
-                                    </span></div></td>
-                                <td class="text-right">mrp</td>
-                                <td class="text-right">price</td>
-                              </tr>
+                              </form>
+                              <?php $subtotal =+ $masterArray[$i][3] * $masterArray[$i][1]; ?>
+
+                             <?php } ?>
                             </tbody>
                             <tfoot>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Sub-Total:</strong></td>
-                                <td class="text-right">$750.00</td>
+                                <td class="text-right"><?php echo $subtotal; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Flat Shipping Rate:</strong></td>
-                                <td class="text-right">add delivery price</td>
-                              </tr>
-                              <tr>
-                                <td class="text-right" colspan="4"><strong>Eco Tax (-2.00):</strong></td>
-                                <td class="text-right">$4.00</td>
-                              </tr>
-                              <tr>
-                                <td class="text-right" colspan="4"><strong>VAT (20%):</strong></td>
-                                <td class="text-right">$151.00</td>
+                                <td class="text-right"><?php 
+                                $mode = 0;
+                                echo $mode =  isset($_GET['deliveryMode']) ? $_GET['deliveryMode'] : 0; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Total:</strong></td>
-                                <td class="text-right">$910.00</td>
+                                <td class="text-right"><?php echo $mode + $subtotal; ?></td>
                               </tr>
                             </tfoot>
                           </table>
@@ -275,12 +343,12 @@ echo '</PRE>';
                        }
                        else
                        {
-                         print('<script>alert("Please select a Payment methode. ");</script>');
+                         print('<script>alert("Please select a Payment method. ");</script>');
                        }
                    }
                    else
                    {
-                     print('<script>alert("Please select a delivery methode. ");</script>');
+                     print('<script>alert("Please select a delivery method. ");</script>');
                    }
                 }
             ?>
@@ -290,12 +358,16 @@ echo '</PRE>';
 </div><!-- container -->
 <?php include "footer.php" ?>
 <!-- JS Part Start-->
+
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.easing-1.3.min.js"></script>
 <script type="text/javascript" src="js/jquery.dcjqaccordion.min.js"></script>
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
+
+
+
 <!-- JS Part End-->
 </body>
 </html>
