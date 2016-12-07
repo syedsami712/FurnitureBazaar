@@ -18,7 +18,17 @@
 <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
 <link rel="stylesheet" type="text/css" href="../css/stylesheet-skin2.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Droid+Sans' type='text/css'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+  function update(elem)
+  {
+    alert(elem.getAttribute('name'));
+    $(elem).closest('tr').find('input').removeAttr('readonly').focus();
+  }
+  function redirect(elem)
+  {
+    location.href = "admin_stockmgmt.php?productid="+elem.getAttribute('name');
+  }
+</script>
 <!-- CSS Part End-->
 </head>
 <body>
@@ -103,18 +113,10 @@
 <!-- Header End  -->
 <!-- Mail Start -->
 <br>
-          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspExisting Customers</h1>
-            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspList of all Customers Registered</p>  
+          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspStock Management</h1>
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMake the desirable cnages and click update</p>  
               <div id="col-sm-9">
               <div class="table-responsive">
-              <script>
-                      $('button').click(function()
-                     {
-                       $(".mrp").removeAttr("readonly");
-                       $(".cost").removeAttr("readonly");  
-                       $(".availablestock").removeAttr("readonly");   
-                     });
-                </script>
                 <table class="table table-bordered table-hover">
                 <p>
                   <thead>
@@ -129,20 +131,6 @@
                   </thead>
                   <tbody>
                        <?php populate_table($array_assoc); ?>
-                                <!-- <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td><button class="btn btn-primary btn-sm" onclick="">Update</button>&nbsp&nbsp<button class="btn btn-primary btn-sm" onclick="">Save</button></td>
-                              </tr>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td>adadas</td>
-                                <td><button class="btn btn-primary btn-sm" onclick="">Update</button>&nbsp&nbsp<button class="btn btn-primary btn-sm" onclick="">Save</button></td>
-                    </tr> -->
                   </tbody>
                 </table>
                 </p>
@@ -155,21 +143,17 @@
       $count = count($array_assoc);
       for($x=0;$x<$count;$x++)
       {
-        echo "<tr>";
+        echo '<tr id='.$array_assoc[$x]['productid'].' onclick="content(this)">';
         echo "<td>".$array_assoc[$x]['productid']."</td>";
         echo "<td>".$array_assoc[$x]['productname']."</td>";
-        echo '<td><input type="text" id="mrp" value="'.$array_assoc[$x]['mrp'].'" readonly></td>';
-        echo '<td><input type="text" id="cost" value="'.$array_assoc[$x]['cost'].'" readonly></td>';
-        echo '<td><input type="text" id="availablestock" value="'.$array_assoc[$x]['availablestock'].'" readonly></td>';
-        echo '<td><button class="btn btn-primary btn-sm" id="update">Update</button>&nbsp&nbsp<button class="btn btn-primary btn-sm" id="save">Save</button></td>';
+        echo '<td><input type="text" id="mrp" value="'.$array_assoc[$x]['mrp'].'" pattern="\d*" readonly required></td>';
+        echo '<td><input type="text" id="cost" value="'.$array_assoc[$x]['cost'].'"pattern="\d*" readonly required ></td>';
+        echo '<td><input type="text" id="availablestock" value="'.$array_assoc[$x]['availablestock'].'" pattern="\d*" readonly required></td>';
+        echo '<td><input type="submit" name="'.$array_assoc[$x]['productid'].'" value="Update" class="btn btn-primary btn-sm" id="update" onclick="update(this)">&nbsp&nbsp&nbsp<input type="submit" name="'.$array_assoc[$x]['productid'].'" value="Save" class="btn btn-primary btn-sm" onclick="redirect(this)"></td>';
         echo "</tr>";
       }
     }
 ?>
-
-
-
-
 <!--Footer Start-->
 <footer id="footer">
     <div class="fpart-first">
