@@ -1,5 +1,10 @@
 <?php session_start(); 
 	  include "../GlobalVariables.php" ;
+    if(isset($_GET['status'])){
+    if($_GET['status'] === "loggedout") {
+      $_SESSION['username'] ="";
+    }
+  }
 	  ?>
 <html>
 <head>
@@ -63,10 +68,9 @@
           <ul class="nav navbar-nav">
             <li><a class="home_link" title="Home" href="index.php">Home</a></li>
             <li class="dropdown">
-            	<li><a href='#' >Products</a>
-            	<li><a href='#' >Stocks</a>
-            	<li><a href='#' >Customers</a>
-            	<li><a href='#' >Orders</a>
+              <li><a href='admin_stockmgmt.php' >Products and Stock</a>
+              <li><a href='admin_customers.php' >Customers</a>
+              <li><a href='admin_orderlist.php' >Orders</a>
             </li>
           </ul>
         </div>
@@ -106,6 +110,30 @@
               </div>
             </div>
             </form>
+            <?php 
+              require("../functions/dbconfig.php");
+              if(isset($_POST['submit']))
+              {
+                $query = "select admin_password from admincredentials";
+                if ($result=mysqli_query($con,$query))
+                  {
+                   // Fetch one and one row
+                   while ($row=mysqli_fetch_row($result))
+                     {
+                        if($row[0]===md5($_POST['password']))
+                        {
+                          $_SESSION["username"] = "Admin";
+                          echo "<script>alert('Login Successfull');window.location.href= 'admin_orderlist.php';</script>";
+                        }
+                        else
+                        {
+                          echo "<script>alert('Login UnSuccessfull');</script>";
+                        }
+                     }
+                     mysqli_free_result($result);
+                  }
+              }
+            ?>
           </div>
         </div>
       </div>

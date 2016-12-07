@@ -1,6 +1,10 @@
 <?php session_start(); 
-	  include "../GlobalVariables.php" ;
-	  ?>
+    include "../GlobalVariables.php" ;
+    if($_SESSION['username']=="")
+    {
+      echo "<script>alert('Plese Login to Continue.');window.location.href='admin_home.php';</script>";
+    }
+    ?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -41,9 +45,8 @@
           </div>
           <div id="top-links" class="nav pull-right flip">
             <ul>
-              <li><a href="login.php">Login</a></li>
-              <li style="padding-left: 4px; padding-right: 4px; font-style: bold;">Login/logout</li>
-              <li><a href="login.php?status=loggedout">Logout</a></li>
+              <li style="padding-left: 4px; padding-right: 4px; font-style: bold;">Welcome <?php echo $_SESSION['username']; ?></li>
+              <li><a href="admin_home.php?status=loggedout">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -70,10 +73,9 @@
           <ul class="nav navbar-nav">
             <li><a class="home_link" title="Home" href="index.php">Home</a></li>
             <li class="dropdown">
-            	<li><a href='#' >Products</a>
-            	<li><a href='#' >Stocks</a>
-            	<li><a href='#' >Customers</a>
-            	<li><a href='#' >Orders</a>
+              <li><a href='admin_stockmgmt.php' >Products and Stock</a>
+              <li><a href='admin_customers.php' >Customers</a>
+              <li><a href='admin_orderlist.php' >Orders</a>
             </li>
           </ul>
         </div>

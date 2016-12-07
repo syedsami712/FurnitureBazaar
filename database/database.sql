@@ -16,6 +16,19 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`furniture_shop` /*!40100 DEFAULT CHARAC
 
 USE `furniture_shop`;
 
+/*Table structure for table `admincredentials` */
+
+DROP TABLE IF EXISTS `admincredentials`;
+
+CREATE TABLE `admincredentials` (
+  `admin_name` varchar(100) DEFAULT NULL,
+  `admin_password` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `admincredentials` */
+
+insert  into `admincredentials`(`admin_name`,`admin_password`) values ('Sami','e64b78fc3bc91bcbc7dc232ba8ec59e0');
+
 /*Table structure for table `category` */
 
 DROP TABLE IF EXISTS `category`;
@@ -92,7 +105,7 @@ insert  into `orderitems`(`orderID`,`productID`,`productname`,`quantity`) values
 DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
-  `orderID` int(3) NOT NULL,
+  `orderID` int(3) NOT NULL AUTO_INCREMENT,
   `uid` int(3) NOT NULL,
   `total_mrp` int(10) NOT NULL,
   `total_cost` int(10) NOT NULL,
@@ -102,7 +115,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`orderID`),
   KEY `uid` (`uid`),
   CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `customers` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `orders` */
 
@@ -146,7 +159,7 @@ CREATE TABLE `productstock` (
 
 /*Data for the table `productstock` */
 
-insert  into `productstock`(`productid`,`availablestock`) values (1,1111),(2,344),(3,0),(4,0),(5,12),(6,0),(7,0),(8,0),(9,0),(10,11),(11,122),(12,0),(13,0),(14,0),(15,0),(16,0),(17,0),(18,0),(19,0),(20,0),(21,0),(22,0),(23,0),(24,0),(25,0),(26,0),(27,0),(28,0),(29,0),(30,0),(31,0),(32,0),(33,0),(34,0),(35,0),(36,0),(37,0),(38,0),(39,0),(40,0),(41,0),(42,0),(43,0),(44,0);
+insert  into `productstock`(`productid`,`availablestock`) values (1,1111),(2,344),(3,44),(4,0),(5,12),(6,0),(7,12),(8,0),(9,0),(10,11),(11,122),(12,0),(13,0),(14,0),(15,0),(16,0),(17,0),(18,0),(19,0),(20,0),(21,0),(22,0),(23,0),(24,0),(25,0),(26,0),(27,0),(28,0),(29,0),(30,0),(31,0),(32,0),(33,0),(34,0),(35,0),(36,0),(37,0),(38,0),(39,0),(40,0),(41,0),(42,0),(43,0),(44,0);
 
 /*Table structure for table `sub_categories` */
 
