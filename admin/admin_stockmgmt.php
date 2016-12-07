@@ -113,8 +113,9 @@
 <!-- Header End  -->
 <!-- Mail Start -->
 <br>
-          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspStock Management</h1>
-            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMake the desirable cnages and click update</p>  
+
+          <h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspStock Managemrnt</h1>
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspClick on Stock to Edit.</p>  
               <div id="col-sm-9">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
