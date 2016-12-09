@@ -5,6 +5,51 @@
       echo "<script>alert('Plese Login to Continue.');window.location.href='admin_home.php';</script>";
     }
     ?>
+
+    <?php
+//this function is used for compressing an image and producing the output as url direct to be sent.
+function compress_image($source_url, $destination_url, $quality) {
+
+    $info = getimagesize($source_url);
+
+    if ($info['mime'] == 'image/jpeg')
+        $image = imagecreatefromjpeg($source_url);
+
+    elseif ($info['mime'] == 'image/gif')
+        $image = imagecreatefromgif($source_url);
+
+    elseif ($info['mime'] == 'image/png')
+        $image = imagecreatefrompng($source_url);
+
+    imagejpeg($image, $destination_url, $quality);
+
+    if(filesize($destination_url) > 500000){
+        $source_url = $destination_url;
+        $destination_url = "images/products/defaultName".time().".jpg";
+        $quality = 10;
+        $info = getimagesize($source_url);
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source_url);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source_url);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source_url);
+
+        imagejpeg($image, $destination_url, $quality);
+
+        // return base64_encode(file_get_contents($destination_url));
+        return $destination_url;
+
+    }
+    else {
+        // return base64_encode(file_get_contents($destination_url));
+        return $destination_url;
+    }
+}
+
+?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -57,11 +102,11 @@
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $array_assoc = json_decode($result, true);
-                echo '<pre>';
-       			    print_r($array_assoc);
+              //   echo '<pre>';
+       			    // print_r($array_assoc);
        			    
-                // echo "<br>". $categoryId;
-        		    echo '</pre>';
+              //   // echo "<br>". $categoryId;
+        		    // echo '</pre>';
 
                 if(isset($_GET['catid'])) {
                   $url = DEFAULT_WEB_PATH.API_PAGE.RETRIEVE_SUBCATEGORY_WITH_RESPECT_TO_CATEGORY_ID;
@@ -77,12 +122,70 @@
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $array_assoc1 = json_decode($result, true);
-                echo '<pre>';
-                print_r($array_assoc1);
+                // echo '<pre>';
+                // print_r($array_assoc1);
                 
-                // echo "<br>". $categoryId;
-                echo '</pre>';
+                // // echo "<br>". $categoryId;
+                // echo '</pre>';
                 }
+                ?>
+
+                <?php 
+
+                  if(isset($_POST['save_product'])){
+
+                    
+                   $category      = $_POST['category'];
+                   $sub_category  = $_POST['sub_category'];
+                   $prodname      = $_POST['prodname'];
+                   $product_desc  = $_POST['product_desc'];
+                   $prodmaterial  = $_POST['prodmaterial'];
+                   $prodmrp       = $_POST['prodmrp'];
+                   $prodcost      = $_POST['prodcost'];
+                   $prodtags      = $_POST['prodtags'];
+
+                   $fileName = $_FILES['prodimg_file']['name'];
+                    $fileData = $_FILES['prodimg_file']['tmp_name'];
+                    $filesize = $_FILES['prodimg_file']['size'];
+                    $filetype = $_FILES['prodimg_file']['type'];
+                    // $separatedVar = explode(".", $fileName);
+
+                    // $imageName = $separatedVar[0].time()."jpg";
+
+                    $destination_url = "../images/products/defaultName".time().".jpg";
+                    $quality = 20;
+
+                    $imgStringName = $fileData == null ? "No Image" :substr(compress_image($fileData,$destination_url,$quality),19);
+
+
+
+                   $url = DEFAULT_WEB_PATH.API_PAGE.INSERT_PRODUCT;
+                    
+                $postfields = array( 'category' => $category, 
+                'subCategory' =>  $sub_category,
+                'productName' =>  $prodname,
+                'productDesc' =>  $product_desc,
+                'productImg' =>  $imgStringName,
+                'productMaterial' =>  $prodmaterial ,
+                'productMrp' =>  $prodmrp,
+                'productCost' =>  $prodcost,
+                'productTags' =>  $prodtags );
+                $ch = curl_init();
+                $options = array (
+                  CURLOPT_URL => $url,
+                  CURLOPT_POST => 1,
+                  CURLOPT_POSTFIELDS => $postfields,
+                  CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $options);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                // echo '<pre>';
+                // print_r($array_assoc1);
+                // echo '</pre>';
+
+                  }
+
                 ?>
 
 <div id="header">
@@ -147,7 +250,7 @@
           <div id="content" class="col-sm-9">
           <br>
 			<h1 class="title text-uppercase">&nbsp&nbsp&nbsp&nbspAdd Products Customers</h1>
-				<form class="form-horizontal" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+				<form class="form-horizontal" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>"   enctype="multipart/form-data">
 					<div class="form-group required">
 
                 <label for="input-country" class="col-sm-2 control-label">Category</label>
@@ -203,6 +306,7 @@
                       </textarea>
                   	</div>
                   </div>
+
                <div class="form-group required">
                 <label class="col-sm-2 control-label">Product Image File</label>
                 <div class="col-sm-10">
@@ -224,13 +328,13 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label">Product Cost</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Product Cost" pattern="\d*" name="prodmrp" required >
+                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Product Cost" pattern="\d*" name="prodcost" required >
                 </div>
               </div>
                <div class="form-group required">
                 <label class="col-sm-2 control-label">Product Tags</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Tags for search" pattern="\d*" name="prodmrp" required >
+                  <input type="text" class="form-control" width="6" id="input-name" placeholder="Tags for search" name="prodtags" required >
                 </div>
               </div>
               <div class="buttons">

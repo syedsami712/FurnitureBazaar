@@ -98,9 +98,9 @@
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $array_assoc = json_decode($result, true);
-                echo "<pre>";
-                print_r($array_assoc);
-                echo "</pre>";
+                // echo "<pre>";
+                // print_r($array_assoc);
+                // echo "</pre>";
 ?>
 <!-- Mail Start -->
         <br>
@@ -143,7 +143,7 @@
       $row = count($array_assoc);
       for($x=0;$x<$row;$x++)
       {?>
-          <tr id="<?php echo $array_assoc[$x]['uid']?>" onclick="content(this)">
+          <tr id="<?php echo $array_assoc[$x]['orderID']?>" onclick="content(this)">
           <td><?php echo $array_assoc[$x]['orderID']; ?></td>
           <td><?php echo $array_assoc[$x]['uid']; ?></td>
           <td><?php echo $array_assoc[$x]['Fname']; ?></td>

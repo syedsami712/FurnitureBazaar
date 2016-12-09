@@ -66,8 +66,14 @@ $ch = curl_init();
                   <li><b>Product Code:</b> <span itemprop="mpn"><?php echo $array_assoc[0]['productid']; ?></span></li>
                 </ul>
                 <ul class="price-box">
-                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old"><?php echo "Rs. ".$array_assoc[0]['mrp']; ?></span> <span itemprop="price"><?php echo "Rs. ".  $array_assoc[0]['cost']; ?><span itemprop="availability" content="In Stock"></span></span></li>
-                  <li></li>
+                  <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old"><?php echo "Rs. ".$array_assoc[0]['mrp']; ?></span> <span itemprop="price"><?php echo "Rs. ".  $array_assoc[0]['cost']; ?></li>
+                  <li><span itemprop="availability" content="In Stock" style="padding: 8px;"></span>
+                 <?php if($array_assoc[0]['availablestock'] > 0) { ?>
+                  Product Available
+                  <?php } else { ?>
+                  Sorry Product Not Available
+                  <?php } ?>
+                 </span></li>
                 </ul>
                 <div id="product">
                   <div class="cart">
@@ -94,8 +100,11 @@ $ch = curl_init();
                         <a class="qtyBtn mines" href="javascript:void(0);">-</a>
                         <div class="clear"></div>
                       </div>
-
+                      <?php if($array_assoc[0]['availablestock'] > 0) { ?>
                       <input type="submit" name="addToCart" id="button-cart" class="btn btn-primary btn-lg" value="Add To Cart" />
+                      <?php } else { ?>
+                       <input type="submit" name="addToCart" id="button-cart" class="btn btn-primary btn-lg" value="Add To Cart" disabled="true" />
+                       <?php } ?>
                       </form>
                     </div>
               </div>

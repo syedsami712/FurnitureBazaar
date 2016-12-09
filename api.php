@@ -2,7 +2,7 @@
 	
 	$functionName = $_GET['functionName'];
 	function retrieveProductDetails($conn, $productId){
-		$result = $conn->query("Select * from products where productid = $productId");
+		$result = $conn->query("Select * from products p, productstock s where s.productid = p.productid and p.productid = $productId");
 		$resultSet = array();
 		while ($row = $result->fetch_assoc()) {
 			array_push($resultSet, $row);
@@ -184,6 +184,41 @@
 		return json_encode($resultSet);
 	}
 
+	function insertOrderAndOrderItem($conn, $userId, $totalMrp, $totalCost, $paymentType, $deliveryMethod, $comment, $cartArray){
+		$result = $conn->query("insert into orders (uid, total_mrp, total_cost, payment_type, delivery_method, comments) VALUES ($userId, $totalMrp, $totalCost, '$paymentType', '$deliveryMethod', '$comment')");
+		$orderIdGenerated = $conn->insert_id;
+		if($orderIdGenerated > 0){
+			// insert into order items
+			$cartArrayDecoded = json_decode($cartArray, true);
+			for($i = 0; $i < count($cartArrayDecoded); $i++) {
+				$productId = (int) $cartArrayDecoded[$i][0];
+				$productname = $cartArrayDecoded[$i][2];
+				$productQuants = $cartArrayDecoded[$i][1];
+				$conn->query("insert into orderitems (orderID, productID, productname, quantity) VALUES ($orderIdGenerated, $productId, '$productname', $productQuants)");
+			}
+			return "success";
+			// $res
+		}
+		else {
+			return "something went wrong";
+		}
+		// return $cartArray;
+	}
+
+	function addProductDetails($conn, $category, $subCategory, $productName, $productDesc, $productImg, $productMaterial, $productMrp, $productCost, $productTags) {
+		
+		if($result = $conn->query("insert into products (categoryid, sub_categoryid, productname, productdesc, productimg, prodmaterial, mrp, cost, tags) VALUES ( $category, $subCategory, '$productName', '$productDesc', '$productImg', '$productMaterial', $productMrp, $productCost, '$productTags')")){
+
+			return "success";
+		}
+		else {
+			return "failure";
+		}
+
+
+
+	}
+
 	switch ($functionName) {
 		case 'retrieveProductDetails':
 			if(isset($_POST['productid'])){
@@ -291,6 +326,31 @@
 				echo retreiveProductsDetailsAndStock($conn);
 			break;	
 
+		case 'insertOrderAndOrderItem' :
+			$userId = $_POST['userId'];
+			$totalMrp = $_POST['totalMrp'];
+			$totalCost = $_POST['totalCost'];
+			$paymentType = $_POST['paymentType'];
+			$deliveryMethod = $_POST['deliveryMethod'];
+			$comment = $_POST['comment'];
+			$cartArray = $_POST['cartArray'];
+
+			echo insertOrderAndOrderItem($conn, $userId, $totalMrp, $totalCost, $paymentType, $deliveryMethod, $comment, $cartArray);
+			break;
+
+		case 'addProductDetails' :
+
+			 $category          =   $_POST['category'];
+			 $subCategory       =   $_POST['subCategory'];
+			 $productName       =   $_POST['productName'];
+			 $productDesc       =   $_POST['productDesc'];
+			 $productImg        =   $_POST['productImg'];
+			 $productMaterial   =   $_POST['productMaterial'];
+			 $productMrp        =   $_POST['productMrp'];
+			 $productCost       =   $_POST['productCost'];
+			 $productTags       =   $_POST['productTags'];
+
+			 echo addProductDetails($conn, $category, $subCategory, $productName, $productDesc, $productImg, $productMaterial, $productMrp, $productCost, $productTags);
 
 		default:
 			# code...

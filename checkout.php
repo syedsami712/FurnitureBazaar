@@ -157,16 +157,18 @@
                       </textarea>
                     </div>
                   </div>
-          <div class="buttons">
-                  <div class="pull-left"><a href="myaccount.php" class="btn btn-primary">Account Settings</a></div>
-                
+                  <div class="buttons">
+                    <div class="pull-left"><a href="myaccount.php" class="btn btn-primary">Account Settings</a></div>
+                  </div>
+                </form>
               </div>
-            </div>
     </div>
 </div> <!-- col sm4 -->       
 </div> <!-- row -->
 <div class="col-sm-8">
               <div class="row">
+              <form action="" method="POST">
+              <!-- Delivery method box -->
                 <div class="col-sm-6">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -174,7 +176,7 @@
                     </div>
                       <div class="panel-body">
                         <p>Please select the preferred shipping method to use on this order.</p>
-                        <form method="POST" id="myForm" name="deliveryTypeForm" action="?">
+
                         <div class="radio">
                         <?php if(isset($_GET['deliveryMode']) && $_GET['deliveryMode'] == "0") { ?>
                           <label>
@@ -215,11 +217,12 @@
                             Delivery and Installaion - Rs.700</label>
                             <?php } ?>
                         </div>
-                        </form>
                       </div>
                       
                   </div>
                 </div>
+
+                <!-- Payment Method Block -->
                 <div class="col-sm-6">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -229,17 +232,19 @@
                         <p>Please select the preferred payment method to use on this order.</p>
                         <div class="radio">
                           <label>
-                            <input type="radio" name="payment">
+                            <input type="radio" name="payment" value="cash on delivery">
                             Cash On Delivery</label>
                         </div>
                         <div class="radio">
                           <label>
-                            <input type="radio" name="payment">
+                            <input type="radio" name="payment" value="card on delivery">
                             Card on Delivery</label>
                         </div>
                       </div>
                   </div>
                 </div>
+
+                <!-- Shopping Cart -->
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -277,14 +282,18 @@
                                 <td class="text-right"><?php echo $masterArray[$i][3]*$masterArray[$i][1]; ?></td>
                               </tr>
                               </form>
-                              <?php $subtotal =+ $masterArray[$i][3] * $masterArray[$i][1]; ?>
+                              <?php $subtotal += $masterArray[$i][3] * $masterArray[$i][1];
 
-                             <?php } ?>
+                               ?>
+
+                             <?php } 
+                              $totalMrp = $subtotal;
+                              ?>
                             </tbody>
                             <tfoot>
                               <tr>
-                                <td class="text-right" colspan="4"><strong>Sub-Total:</strong></td>
-                                <td class="text-right"><?php echo $subtotal; ?></td>
+                                <td class="text-right" colspan="4"><strong>Sub-Total + VAT(12%) :</strong></td>
+                                <td class="text-right"><?php echo  $subtotal += (12/100)*$subtotal; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Flat Shipping Rate:</strong></td>
@@ -294,7 +303,7 @@
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Total:</strong></td>
-                                <td class="text-right"><?php echo $mode + $subtotal; ?></td>
+                                <td class="text-right"><?php echo $subtotal += $mode; ?></td>
                               </tr>
                             </tfoot>
                           </table>
@@ -302,6 +311,8 @@
                       </div>
                   </div>
                 </div>
+
+                <!-- Add Comments Section -->
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -315,12 +326,17 @@
                           <span>I have read and agree to the <a class="agree" href="#"><b>Terms &amp; Conditions</b></a></span> </label>
                         <div class="buttons">
                           <div class="pull-right">
+                          <?php if($totalMrp > 0) {?>
                             <input type="submit" class="btn btn-primary" value="Confirm Order" name="submit">
+                            <?php } else {?>
+                            <input type="submit" class="btn btn-primary" value="Confirm Order" name="submit" disabled="true">
+                            <?php } ?>
                           </div>
                         </div>
                       </div>
                   </div>
                 </div>
+
                 </form>
               </div>
             </div>
@@ -334,7 +350,36 @@
                        {
                            if(isset($_POST['confirmagree']))
                            {
-                           print('<script>alert("Your order has been confimed");</script>');
+                            // here i need to insert the values inside the table.
+
+                            //first check whether user is logged or not.
+                            if(isset($_SESSION['userid']) && $_SESSION['username'] != "") {
+                                 $url = DEFAULT_WEB_PATH.API_PAGE.INSERT_ORDER;
+                              $userId = $_SESSION['userid'];
+                              $paymentMethod = $_POST['payment'];
+                              $deliveryMethod = $_POST['delivery'];
+                              $masterArrayEncoded = json_encode($masterArray);
+                              $comment = $_POST['comments'];
+                              $postfields = array('userId' => $userId, 'totalMrp' => $totalMrp, 'totalCost' => $subtotal, 'paymentType' => $paymentMethod, 'deliveryMethod' => $deliveryMethod, 'comment' => $comment, 'cartArray' => $masterArrayEncoded);
+                              $ch = curl_init();
+                              $options = array (
+                                CURLOPT_URL => $url,
+                                CURLOPT_POST => 1,
+                                CURLOPT_POSTFIELDS => $postfields,
+                                CURLOPT_RETURNTRANSFER => true
+                              );
+                              curl_setopt_array($ch, $options);
+                              $result = curl_exec($ch);
+                              curl_close($ch);
+                              if($result === "success"){
+                                echo '<script> window.location.href="http://localhost:8012/FurnitureBazaar/orderSuccess.php"; </script>';
+                              }
+                             // print('<script>alert("Your order has been confimed");</script>');
+                            }
+                            else {
+                              echo '<script> window.location.href= "http://localhost:8012/FurnitureBazaar/login.php"; </script>';
+                            }
+                           
                            }
                            else
                            {

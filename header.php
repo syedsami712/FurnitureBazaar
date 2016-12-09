@@ -337,7 +337,14 @@ $ch = curl_init();
             <li class="dropdown">
             <?php  getcats(); ?>
             </li>
-            <li class="custom-link-right"><a href="checkout.php" target="_blank">Checkout</a></li>
+            <li class="custom-link-right"><a href="<?php 
+                    if(isset($_SESSION['username']) && $_SESSION['username'] != '') {
+                      echo 'checkout.php';
+                    }
+                    else {
+                      echo "login.php";
+                    }
+            ?>" target="_blank">Checkout</a></li>
           </ul>
         </div>
         </div>

@@ -110,10 +110,10 @@
                 curl_close($ch1);
                 $array_assoc = json_decode($result, true);
                 $array_assoc1 = json_decode($result1,true);
-                echo "<pre>";
-                print_r($array_assoc);
-                print_r($array_assoc1);
-                echo "</pre>";
+                // echo "<pre>";
+                // print_r($array_assoc);
+                // print_r($array_assoc1);
+                // echo "</pre>";
                 ?>
 
 <div id="container">
@@ -199,7 +199,15 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-center"><?php echo $array_assoc[0]['delivery_method']; ?></td>
+                              <td class="text-center"><?php if($array_assoc[0]['delivery_method'] == "0"){
+                                echo "Self Pickup And Installation"; 
+                              } else if($array_assoc[0]['delivery_method'] == "300") {
+                                echo "Installation only";
+                              }
+                                else if($array_assoc[0]['delivery_method'] == "700"){
+                                  echo "Delivery and Installation";
+                                }?></td>
+                              
                               <td class="text-center"><?php echo $array_assoc[0]['payment_type']; ?></td>
                             </tr>
                           </tbody>
@@ -226,24 +234,47 @@
                               </tr>
                             </thead>
                             <tbody>
-                                <?php populatecart($array_assoc1); ?> 
+                                <?php 
+                                $subtotal = 0;
+
+
+                                // populatecart($array_assoc1);
+
+                      $count = count($array_assoc1);
+                      for($x=0;$x<$count;$x++)
+                      {
+                        echo "<tr>";
+                        echo '<td class="text-center"><img src="'.DEFAULT_IMAGE_PATH.'products/'.$array_assoc1[$x]['productimg'].'" width="150" height="150" alt="'.$array_assoc1[$x]['productname'].'" title="'.$array_assoc1[$x]['productname'].'" class="img-thumbnail"></td>';
+                        echo '<td class="text-left">'.$array_assoc1[$x]['productname'].'</a></td>';
+                        echo '<td class="text-left">'.$array_assoc1[$x]['quantity'].'</td>';
+                        echo '<td class="text-right">'.$array_assoc1[$x]['cost'].'</td>';
+                        $subtotal += $array_assoc1[$x]['cost']*$array_assoc1[$x]['quantity'];
+                        echo '<td class="text-right">'.$subtotal.'</td>';
+                        echo "</tr>"; 
+                      }
+
+
+
+                                 ?> 
                             </tbody>
                             <tfoot>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Sub-Total:</strong></td>
-                                <td class="text-right">$750.00</td>
+                                <td class="text-right"><?php echo "Rs. ".$subtotal; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Shipping Charges</strong></td>
-                                <td class="text-right">add delivery price</td>
+                                <td class="text-right"><?php echo "Rs. ".$array_assoc[0]['delivery_method']; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>VAT (12%):</strong></td>
-                                <td class="text-right">$151.00</td>
+                                <td class="text-right"><?php echo "Rs. ".$VAT = (12/100)*$subtotal;
+
+                                $grandTotal = $VAT + $subtotal; ?></td>
                               </tr>
                               <tr>
                                 <td class="text-right" colspan="4"><strong>Total:</strong></td>
-                                <td class="text-right">$910.00</td>
+                                <td class="text-right"><?php echo "Rs. ".$grandTotal; ?></td>
                               </tr>
                             </tfoot>
                           </table>
@@ -252,17 +283,8 @@
                   </div>
                   <?php 
                     function populatecart($array_assoc1){
-                      $count = count($array_assoc1);
-                      for($x=0;$x<$count;$x++)
-                      {
-                        echo "<tr>";
-                        echo '<td class="text-center"><img src="'.DEFAULT_IMAGE_PATH.'products/'.$array_assoc1[$x]['productimg'].'" width="150" height="150" alt="'.$array_assoc1[$x]['productname'].'" title="'.$array_assoc1[$x]['productname'].'" class="img-thumbnail"></td>';
-                        echo '<td class="text-left">'.$array_assoc1[$x]['productname'].'</a></td>';
-                        echo '<td class="text-left">'.$array_assoc1[$x]['quantity'].'</td>';
-                        echo '<td class="text-right">'.$array_assoc1[$x]['mrp'].'</td>';
-                        echo '<td class="text-right">'.$array_assoc1[$x]['cost'].'</td>';
-                        echo "</tr>";
-                      }
+
+                     
                     }
                   ?>
                   <div class="col-sm-12">

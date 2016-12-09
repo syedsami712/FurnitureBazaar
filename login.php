@@ -5,6 +5,8 @@
       $_SESSION['username'] ="";
     }
   }
+
+  include 'GlobalVariables.php';
   
  ?>
 <html>

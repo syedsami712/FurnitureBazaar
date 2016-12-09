@@ -143,7 +143,11 @@
           </div>
           <div class="buttons">
             <div class="pull-left"><a href="index.php" class="btn btn-default">Continue Shopping</a></div>
+            <?php if(isset($_SESSION['userid']) && $_SESSION['username'] != ""){ ?>
             <div class="pull-right"><a href="checkout.php" class="btn btn-primary">Checkout</a></div>
+            <?php } else { ?>
+            <div class="pull-right"><a href="login.php" class="btn btn-primary">Checkout</a></div>
+            <?php } ?>
           </div>
         </div>
         <!--Middle Part End -->
